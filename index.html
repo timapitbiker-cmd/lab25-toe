@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="ЛР №25 ТОЭ МЭИ: моделирование длинной линии цепной схемой — интерактивный стенд, тренажёр, теория и ответы на контрольные вопросы.">
+<title>Длинная линия · ЛР 25</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Cpath d=%22M2 9h28M2 23h28%22 stroke=%22%2313233A%22 stroke-width=%222.5%22/%3E%3Cpath d=%22M8 9v14M16 9v14M24 9v14%22 stroke=%22%23B5582A%22 stroke-width=%222.5%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Unbounded:wght@500;700&display=swap">
+<script>
+window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global'},startup:{typeset:true}};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js" async></script>
+<style>
+/* Layout: лабораторная тетрадь на миллиметровке — узкая колонка текста, широкие «стенды» с графиками */
+:root{
+  --bg:#ECF2F0; --paper:#F8FBFA; --ink:#13233A; --muted:#55657A; --rule:#C7D5D1; --grid:rgba(31,122,140,.09);
+  --copper:#B5582A; --teal:#1F7A8C; --plum:#7A4E9C; --good:#2E7D4F; --warn:#A86B12; --chip:#E1EAE7; --shadow:0 1px 0 rgba(19,35,58,.06),0 8px 24px -12px rgba(19,35,58,.18);
+  --f-disp:"Unbounded","Golos Text",system-ui,sans-serif; --f-body:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif; --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0D1520; --paper:#132030; --ink:#E5ECF4; --muted:#93A4BA; --rule:#25374D; --grid:rgba(79,179,196,.07);
+  --copper:#E5905C; --teal:#56B8C8; --plum:#B793D8; --good:#5DBB86; --warn:#E0A84A; --chip:#1B2B3F; --shadow:0 1px 0 rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.6); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0D1520; --paper:#132030; --ink:#E5ECF4; --muted:#93A4BA; --rule:#25374D; --grid:rgba(79,179,196,.07);
+  --copper:#E5905C; --teal:#56B8C8; --plum:#B793D8; --good:#5DBB86; --warn:#E0A84A; --chip:#1B2B3F; --shadow:0 1px 0 rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.6); color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--f-body);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:var(--teal)}
+:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-disp);font-weight:700;line-height:1.15;text-wrap:balance;margin:0}
+h2{font-size:clamp(1.4rem,2.6vw,1.9rem)}
+h3{font-size:1.05rem;font-weight:500}
+p{margin:0}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.eyebrow{font:600 .72rem/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--copper)}
+/* шапка */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+header.top .wrap{display:flex;align-items:center;gap:16px;padding-block:10px;flex-wrap:wrap}
+.logo{font:700 .95rem var(--f-disp);display:flex;align-items:center;gap:8px;color:var(--ink);text-decoration:none}
+.logo svg{flex:none}
+nav{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
+nav a{font-size:.88rem;color:var(--muted);text-decoration:none;padding:4px 10px;border-radius:999px}
+nav a:hover{color:var(--ink);background:var(--chip)}
+/* hero */
+.hero{padding-block:40px 24px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:32px;align-items:center}
+.hero h1{font-size:clamp(1.9rem,4.4vw,3.1rem);margin-top:10px}
+.hero h1 em{font-style:normal;color:var(--copper)}
+.hero .lead{margin-top:16px;color:var(--muted);max-width:56ch}
+.hero .facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.pill{font:500 .8rem var(--f-mono);padding:5px 10px;border:1px solid var(--rule);border-radius:999px;background:var(--paper)}
+.hero-fig{background:var(--paper);border:1px solid var(--rule);border-radius:14px;box-shadow:var(--shadow);padding:14px;min-width:0}
+.hero-fig canvas{width:100%;height:210px;display:block}
+.hero-fig .cap{font-size:.8rem;color:var(--muted);margin-top:6px}
+section{padding-block:36px}
+.sec-head{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;max-width:70ch}
+.sec-head p{color:var(--muted)}
+/* стенд */
+.bench{background:var(--paper);border:1px solid var(--rule);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.bench-schem{border-bottom:1px solid var(--rule);padding:14px 16px 6px;overflow-x:auto}
+.bench-schem svg{display:block;min-width:720px;width:100%;height:auto}
+.bench-body{display:grid;grid-template-columns:300px minmax(0,1fr);gap:0}
+.controls{border-right:1px solid var(--rule);padding:16px;display:flex;flex-direction:column;gap:16px}
+.ctl-label{font:600 .72rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:block}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:500 .85rem var(--f-body);border:1px solid var(--rule);background:var(--bg);color:var(--ink);padding:6px 10px;border-radius:8px;cursor:pointer}
+.chip:hover{border-color:var(--teal)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.slider{display:flex;flex-direction:column;gap:4px}
+.slider .row{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.slider output{font:600 .9rem var(--f-mono);color:var(--copper)}
+input[type=range]{width:100%;accent-color:var(--copper)}
+.mini{font:500 .78rem var(--f-body);border:1px dashed var(--rule);background:none;color:var(--teal);padding:3px 8px;border-radius:6px;cursor:pointer}
+.mini:hover{border-style:solid}
+.readout{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:.84rem}
+.readout div{display:flex;flex-direction:column}
+.readout span{color:var(--muted);font-size:.72rem}
+.readout b{font:600 .95rem var(--f-mono)}
+.warnbox{font-size:.82rem;color:var(--warn);border:1px solid color-mix(in srgb,var(--warn) 45%,transparent);border-radius:8px;padding:8px 10px}
+.plot-area{padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.tabs{display:flex;gap:4px;flex-wrap:wrap}
+.tab{font:500 .84rem var(--f-body);border:none;background:none;color:var(--muted);padding:6px 10px;border-radius:8px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--chip);color:var(--ink)}
+.plot{width:100%;height:340px;display:block}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.8rem;color:var(--muted)}
+.legend i{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:6px;border-radius:2px}
+.legend i.dot{width:9px;height:9px;border-radius:50%}
+.summary{font-size:.92rem;border-left:3px solid var(--teal);padding:4px 0 4px 12px}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--rule);border-radius:10px}
+table{border-collapse:collapse;width:100%;font:500 .82rem var(--f-mono);font-variant-numeric:tabular-nums}
+th,td{padding:6px 8px;text-align:center;border-bottom:1px solid var(--rule);white-space:nowrap}
+th{font-weight:600;color:var(--muted);background:var(--bg)}
+td.k,th.k{text-align:left;color:var(--muted);font-family:var(--f-body);font-weight:500;position:sticky;left:0;background:var(--paper)}
+tr:last-child td{border-bottom:none}
+td.zero{color:var(--copper);font-weight:600}
+.row2.one{grid-template-columns:minmax(0,1fr)}
+.row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-top:16px}
+.panel{background:var(--paper);border:1px solid var(--rule);border-radius:14px;padding:16px;min-width:0;display:flex;flex-direction:column;gap:10px}
+.panel canvas{width:100%;height:300px;display:block}
+.panel .bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn{font:600 .84rem var(--f-body);border:1px solid var(--ink);background:var(--ink);color:var(--paper);padding:6px 12px;border-radius:8px;cursor:pointer}
+.btn.ghost{background:none;color:var(--ink)}
+.note{font-size:.84rem;color:var(--muted)}
+/* подготовка */
+.prep{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.card{background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card .n{font:600 .72rem var(--f-mono);color:var(--copper)}
+.card .ans{font:600 1.15rem var(--f-mono);color:var(--ink)}
+.card .ans small{font-size:.75rem;color:var(--muted);font-weight:500}
+.card .f{font-size:.92rem;overflow-x:auto;overflow-y:hidden}
+.card p{font-size:.88rem;color:var(--muted)}
+/* теория */
+.prose{max-width:70ch;display:flex;flex-direction:column;gap:14px}
+.prose .eq{overflow-x:auto;overflow-y:hidden;padding:4px 0}
+.modes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:20px}
+.mode{border-top:3px solid var(--teal);background:var(--paper);border-radius:0 0 12px 12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.mode b{font-family:var(--f-disp);font-weight:500;font-size:.95rem}
+.mode p{font-size:.86rem;color:var(--muted)}
+.mode .eq{font-size:.9rem;overflow-x:auto;overflow-y:hidden}
+/* ход работы */
+.steps{display:flex;flex-direction:column;gap:10px;max-width:80ch}
+.step{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:14px}
+.step .num{font:700 1.3rem var(--f-disp);color:var(--copper)}
+.step h3{margin-bottom:6px}
+.step p,.step li{font-size:.92rem}
+.step ul{margin:6px 0 0;padding-left:18px}
+.expect{margin-top:8px;font-size:.86rem;background:var(--bg);border-radius:8px;padding:8px 10px}
+.expect b{color:var(--good)}
+/* вопросы */
+details.q{background:var(--paper);border:1px solid var(--rule);border-radius:12px;margin-bottom:8px}
+details.q summary{cursor:pointer;padding:12px 16px;display:grid;grid-template-columns:36px minmax(0,1fr) 18px;gap:10px;align-items:baseline;list-style:none}
+details.q summary::-webkit-details-marker{display:none}
+details.q summary .qn{font:700 .9rem var(--f-mono);color:var(--copper)}
+details.q summary::after{content:"+";font:600 1.1rem var(--f-mono);color:var(--muted)}
+details.q[open] summary::after{content:"–"}
+details.q .a{padding:0 16px 14px 62px;display:flex;flex-direction:column;gap:8px;font-size:.93rem}
+details.q .a .eq{overflow-x:auto;overflow-y:hidden}
+.calc{display:flex;flex-wrap:wrap;gap:12px;align-items:center;background:var(--bg);border-radius:8px;padding:8px 10px;font-size:.88rem}
+.calc label{display:flex;gap:6px;align-items:center}
+.calc input[type=number]{width:60px;font:600 .9rem var(--f-mono);background:var(--paper);color:var(--ink);border:1px solid var(--rule);border-radius:6px;padding:3px 6px}
+.calc output{font:600 .9rem var(--f-mono);color:var(--copper)}
+/* подвал */
+footer{border-top:1px solid var(--rule);margin-top:24px;padding-block:28px 40px;color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center}
+.egg-btn{background:none;border:1px dashed var(--rule);border-radius:10px;padding:8px 12px;color:var(--muted);cursor:pointer;font:500 .8rem var(--f-mono);display:flex;gap:8px;align-items:center}
+.egg-btn:hover{color:var(--ink);border-color:var(--copper)}
+.egg{display:flex;flex-direction:column;align-items:center;gap:6px;padding:18px 22px;border-radius:16px;background:var(--paper);border:1px solid var(--copper);box-shadow:var(--shadow)}
+.egg .big{font:700 clamp(1.4rem,4vw,2rem) var(--f-disp);color:var(--ink)}
+.egg .face{font-size:3rem;line-height:1;animation:wob 1.6s ease-in-out infinite}
+@keyframes wob{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+.five{position:fixed;top:-40px;font:700 28px var(--f-disp);color:var(--copper);pointer-events:none;z-index:50;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:.2}}
+@media (prefers-reduced-motion:reduce){.egg .face{animation:none}.five{display:none}html{scroll-behavior:auto}}
+.game{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:16px;background:var(--paper);border:1px solid var(--rule);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
+.game-plot{min-width:0}.game-plot canvas{width:100%;height:260px;display:block}
+.game-side{display:flex;flex-direction:column;gap:12px;justify-content:center;min-width:0}
+.score{font-size:1.6rem;font-weight:600;color:var(--copper)}
+.gfb{font-size:.92rem;min-height:3.2em}
+.gfb.ok{color:var(--good)} .gfb.bad{color:var(--warn)}
+.chip:disabled{cursor:default;opacity:.75}
+.chip.right{background:var(--good);color:#fff;border-color:var(--good);opacity:1} .chip.wrong{background:var(--warn);color:#fff;border-color:var(--warn);opacity:1}
+details.hint{margin-top:10px;font-size:.9rem;color:var(--muted)} details.hint summary{cursor:pointer;color:var(--teal)}
+@media (max-width:900px){.game{grid-template-columns:minmax(0,1fr)}}
+/* адаптив */
+@media (max-width:900px){
+  .hero{grid-template-columns:minmax(0,1fr)}
+  .bench-body{grid-template-columns:minmax(0,1fr)}
+  .controls{border-right:none;border-bottom:1px solid var(--rule)}
+  .row2{grid-template-columns:minmax(0,1fr)}
+  .prep{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .modes{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .prep,.modes{grid-template-columns:minmax(0,1fr)}
+  nav{margin-left:0}
+  .plot{height:280px}
+  details.q .a{padding-left:16px}
+  .step{grid-template-columns:minmax(0,1fr)}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#top">
+      <svg width="34" height="18" viewBox="0 0 34 18" aria-hidden="true"><path d="M1 4h32M1 15h32" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M6 4v11M14 4v11M22 4v11M30 4v11" stroke="var(--copper)" stroke-width="1.6"/></svg>
+      ЛР 25 · Длинная линия
+    </a>
+    <nav aria-label="Разделы">
+      <a href="#stend">Стенд</a><a href="#igra">Тренажёр</a><a href="#teoriya">Теория</a><a href="#hod">Ход работы</a><a href="#voprosy">Вопросы</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <span class="eyebrow">Кафедра ТОЭ · лабораторная работа № 25</span>
+        <h1>Моделирование длинной линии <em>однородной цепной схемой</em></h1>
+        <p class="lead">Коаксиальный кабель без потерь заменяют цепочкой из 10 П-образных звеньев фильтра нижних частот. Здесь можно покрутить режимы нагрузки, увидеть стоячие и бегущие волны и найти готовые ответы к подготовке и контрольным вопросам.</p>
+        <div class="facts">
+          <span class="pill">L₀ = 0,24 мГн/км</span><span class="pill">C₀ = 0,1 мкФ/км</span><span class="pill">звено: L = 0,24 мГн, C = 0,1 мкФ</span><span class="pill">10 звеньев</span>
+        </div>
+      </div>
+      <figure class="hero-fig" style="margin:0">
+        <canvas id="heroCanvas" aria-label="Анимация: падающая, отражённая и суммарная волна напряжения вдоль линии"></canvas>
+        <figcaption class="cap" id="heroCap">Холостой ход: падающая и отражённая волны складываются в стоячую. Узел напряжения — на 4-м звене от нагрузки.</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <!-- ====================== СТЕНД ====================== -->
+  <section id="stend">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Виртуальный стенд</span>
+        <h2>Цепная схема и линия: выбери нагрузку</h2>
+        <p>Генератор слева подключён к узлу 10, нагрузка справа — к узлу 0. Номера узлов отсчитываются от нагрузки, как в методичке. Столбики над узлами показывают действующее напряжение, которое покажет милливольтметр.</p>
+      </div>
+      <div class="bench">
+        <div class="bench-schem"><svg id="schem" viewBox="0 0 960 230" role="img" aria-label="Схема: генератор, 10 П-образных звеньев и нагрузка, над узлами столбики напряжения"></svg></div>
+        <div class="bench-body">
+          <div class="controls">
+            <div>
+              <span class="ctl-label">Режим нагрузки</span>
+              <div class="chips" id="modeChips" role="group" aria-label="Режим нагрузки">
+                <button class="chip" data-mode="match" aria-pressed="false">Согласованная</button>
+                <button class="chip" data-mode="open" aria-pressed="true">Холостой ход</button>
+                <button class="chip" data-mode="short" aria-pressed="false">Короткое замыкание</button>
+                <button class="chip" data-mode="cap" aria-pressed="false">Ёмкость C<sub>н</sub></button>
+                <button class="chip" data-mode="ind" aria-pressed="false">Индуктивность L<sub>н</sub></button>
+                <button class="chip" data-mode="res" aria-pressed="false">Активная R<sub>н</sub></button>
+              </div>
+            </div>
+            <div class="slider" id="boxR" hidden>
+              <div class="row"><label for="sR">R<sub>н</sub></label><output id="oR">98 Ом</output></div>
+              <input type="range" id="sR" min="0" max="1000" value="650">
+              <div class="chips"><button class="mini" data-r="2">R = 2Z<sub>C</sub></button><button class="mini" data-r="0.2">R = 0,2Z<sub>C</sub></button><button class="mini" data-r="1">R = Z<sub>C</sub></button></div>
+            </div>
+            <div class="slider" id="boxC" hidden>
+              <div class="row"><label for="sC">C<sub>н</sub></label><output id="oC">0,104 мкФ</output></div>
+              <input type="range" id="sC" min="0" max="1000" value="500">
+              <div class="chips"><button class="mini" id="setCH">C<sub>н</sub> из п. 7 (0,104 мкФ)</button></div>
+            </div>
+            <div class="slider" id="boxL" hidden>
+              <div class="row"><label for="sL">L<sub>н</sub></label><output id="oL">0,26 мГн</output></div>
+              <input type="range" id="sL" min="0" max="1000" value="500">
+              <div class="chips"><button class="mini" id="setLH">как 1 звено при КЗ (0,26 мГн)</button></div>
+            </div>
+            <div class="slider">
+              <div class="row"><label for="sF">Частота генератора f</label><output id="oF">12,68 кГц</output></div>
+              <input type="range" id="sF" min="2000" max="80000" step="10" value="12676">
+              <div class="chips"><button class="mini" id="setF">рабочая: B = π/8</button><button class="mini" id="setF2">граничная f₂</button></div>
+            </div>
+            <div class="slider">
+              <div class="row"><label for="sUin">Напряжение на входе U<sub>вх</sub></label><output id="oUin">6,0 В</output></div>
+              <input type="range" id="sUin" min="1" max="10" step="0.5" value="6">
+            </div>
+            <div class="readout" aria-live="polite">
+              <div><span>B одного звена</span><b id="rB">22,5°</b></div>
+              <div><span>Z<sub>C</sub> звена (Zπ)</span><b id="rZ">49,95 Ом</b></div>
+              <div><span>λ линии</span><b id="rLam">16,10 км</b></div>
+              <div><span>длина 10 звеньев</span><b id="rLen">0,625 λ</b></div>
+              <div><span>U<sub>max</sub> / U<sub>min</sub></span><b id="rKs">—</b></div>
+              <div><span>узлы U ≈ 0</span><b id="rNodes">—</b></div>
+            </div>
+            <div class="warnbox" id="warn" hidden></div>
+          </div>
+          <div class="plot-area">
+            <div class="tabs" role="tablist" aria-label="Что показать">
+              <button class="tab" role="tab" data-q="U" aria-selected="true">U(n)/U(0)</button>
+              <button class="tab" role="tab" data-q="V" aria-selected="false">U(n), В</button>
+              <button class="tab" role="tab" data-q="I" aria-selected="false">I(n)</button>
+              <button class="tab" role="tab" data-q="Z" aria-selected="false">|Z<sub>вх</sub>(n)|</button>
+              <button class="tab" role="tab" data-q="P" aria-selected="false">фаза φ(n)</button>
+            </div>
+            <canvas class="plot" id="plot" aria-label="График распределения вдоль линии"></canvas>
+            <div class="legend"><span><i style="background:var(--teal)"></i>линия без потерь (теория, x = n · l₁)</span><span><i class="dot" style="background:var(--copper)"></i>цепная схема (узлы n = 0…10)</span></div>
+            <p class="summary" id="summary"></p>
+            <div class="tbl-wrap"><table id="tbl"></table></div>
+            <p class="note">Таблицу можно переписать в протокол как ожидаемые значения: это точный расчёт цепочки из 10 звеньев с L = 0,24 мГн и C = 0,1 мкФ (C/2 по краям звена).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row2 one">
+        <div class="panel">
+          <h3>Мгновенные значения u(x, t)</h3>
+          <canvas id="wave" aria-label="Анимация мгновенного напряжения вдоль линии"></canvas>
+          <div class="bar">
+            <button class="btn" id="play">Пауза</button>
+            <label class="note"><input type="checkbox" id="showParts" checked> падающая и отражённая волны</label>
+          </div>
+          <p class="note">Бегущая волна движется к нагрузке, огибающая ровная. Стоячая волна дышит на месте: узлы не двигаются, амплитуда между ними меняется.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== ИГРА ====================== -->
+  <section id="igra">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Тренажёр</span>
+        <h2>Угадай нагрузку по показаниям вольтметра</h2>
+        <p>Как на защите: нагрузку закрыли, видно только U(n) по узлам. Частота рабочая, B = 22,5°. Что стоит на конце линии?</p>
+      </div>
+      <div class="game">
+        <div class="game-plot"><canvas id="gameCv" aria-label="Распределение напряжения по узлам для загаданной нагрузки"></canvas></div>
+        <div class="game-side">
+          <div class="score mono" id="gScore">0 / 0</div>
+          <div class="chips" id="gOpts">
+            <button class="chip" data-g="match">Z<sub>н</sub> = Z<sub>C</sub></button>
+            <button class="chip" data-g="open">ХХ</button>
+            <button class="chip" data-g="short">КЗ</button>
+            <button class="chip" data-g="cap">ёмкость</button>
+            <button class="chip" data-g="ind">индуктивность</button>
+            <button class="chip" data-g="resH">R &gt; Z<sub>C</sub></button>
+            <button class="chip" data-g="resL">R &lt; Z<sub>C</sub></button>
+          </div>
+          <p class="gfb" id="gFb" aria-live="polite"></p>
+          <button class="btn" id="gNext" style="align-self:flex-start">Следующая</button>
+        </div>
+      </div>
+      <details class="hint"><summary>Шпаргалка: как отличать</summary>
+        <ul>
+          <li>Все столбики одинаковые — согласованная нагрузка.</li>
+          <li>Есть ноль: у нагрузки максимум и ноль на n = 4 — ХХ; ноль на самой нагрузке — КЗ.</li>
+          <li>Ноль ближе n = 4 — ёмкость; ноль дальше n = 4, а ближе — максимум — индуктивность.</li>
+          <li>Нулей нет, но волна неровная — активная: у нагрузки максимум → R &gt; Z<sub>C</sub>, минимум → R &lt; Z<sub>C</sub>.</li>
+        </ul>
+      </details>
+    </div>
+  </section>
+
+  <!-- ====================== ТЕОРИЯ ====================== -->
+  <section id="teoriya">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Теория коротко</span>
+        <h2>Что происходит в линии</h2>
+      </div>
+      <div class="prose">
+        <p><b>Длинная линия</b> — цепь, где индуктивность и ёмкость распределены по длине. Если линия сравнима с длиной волны, фаза напряжения заметно меняется вдоль неё, и ток с напряжением становятся функциями координаты x. В линии без потерь (R₀ = 0, G₀ = 0) остаются только L₀ и C₀.</p>
+        <p>Напряжение и ток в любой точке — сумма двух бегущих волн: прямой (к нагрузке) и обратной (от нагрузки). Если отсчитывать x от нагрузки, то для действующих комплексов:</p>
+        <div class="eq">\[\underline U(x)=\underline U_2\cos\beta x+j Z_C\underline I_2\sin\beta x,\qquad \underline I(x)=\underline I_2\cos\beta x+j\frac{\underline U_2}{Z_C}\sin\beta x\]</div>
+        <p>Здесь β = ω√(L₀C₀) — коэффициент фазы, Z<sub>C</sub> = √(L₀/C₀) — волновое сопротивление. Входное сопротивление отрезка длиной x:</p>
+        <div class="eq">\[\underline Z_{вх}(x)=Z_C\,\frac{\underline Z_н+jZ_C\,\mathrm{tg}\,\beta x}{Z_C+j\underline Z_н\,\mathrm{tg}\,\beta x}\]</div>
+        <p><b>Почему цепочка звеньев заменяет кабель.</b> Звено ФНЧ в полосе пропускания (f &lt; f₂) имеет вещественное характеристическое сопротивление Z<sub>C</sub> и коэффициент фазы B, где cos B = 1 − ω²LC/2. Напряжения в узлах цепочки описываются теми же формулами, что и линия, только βx заменяется на nB:</p>
+        <div class="eq">\[\underline U(n)=\underline U(0)\cos nB+jZ_C\underline I(0)\sin nB\]</div>
+        <p>Одно звено соответствует отрезку кабеля l₁ = 1 км (L/L₀ = 0,24/0,24). При B = π/8 на длину волны приходится 16 звеньев, поэтому 10 звеньев — это 0,625 λ. Цепочка показывает только дискретные точки линии с шагом l₁, а её Z<sub>C</sub> растёт с частотой и уходит в бесконечность на f₂. Поэтому рабочую частоту берут низкой, чтобы шаг по фазе был мал.</p>
+        <p><b>Коэффициент стоячей волны</b> k<sub>с</sub> = U<sub>max</sub>/U<sub>min</sub>. При чисто активной нагрузке k<sub>с</sub> = R<sub>н</sub>/Z<sub>C</sub> (если R<sub>н</sub> &gt; Z<sub>C</sub>) или Z<sub>C</sub>/R<sub>н</sub> (если R<sub>н</sub> &lt; Z<sub>C</sub>). Согласованный режим: k<sub>с</sub> = 1. ХХ, КЗ и реактивная нагрузка: k<sub>с</sub> = ∞.</p>
+      </div>
+      <div class="modes">
+        <div class="mode"><b>Согласованная, Z<sub>н</sub> = Z<sub>C</sub></b><div class="eq">\(U(x)=U_2,\;\psi=\beta x\)</div><p>Только прямая волна, режим бегущей волны. Действующее значение одинаково по всей длине, фаза растёт линейно.</p></div>
+        <div class="mode" style="border-top-color:var(--copper)"><b>Холостой ход, Z<sub>н</sub> = ∞</b><div class="eq">\(U=U_2|\cos\beta x|,\;I=\frac{U_2}{Z_C}|\sin\beta x|\)</div><p>Стоячая волна. У нагрузки пучность напряжения, на λ/4 — узел. В опыте узел на n = 4.</p></div>
+        <div class="mode" style="border-top-color:var(--plum)"><b>Короткое замыкание, Z<sub>н</sub> = 0</b><div class="eq">\(U=Z_CI_2|\sin\beta x|,\;I=I_2|\cos\beta x|\)</div><p>Стоячая волна, у нагрузки узел напряжения и пучность тока. Картина ХХ, сдвинутая на λ/4.</p></div>
+        <div class="mode" style="border-top-color:var(--warn)"><b>Реактивная, Z<sub>н</sub> = ±jX</b><div class="eq">\(U=U_2\frac{|\cos\beta(x+y)|}{|\cos\beta y|}\)</div><p>Стоячая волна со сдвигом: нагрузку заменяют отрезком разомкнутой линии длиной y. Ёмкость: узел ближе λ/4. Индуктивность: узел дальше λ/4.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== ХОД РАБОТЫ ====================== -->
+  <section id="hod">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Рабочее задание</span>
+        <h2>Что делать на стенде и что должно получиться</h2>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="num">1</span><div><h3>Выбор рабочей частоты</h3>
+          <p>Собрать цепочку с перемычкой K, подать U<sub>вх</sub> ≈ 5–7 В на частоте около 12–13 кГц. Нагрузку отключить (ХХ) и подстроить частоту так, чтобы на 4-м узле от нагрузки напряжение было почти нулевым. Дальше частоту не трогать.</p>
+          <p class="expect"><b>Ожидаемо:</b> f ≈ 12,7 кГц (расчёт 12,68 кГц). Небольшая разница — разброс номиналов L и C на стенде.</p></div></div>
+        <div class="step"><span class="num">2</span><div><h3>Исследование одного звена</h3>
+          <p>Снять перемычку K, измерить U<sub>1х</sub> и U<sub>2х</sub> одного звена на ХХ. В полосе пропускания они совпадают по фазе, и B находится из отношения:</p>
+          <div class="eq">\[\cos B=\frac{U_{2х}}{U_{1х}}\]</div>
+          <p>Затем включить R<sub>н</sub> = Z<sub>C</sub> ≈ 50 Ом и проверить, что U₁ = U₂.</p>
+          <p class="expect"><b>Ожидаемо:</b> U<sub>2х</sub>/U<sub>1х</sub> = cos 22,5° = 0,924, например 6,0 В → 5,54 В. При ХХ U₁ и U₂ в фазе, при Z<sub>C</sub> — равны по модулю и сдвинуты на 22,5°.</p></div></div>
+        <div class="step"><span class="num">3</span><div><h3>Согласованный режим</h3>
+          <p>Восстановить цепочку, нагрузить на резистор ≈ Z<sub>C</sub>, измерить U(n) во всех узлах. Двулучевым осциллографом измерить фазу φ(n) относительно нагрузки: 8 клеток на период, 45° на клетку.</p>
+          <p class="expect"><b>Ожидаемо:</b> U(n) ≈ const, φ(n) = 22,5°·n, то есть полклетки на звено. Годограф — окружность, векторы через 22,5°.</p></div></div>
+        <div class="step"><span class="num">4</span><div><h3>Режим стоячих волн</h3>
+          <p>Измерить U(n) на ХХ, затем с конденсатором C<sub>н</sub> ≈ 0,1 мкФ из модуля конденсаторов.</p>
+          <p class="expect"><b>Ожидаемо:</b> ХХ — узел на n = 4, пучности на n = 0 и 8. С ёмкостью картина сдвигается на одно звено: узел на n = 3, пучность на n = 7.</p></div></div>
+        <div class="step"><span class="num">5</span><div><h3>Активная нагрузка (по указанию преподавателя)</h3>
+          <p>Магазином сопротивлений поставить R<sub>н</sub> = 2Z<sub>C</sub> ≈ 100 Ом, затем 0,2Z<sub>C</sub> ≈ 10 Ом. Найти U<sub>max</sub>, U<sub>min</sub>, k<sub>с</sub>.</p>
+          <p class="expect"><b>Ожидаемо:</b> при 2Z<sub>C</sub> минимум на n = 4, k<sub>с</sub> = 2. При 0,2Z<sub>C</sub> минимум у нагрузки, максимум на n = 4, k<sub>с</sub> = 5. Узлы не нулевые: часть энергии уходит в нагрузку.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== ВОПРОСЫ ====================== -->
+  <section id="voprosy">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Контрольные вопросы</span>
+        <h2>Ответы на все 14 вопросов</h2>
+        <p>U(0) = U₂ — напряжение на нагрузке, B = 22,5°, Z<sub>C</sub> ≈ 50 Ом. Где в вопросе номер звена задаёт преподаватель, есть калькулятор.</p>
+      </div>
+      <div id="qlist">
+        <details class="q"><summary><span class="qn">1</span><span>Показание вольтметра между нагрузкой и n-м звеном: а) согласованная нагрузка, б) ХХ</span></summary>
+          <div class="a">
+            <p>Вольтметр показывает модуль разности комплексов: |U(n) − U(0)|.</p>
+            <div class="eq">\[а)\;U_V=U_2\left|e^{jnB}-1\right|=2U_2\sin\frac{nB}{2}\qquad б)\;U_V=U_2\left(1-\cos nB\right)\]</div>
+            <div class="calc"><label for="q1n">n =</label><input type="number" id="q1n" min="0" max="10" value="4"><span>а) <output id="q1a"></output></span><span>б) <output id="q1b"></output></span></div>
+          </div></details>
+        <details class="q"><summary><span class="qn">2</span><span>Показание вольтметра между n-м и m-м звеньями: а) согласованная нагрузка, б) ХХ</span></summary>
+          <div class="a">
+            <div class="eq">\[а)\;U_V=2U_2\sin\frac{|n-m|B}{2}\qquad б)\;U_V=U_2\left|\cos nB-\cos mB\right|\]</div>
+            <p>На ХХ все напряжения узлов вещественны (в фазе или в противофазе), поэтому разность — просто разность косинусов со знаком.</p>
+            <div class="calc"><label for="q2n">n =</label><input type="number" id="q2n" min="0" max="10" value="2"><label for="q2m">m =</label><input type="number" id="q2m" min="0" max="10" value="6"><span>а) <output id="q2a"></output></span><span>б) <output id="q2b"></output></span></div>
+          </div></details>
+        <details class="q"><summary><span class="qn">3</span><span>Найти n и m, при которых на ХХ Z<sub>вх</sub>(n) = Z<sub>вх</sub>(m) и Z<sub>вх</sub>(n) = Z*<sub>вх</sub>(m)</span></summary>
+          <div class="a">
+            <div class="eq">\[\underline Z_{вх}(n)=-jZ_C\,\mathrm{ctg}\,nB\]</div>
+            <p><b>Равенство:</b> ctg периодичен с периодом π, значит (m − n)B = π, m = n + 8. В цепочке это пары (0, 8), (1, 9), (2, 10).</p>
+            <p><b>Сопряжённые:</b> ctg mB = −ctg nB, значит (n + m)B = π, n + m = 8: пары (1, 7), (2, 6), (3, 5). Например, Z<sub>вх</sub>(1) = −j120,6 Ом (ёмкостное), Z<sub>вх</sub>(7) = +j120,6 Ом (индуктивное). Также n + m = 16: (6, 10), (7, 9).</p>
+          </div></details>
+        <details class="q"><summary><span class="qn">4</span><span>Номер звена при ёмкостной нагрузке, где Z<sub>вх</sub>(n) = Z<sub>н</sub> и Z<sub>вх</sub>(n) = Z*<sub>н</sub></span></summary>
+          <div class="a">
+            <p>C<sub>н</sub> эквивалентна одному разомкнутому звену, поэтому</p>
+            <div class="eq">\[\underline Z_{вх}(n)=-jZ_C\,\mathrm{ctg}\,(n+1)B,\qquad \underline Z_н=-jZ_C\,\mathrm{ctg}\,B\]</div>
+            <p><b>Z<sub>вх</sub>(n) = Z<sub>н</sub>:</b> nB = π, n = 8. <b>Z<sub>вх</sub>(n) = Z*<sub>н</sub></b> (то же |Z|, но индуктивное): (n + 2)B = π, n = 6.</p>
+          </div></details>
+        <details class="q"><summary><span class="qn">5</span><span>Распределение модуля входного сопротивления |Z<sub>вх</sub>(n)|: согласованная, ХХ, ёмкостная</span></summary>
+          <div class="a">
+            <div class="eq">\[а)\;|Z_{вх}|=Z_C\qquad б)\;|Z_{вх}|=Z_C|\mathrm{ctg}\,nB|\qquad в)\;|Z_{вх}|=Z_C|\mathrm{ctg}\,(n+1)B|\]</div>
+            <p>ХХ: ∞ на n = 0 и 8, ноль на n = 4. Ёмкостная: ∞ на n = 7, ноль на n = 3. График — вкладка «|Z<sub>вх</sub>(n)|» на стенде.</p>
+          </div></details>
+        <details class="q"><summary><span class="qn">6</span><span>Распределение действующего тока I(n) при известном U₂: согласованная, ХХ, ёмкостная</span></summary>
+          <div class="a">
+            <div class="eq">\[а)\;I=\frac{U_2}{Z_C}\qquad б)\;I=\frac{U_2}{Z_C}|\sin nB|\qquad в)\;I=\frac{U_2}{Z_C}\frac{|\sin(n+1)B|}{\cos B}\]</div>
+            <p>Узлы тока там, где пучности напряжения, и наоборот. При U₂ = 1 В и Z<sub>C</sub> = 50 Ом согласованный ток 20 мА. Вкладка «I(n)» на стенде.</p>
+          </div></details>
+        <details class="q"><summary><span class="qn">7</span><span>Векторные диаграммы U(n) и I(n) для заданного звена n: согласованная, ХХ, ёмкостная</span></summary>
+          <div class="a">
+            <p>Относительно U(0) = U₂ (вектор по оси +1):</p>
+            <ul style="margin:0;padding-left:18px">
+              <li><b>Согласованная:</b> U(n) = U₂e<sup>jnB</sup>, I(n) = (U₂/Z<sub>C</sub>)e<sup>jnB</sup> — векторы совпадают по направлению, повёрнуты на nB.</li>
+              <li><b>ХХ:</b> U(n) = U₂cos nB — на оси; I(n) = j(U₂/Z<sub>C</sub>)sin nB — опережает на 90° (или отстаёт, если sin &lt; 0).</li>
+              <li><b>Ёмкостная:</b> U(n) = U₂cos(n+1)B / cos B — на оси; I(n) = j(U₂/Z<sub>C</sub>)sin(n+1)B / cos B — перпендикулярно.</li>
+            </ul>
+            <div class="calc"><label for="q7n">n =</label><input type="number" id="q7n" min="0" max="10" value="3"><output id="q7o" style="white-space:normal"></output></div>
+            
+          </div></details>
+        <details class="q"><summary><span class="qn">8</span><span>Мгновенные значения u<sub>n</sub>(t) и i<sub>n</sub>(t): согласованная, ХХ, ёмкостная</span></summary>
+          <div class="a">
+            <p>Принимаем ψ<sub>u2</sub> = 0, действующее U₂:</p>
+            <div class="eq">\[а)\;u_n=\sqrt2U_2\sin(\omega t+nB),\quad i_n=\sqrt2\frac{U_2}{Z_C}\sin(\omega t+nB)\]</div>
+            <div class="eq">\[б)\;u_n=\sqrt2U_2\cos nB\,\sin\omega t,\quad i_n=\sqrt2\frac{U_2}{Z_C}\sin nB\,\sin(\omega t+90^\circ)\]</div>
+            <div class="eq">\[в)\;u_n=\sqrt2U_2\frac{\cos(n+1)B}{\cos B}\sin\omega t,\quad i_n=\sqrt2\frac{U_2}{Z_C}\frac{\sin(n+1)B}{\cos B}\sin(\omega t+90^\circ)\]</div>
+            <div class="calc"><label for="q8n">n =</label><input type="number" id="q8n" min="0" max="10" value="2"><output id="q8o" style="white-space:normal"></output></div>
+          </div></details>
+        <details class="q"><summary><span class="qn">9</span><span>Линия нагружена на чисто реактивную нагрузку. Как по графику U(x) определить её характер?</span></summary>
+          <div class="a">
+            <p>Реактивная нагрузка даёт стоячую волну с нулями напряжения. Смотрим, где ближайший к нагрузке <b>узел</b>:</p>
+            <ul style="margin:0;padding-left:18px">
+              <li>узел ближе λ/4 (в цепочке n &lt; 4) — нагрузка <b>ёмкостная</b> (эквивалент разомкнутого отрезка y &lt; λ/4);</li>
+              <li>узел дальше λ/4, а ближе λ/4 стоит пучность — <b>индуктивная</b> (эквивалент короткозамкнутого отрезка);</li>
+              <li>узел ровно на λ/4 — ХХ; узел на самой нагрузке — КЗ.</li>
+            </ul>
+          </div></details>
+        <details class="q"><summary><span class="qn">10</span><span>Распределение U(n) и I(n) в режиме КЗ при известном I₂</span></summary>
+          <div class="a">
+            <div class="eq">\[U(n)=Z_CI_2\,|\sin nB|,\qquad I(n)=I_2\,|\cos nB|\]</div>
+            <p>Узлы напряжения на n = 0 и 8, пучность на n = 4. Это ХХ, сдвинутый на λ/4. Выбери «Короткое замыкание» на стенде.</p>
+          </div></details>
+        <details class="q"><summary><span class="qn">11</span><span>U(n), если нагрузка равна входному сопротивлению одного короткозамкнутого звена</span></summary>
+          <div class="a">
+            <div class="eq">\[\underline Z_н=jZ_C\,\mathrm{tg}\,B=j20{,}7\;Ом\;(L_н=0{,}26\;мГн),\qquad \frac{U(n)}{U(0)}=\frac{|\sin(n+1)B|}{\sin B}\]</div>
+            <p>Индуктивная нагрузка заменяет одно звено с КЗ: картина КЗ сдвигается на одно звено. Узел на n = 7, пучность 2,61·U(0) на n = 3. На стенде: «Индуктивность L<sub>н</sub>» → «как 1 звено при КЗ».</p>
+          </div></details>
+        <details class="q"><summary><span class="qn">12</span><span>Векторные диаграммы U(n), I(n) и годограф при R<sub>н</sub> = 2Z<sub>C</sub></span></summary>
+          <div class="a">
+            <div class="eq">\[\underline U(n)=U_2\left(\cos nB+j\tfrac12\sin nB\right),\qquad \underline I(n)=\frac{U_2}{2Z_C}\left(\cos nB+j\,2\sin nB\right)\]</div>
+            <p>Годограф U(n) — эллипс с полуосями U₂ (по оси) и 0,5U₂; концы векторов идут по эллипсу через каждые 22,5° «эллиптического угла». Годограф I(n) — эллипс с полуосями 0,5U₂/Z<sub>C</sub> и U₂/Z<sub>C</sub>.</p>
+          </div></details>
+        <details class="q"><summary><span class="qn">13</span><span>Векторные диаграммы U(n), I(n) и годограф при R<sub>н</sub> = 0,2Z<sub>C</sub></span></summary>
+          <div class="a">
+            <div class="eq">\[\underline U(n)=U_2\left(\cos nB+j\,5\sin nB\right),\qquad \underline I(n)=\frac{5U_2}{Z_C}\left(\cos nB+j\,0{,}2\sin nB\right)\]</div>
+            <p>Годограф U(n) — эллипс, вытянутый по мнимой оси: полуоси U₂ и 5U₂. На n = 4 вектор U(4) = j5U₂ — максимум. Распределение U(n) — на стенде: «Активная» → «R = 0,2Z<sub>C</sub>».</p>
+          </div></details>
+        <details class="q"><summary><span class="qn">14</span><span>B и Z<sub>C</sub> одного звена на частоте 5f. Возможно ли моделирование, каков шаг l′?</span></summary>
+          <div class="a">
+            <p>5f = 63,38 кГц, ω′ = 398 226 рад/с, ω′²LC = 3,806:</p>
+            <div class="eq">\[\cos B'=1-\frac{3{,}806}{2}=-0{,}903\Rightarrow B'=154{,}6^\circ,\qquad Z_C'=\frac{48{,}99}{\sqrt{1-3{,}806/4}}=222{,}5\;Ом\]</div>
+            <p>Формально частота ещё в полосе пропускания (f₂ = 64,97 кГц), но моделировать линию нельзя. Шаг по фазе 154,6° — на длину волны приходится 2,3 звена, а характеристическое сопротивление в 4,5 раза больше волнового сопротивления кабеля (и сильно зависит от частоты). Шаг дискретизации l′ = B′/β′ = 1,38 км при λ′ = 3,22 км.</p>
+            <div class="calc"><label for="q14k">множитель k =</label><input type="number" id="q14k" min="0.2" max="6" step="0.1" value="5"><output id="q14o" style="white-space:normal"></output></div>
+          </div></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Расчёты — по методичке ЛР № 25 кафедры ТОЭ НИУ «МЭИ». Числа на стенде — точный расчёт цепочки из 10 звеньев; на реальном стенде будет разброс в несколько процентов.</p>
+    <button class="egg-btn" id="eggBtn" aria-expanded="false" aria-controls="egg">
+      <svg width="40" height="12" viewBox="0 0 40 12" aria-hidden="true"><path d="M0 6h10M30 6h10" stroke="currentColor" stroke-width="1.5"/><rect x="10" y="2" width="20" height="8" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      звено № 11
+    </button>
+    <div class="egg" id="egg" hidden>
+      <span class="face">🥹</span>
+      <span class="big">Можно, пожалуйста, 5?</span>
+      <span>Все 14 вопросов разобраны. Узел на 4-м звене найден. Ну пожалуйста.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+/* ---------- комплексные числа ---------- */
+const C=(re,im=0)=>({re,im});
+const add=(a,b)=>C(a.re+b.re,a.im+b.im), sub=(a,b)=>C(a.re-b.re,a.im-b.im);
+const mul=(a,b)=>C(a.re*b.re-a.im*b.im,a.re*b.im+a.im*b.re);
+const div=(a,b)=>{const d=b.re*b.re+b.im*b.im;return C((a.re*b.re+a.im*b.im)/d,(a.im*b.re-a.re*b.im)/d)};
+const sc=(a,k)=>C(a.re*k,a.im*k), abs=a=>Math.hypot(a.re,a.im), arg=a=>Math.atan2(a.im,a.re);
+const expj=t=>C(Math.cos(t),Math.sin(t));
+/* ---------- константы ---------- */
+const L0=0.24e-3, C0=0.1e-6, Lz=0.24e-3, Cz=0.1e-6, N=10;
+const ZcLine=Math.sqrt(L0/C0), vLine=1/Math.sqrt(L0*C0);
+const f2=1/(Math.PI*Math.sqrt(Lz*Cz));
+const fWork=Math.sin(Math.PI/16)*2/Math.sqrt(Lz*Cz)/(2*Math.PI);
+const fmt=(x,d=2)=>{if(!isFinite(x))return '∞';return x.toFixed(d).replace('.',',').replace(/\B(?=(\d{3})+(?!\d))/g,' ')};
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+const S={mode:'open',f:fWork,R:2*ZcLine,Cn:0.1041e-6,Ln:0.2598e-3,Uin:6,q:'U',n:4,play:true};
+try{const m=localStorage.getItem('lr25-mode');if(m)S.mode=m;}catch(e){}
+
+/* ---------- расчёт ---------- */
+function compute(){
+  const w=2*Math.PI*S.f, x=w*w*Lz*Cz;
+  const inBand=x<4;
+  const cosB=1-x/2, B=inBand?Math.acos(Math.max(-1,Math.min(1,cosB))):NaN;
+  const Zpi=inBand?Math.sqrt(Lz/Cz)/Math.sqrt(1-x/4):NaN;
+  const beta=w*Math.sqrt(L0*C0), lam=vLine/S.f;
+  // нагрузка
+  let Zn=null, kind='z';
+  if(S.mode==='open'){kind='open'} else if(S.mode==='short'){kind='short'}
+  else if(S.mode==='match'){Zn=C(inBand?Zpi:ZcLine)}
+  else if(S.mode==='res'){Zn=C(S.R)}
+  else if(S.mode==='cap'){Zn=C(0,-1/(w*S.Cn))}
+  else if(S.mode==='ind'){Zn=C(0,w*S.Ln)}
+  const ZnLine=S.mode==='match'?C(ZcLine):Zn;
+  // начальные условия у нагрузки
+  const init=(Z)=>kind==='open'?[C(1),C(0)]:kind==='short'?[C(0),C(1/ZcLine)]:[C(1),div(C(1),Z)];
+  // цепочка: П-звено, C/2 по краям
+  const Y=C(0,w*Cz/2), Zs=C(0,w*Lz);
+  let [U,I]=init(Zn); const nodes=[{U,I}];
+  for(let k=0;k<N;k++){const Ia=add(I,mul(Y,U));const Un=add(U,mul(Zs,Ia));const In=add(Ia,mul(Y,Un));U=Un;I=In;nodes.push({U,I});}
+  // линия, x в км (1 звено = 1 км)
+  const [U2,I2]=init(ZnLine); const line=[];
+  for(let i=0;i<=400;i++){const xk=10*i/400, bx=beta*xk;
+    const Ux=add(sc(U2,Math.cos(bx)),mul(C(0,ZcLine*Math.sin(bx)),I2));
+    const Ix=add(sc(I2,Math.cos(bx)),mul(C(0,Math.sin(bx)/ZcLine),U2));
+    line.push({x:xk,U:Ux,I:Ix});}
+  return {w,B,Zpi,beta,lam,inBand,nodes,line,kind,U2,I2,Zn};
+}
+
+/* ---------- величины для графика ---------- */
+function series(R){
+  const n0=R.nodes[0], l0=R.line[0];
+  const vRef=a=>abs(a.U)>1e-12?abs(a.U):ZcLine*abs(a.I);
+  const iRef=a=>abs(a.I)>1e-12?abs(a.I):abs(a.U)/ZcLine;
+  const vN=vRef(n0), vL=vRef(l0), iN=iRef(n0), iL=iRef(l0);
+  const scaleV=S.Uin/abs(R.nodes[N].U);
+  const ph0=arg(n0.U), phl=arg(l0.U);
+  const unwrap=(arr)=>{for(let i=1;i<arr.length;i++){while(arr[i]-arr[i-1]>180)arr[i]-=360;while(arr[i]-arr[i-1]<-180)arr[i]+=360;}return arr};
+  let pts=[], lin=[], unit='', ylab='';
+  const lineScaleV=S.Uin/abs(R.line[400].U);
+  switch(S.q){
+    case 'U': pts=R.nodes.map(o=>abs(o.U)/vN); lin=R.line.map(o=>abs(o.U)/vL); ylab=R.kind==='short'?'U(n) / (Zc·I₂)':'U(n) / U(0)'; break;
+    case 'V': pts=R.nodes.map(o=>abs(o.U)*scaleV); lin=R.line.map(o=>abs(o.U)*lineScaleV); ylab='U(n), В при Uвх = '+fmt(S.Uin,1)+' В'; unit='В'; break;
+    case 'I': pts=R.nodes.map(o=>abs(o.I)*scaleV*1000); lin=R.line.map(o=>abs(o.I)*lineScaleV*1000); ylab='I(n), мА при Uвх = '+fmt(S.Uin,1)+' В'; unit='мА'; break;
+    case 'Z': pts=R.nodes.map(o=>abs(o.I)<1e-12?Infinity:abs(div(o.U,o.I))); lin=R.line.map(o=>abs(o.I)<1e-12?Infinity:abs(div(o.U,o.I))); ylab='|Zвх(n)|, Ом'; unit='Ом'; break;
+    case 'P': {
+      if(R.kind==='short'){pts=unwrap(R.nodes.map(o=>(arg(o.U)-arg(R.nodes[1].U))*180/Math.PI)); lin=unwrap(R.line.map(o=>(arg(o.U)-arg(R.line[20].U))*180/Math.PI));}
+      else {pts=unwrap(R.nodes.map(o=>(arg(o.U)-ph0)*180/Math.PI)); lin=unwrap(R.line.map(o=>(arg(o.U)-phl)*180/Math.PI));}
+      ylab='φ(n) − φ(0), град'; unit='°'; break;}
+  }
+  return {pts,lin,ylab,unit};
+}
+
+/* ---------- canvas helpers ---------- */
+function prep(cv){const r=cv.getBoundingClientRect();const d=window.devicePixelRatio||1;cv.width=Math.max(10,r.width*d);cv.height=Math.max(10,r.height*d);const g=cv.getContext('2d');g.setTransform(d,0,0,d,0,0);return {g,W:r.width,H:r.height};}
+function nice(max){if(!isFinite(max)||max<=0)return 1;const e=Math.pow(10,Math.floor(Math.log10(max)));const m=max/e;return (m<=1?1:m<=2?2:m<=2.5?2.5:m<=5?5:10)*e;}
+
+function drawPlot(R,s){
+  const cv=document.getElementById('plot'); const {g,W,H}=prep(cv);
+  const ink=css('--ink'), mut=css('--muted'), rule=css('--rule'), teal=css('--teal'), cop=css('--copper');
+  const ml=58,mr=14,mt=14,mb=40, pw=W-ml-mr, ph=H-mt-mb;
+  let finite=s.lin.concat(s.pts).filter(v=>isFinite(v));
+  let ymin=Math.min(0,...finite), ymax=Math.max(...finite);
+  if(S.q==='Z'){ymax=Math.min(ymax,Math.max(6*ZcLine, (isFinite(R.Zpi)?R.Zpi:ZcLine)*3)); }
+  if(S.q==='P'){ymin=Math.min(...finite);ymax=Math.max(...finite); if(ymax-ymin<10){ymax+=10;ymin-=10}}
+  const step=nice((ymax-ymin)/5||1); ymin=Math.floor(ymin/step)*step; ymax=Math.ceil(ymax/step)*step; if(ymax===ymin)ymax=ymin+step;
+  const X=n=>ml+pw*(1-n/10), Yp=v=>mt+ph*(1-(Math.max(ymin,Math.min(ymax,v))-ymin)/(ymax-ymin));
+  g.font='12px "JetBrains Mono",monospace'; g.textBaseline='middle';
+  // сетка
+  g.strokeStyle=rule; g.lineWidth=1; g.fillStyle=mut;
+  for(let v=ymin;v<=ymax+1e-9;v+=step){const y=Yp(v);g.beginPath();g.moveTo(ml,y);g.lineTo(W-mr,y);g.stroke();g.textAlign='right';const dd=step>=1?0:(Math.abs(step*10-Math.round(step*10))<1e-9?1:2);g.fillText(fmt(v,dd),ml-6,y);}
+  for(let n=0;n<=10;n++){const x=X(n);g.beginPath();g.moveTo(x,mt);g.lineTo(x,mt+ph);g.globalAlpha=.5;g.stroke();g.globalAlpha=1;g.textAlign='center';g.fillText(String(n),x,mt+ph+14);}
+  g.fillText(W<520?'узел n (от нагрузки)':'← генератор        узел n (x = n·l₁ от нагрузки)        нагрузка →',ml+pw/2,mt+ph+31);
+  g.save();g.translate(14,mt+ph/2);g.rotate(-Math.PI/2);g.textAlign='center';g.fillText(s.ylab,0,0);g.restore();
+  // линия
+  g.strokeStyle=teal; g.lineWidth=2.2; g.beginPath(); let pen=false;
+  R.line.forEach((o,i)=>{const v=s.lin[i]; if(!isFinite(v)||v>ymax*1.5){pen=false;return} const x=X(o.x), y=Yp(v); if(!pen){g.moveTo(x,y);pen=true}else g.lineTo(x,y)}); g.stroke();
+  // точки цепочки
+  s.pts.forEach((v,n)=>{const x=X(n), y=isFinite(v)?Yp(v):mt; g.beginPath(); g.arc(x,y,5,0,2*Math.PI); g.fillStyle=cop; g.fill(); g.strokeStyle=css('--paper'); g.lineWidth=1.5; g.stroke(); if(!isFinite(v)||v>ymax){g.fillStyle=cop;g.textAlign='center';g.fillText('∞',x,mt+8)}});
+}
+
+/* ---------- схема ---------- */
+function drawSchem(R){
+  const svg=document.getElementById('schem'); const ink=css('--ink'), cop=css('--copper'), mut=css('--muted'), teal=css('--teal'), rule=css('--rule');
+  const x0=120, dx=72, yT=150, yB=205; const nodeX=n=>x0+(N-n)*dx;
+  const vals=R.nodes.map(o=>abs(o.U)*S.Uin/abs(R.nodes[N].U)); const vmax=Math.max(...vals, S.Uin);
+  let h='';
+  h+=`<g stroke="${ink}" stroke-width="1.6" fill="none">`;
+  h+=`<path d="M${nodeX(N)-70} ${yT}H${nodeX(N)} M${nodeX(N)-70} ${yB}H${nodeX(0)+70}"/>`;
+  // генератор
+  const gx=nodeX(N)-70; h+=`<path d="M${gx} ${yT}V${yT+12} M${gx} ${yB}V${yB-12}"/><circle cx="${gx}" cy="${(yT+yB)/2}" r="15"/><path d="M${gx-8} ${(yT+yB)/2} q4 -8 8 0 t8 0"/>`;
+  for(let k=N;k>0;k--){const xa=nodeX(k), xb=nodeX(k-1), xm=(xa+xb)/2;
+    h+=`<path d="M${xa} ${yT}H${xm-15} M${xm+15} ${yT}H${xb}"/>`;
+    h+=`<path d="M${xm-15} ${yT} a4 5 0 0 1 7.5 0 a4 5 0 0 1 7.5 0 a4 5 0 0 1 7.5 0 a4 5 0 0 1 7.5 0" transform="translate(0,0) scale(1,1)"/>`;}
+  // шунты C на узлах
+  for(let n=0;n<=N;n++){const x=nodeX(n), ym=(yT+yB)/2;
+    h+=`<path d="M${x} ${yT}V${ym-4} M${x-9} ${ym-4}H${x+9} M${x-9} ${ym+4}H${x+9} M${x} ${ym+4}V${yB}"/>`;}
+  // нагрузка
+  const lx=nodeX(0)+70; const lab={match:'Z_C',open:'ХХ',short:'КЗ',cap:'C_н',ind:'L_н',res:'R_н'}[S.mode];
+  h+=`<path d="M${nodeX(0)} ${yT}H${lx}"/>`;
+  if(S.mode==='open'){h+=`<path d="M${lx} ${yT}V${yT+12} M${lx} ${yB}V${yB-12}"/>`}
+  else if(S.mode==='short'){h+=`<path d="M${lx} ${yT}V${yB}"/>`}
+  else {h+=`<path d="M${lx} ${yT}V${yT+12} M${lx} ${yB}V${yB-12}"/><rect x="${lx-7}" y="${yT+12}" width="14" height="${yB-yT-24}" fill="${css('--paper')}"/>`}
+  h+=`</g>`;
+  h+=`<g font-family="JetBrains Mono,monospace" font-size="12" fill="${mut}" text-anchor="middle">`;
+  h+=`<text x="${gx}" y="${yB+18}">ген.</text><text x="${lx}" y="${yB+18}" fill="${cop}">${lab}</text>`;
+  for(let n=0;n<=N;n++){h+=`<text x="${nodeX(n)}" y="${yB+18}">${n}</text>`}
+  h+=`</g>`;
+  // столбики
+  for(let n=0;n<=N;n++){const v=vals[n], bh=Math.max(1,(v/vmax)*95), x=nodeX(n);
+    h+=`<rect x="${x-9}" y="${yT-8-bh}" width="18" height="${bh}" rx="2" fill="${v<0.04*vmax?cop:teal}" opacity="${v<0.04*vmax?1:.85}"/>`;
+    h+=`<text x="${x}" y="${yT-14-bh}" font-family="JetBrains Mono,monospace" font-size="10.5" fill="${css('--ink')}" text-anchor="middle">${fmt(v,2)}</text>`;}
+  h+=`<text x="${gx}" y="${yT-12}" font-family="JetBrains Mono,monospace" font-size="11" fill="${mut}" text-anchor="middle">U, В</text>`;
+  svg.innerHTML=h;
+}
+
+/* ---------- таблица и сводка ---------- */
+function drawTable(R,s){
+  const t=document.getElementById('tbl'); const d=S.q==='P'?1:S.q==='Z'?1:S.q==='I'?1:3;
+  let h='<tr><th class="k">n</th>'; for(let n=0;n<=N;n++)h+=`<th>${n}</th>`; h+='</tr>';
+  h+=`<tr><td class="k">цепочка</td>`; s.pts.forEach(v=>{const z=isFinite(v)&&Math.abs(v)<(S.q==='P'?-1:0.02*Math.max(...s.pts.filter(isFinite)));h+=`<td class="${z?'zero':''}">${fmt(v,d)}</td>`}); h+='</tr>';
+  h+=`<tr><td class="k">линия</td>`; for(let n=0;n<=N;n++){const v=s.lin[n*40];h+=`<td>${fmt(v,d)}</td>`} h+='</tr>';
+  t.innerHTML=h;
+}
+const modeName={match:'согласованная нагрузка',open:'холостой ход',short:'короткое замыкание',cap:'ёмкостная нагрузка',ind:'индуктивная нагрузка',res:'активная нагрузка'};
+function summarize(R){
+  const v=R.nodes.map(o=>abs(o.U)); const mx=Math.max(...v), mn=Math.min(...v);
+  const ks=mn<1e-9*mx?Infinity:mx/mn;
+  const zeros=v.map((a,i)=>[a,i]).filter(([a])=>a<0.03*mx).map(([,i])=>i);
+  const imax=v.indexOf(mx), imin=v.indexOf(mn);
+  document.getElementById('rKs').textContent=isFinite(ks)?'k = '+fmt(ks,2):'k = ∞';
+  document.getElementById('rNodes').textContent=zeros.length?'n = '+zeros.join(', '):'нет';
+  let txt='';
+  const B=R.B*180/Math.PI;
+  if(!R.inBand){txt='Частота выше граничной f₂ = 64,97 кГц: звенья не пропускают сигнал, напряжение затухает от генератора к нагрузке. Линию так моделировать нельзя.';}
+  else switch(S.mode){
+    case 'match': txt=`Бегущая волна: U(n) почти одинаково во всех узлах, фаза растёт на B = ${fmt(B,1)}° на звено. k<sub>с</sub> = ${fmt(ks,2)}.`; break;
+    case 'open': txt=`Стоячая волна. Пучность у нагрузки (n = 0), узлы напряжения: ${zeros.length?'n = '+zeros.join(', '):'между узлами цепочки'}. Ток в нагрузке ноль.`; break;
+    case 'short': txt=`Стоячая волна, сдвинутая на λ/4 относительно ХХ: у нагрузки узел напряжения, пучность на n = ${imax}.`; break;
+    case 'cap': txt=`Ёмкость эквивалентна отрезку разомкнутой линии: картина ХХ сдвинута к нагрузке. Ближайший узел: ${zeros.length?'n = '+zeros[0]:'между узлами (n ≈ '+imin+')'}, максимум ${fmt(mx/v[0],3)}·U(0) на n = ${imax}.`; break;
+    case 'ind': txt=`Индуктивность эквивалентна короткозамкнутому отрезку: картина КЗ сдвинута. Ближайший к нагрузке максимум на n = ${imax}, узел: ${zeros.length?'n = '+zeros.join(', '):'n ≈ '+imin}.`; break;
+    case 'res': txt=`Смешанная волна: U<sub>max</sub> = ${fmt(mx/v[0],2)}·U(0) (n = ${imax}), U<sub>min</sub> = ${fmt(mn/v[0],2)}·U(0) (n = ${imin}), k<sub>с</sub> = ${fmt(ks,2)}. Теория: k<sub>с</sub> = ${S.R>=ZcLine?'R/Z<sub>C</sub>':'Z<sub>C</sub>/R'} = ${fmt(S.R>=ZcLine?S.R/R.Zpi:R.Zpi/S.R,2)}.`; break;
+  }
+  document.getElementById('summary').innerHTML='<b>'+modeName[S.mode][0].toUpperCase()+modeName[S.mode].slice(1)+'.</b> '+txt;
+  const w=document.getElementById('warn');
+  if(!R.inBand){w.hidden=false;w.textContent='f > f₂: полоса задерживания фильтра.'}
+  else if(R.B>Math.PI/4){w.hidden=false;w.textContent='B = '+fmt(R.B*180/Math.PI,1)+'° — слишком крупный шаг по фазе, точки цепочки плохо описывают линию.'}
+  else w.hidden=true;
+}
+function readouts(R){
+  document.getElementById('rB').textContent=R.inBand?fmt(R.B*180/Math.PI,1)+'°':'—';
+  document.getElementById('rZ').textContent=R.inBand?fmt(R.Zpi,2)+' Ом':'—';
+  document.getElementById('rLam').textContent=fmt(R.lam,2)+' км';
+  document.getElementById('rLen').textContent=R.inBand?fmt(10*R.B/(2*Math.PI),3)+' λ':'—';
+}
+
+/* ---------- расчёт для произвольных параметров ---------- */
+function computeWith(o){const keep={}; for(const k in o){keep[k]=S[k]; S[k]=o[k];} const r=compute(); for(const k in keep)S[k]=keep[k]; return r;}
+function chainGain(f,mode,R){ // |U(0)| / |U(10)| для цепочки и линии длиной 10 км
+  const w=2*Math.PI*f, Y=C(0,w*Cz/2), Zs=C(0,w*Lz);
+  const init=mode==='open'?[C(1),C(0)]:mode==='match'?[C(1),C(1/ZcLine)]:[C(1),C(1/R)];
+  let [U,I]=init;
+  for(let k=0;k<N;k++){const Ia=add(I,mul(Y,U));const Un=add(U,mul(Zs,Ia));I=add(Ia,mul(Y,Un));U=Un;}
+  const bl=w*Math.sqrt(L0*C0)*10; const [U2,I2]=init;
+  const Ul=add(sc(U2,Math.cos(bl)),mul(C(0,ZcLine*Math.sin(bl)),I2));
+  return [1/abs(U),1/abs(Ul)];
+}
+function axes(g,W,H,ml,mr,mt,mb,xmax,ymin,ymax,ystep,xlab,ylab,log){
+  const mut=css('--muted'), rule=css('--rule'); const pw=W-ml-mr, ph=H-mt-mb;
+  const X=f=>ml+pw*f/xmax;
+  const Y=log?(v=>mt+ph*(1-(Math.log10(Math.max(v,ymin))-Math.log10(ymin))/(Math.log10(ymax)-Math.log10(ymin)))):(v=>mt+ph*(1-(Math.min(Math.max(v,ymin),ymax)-ymin)/(ymax-ymin)));
+  g.font='12px "JetBrains Mono",monospace'; g.textBaseline='middle'; g.strokeStyle=rule; g.fillStyle=mut; g.lineWidth=1;
+  const ticks=log?[0.1,0.3,1,3,10,30].filter(v=>v>=ymin&&v<=ymax):(()=>{const a=[];for(let v=ymin;v<=ymax+1e-9;v+=ystep)a.push(v);return a})();
+  ticks.forEach(v=>{const y=Y(v);g.beginPath();g.moveTo(ml,y);g.lineTo(W-mr,y);g.stroke();g.textAlign='right';g.fillText(fmt(v,log&&v<1?1:0),ml-6,y);});
+  const xs=xmax>60000?10000:5000;
+  for(let f=0;f<=xmax+1;f+=xs){const x=X(f);g.globalAlpha=.5;g.beginPath();g.moveTo(x,mt);g.lineTo(x,mt+ph);g.stroke();g.globalAlpha=1;g.textAlign='center';g.fillText(String(f/1000),x,mt+ph+14);}
+  g.textAlign='center'; g.fillText(xlab,ml+pw/2,mt+ph+31);
+  g.save();g.translate(13,mt+ph/2);g.rotate(-Math.PI/2);g.fillText(ylab,0,0);g.restore();
+  return {X,Y,pw,ph};
+}
+function vline(g,x,mt,ph,col,dash,label){g.strokeStyle=col;g.fillStyle=col;g.lineWidth=1.5;g.setLineDash(dash);g.beginPath();g.moveTo(x,mt);g.lineTo(x,mt+ph);g.stroke();g.setLineDash([]);if(label){g.textAlign='left';g.fillText(label,x+4,mt+8);}}
+
+/* ---------- тренажёр ---------- */
+const G={ans:null,R:null,score:0,total:0,done:false};
+const gNames={match:'согласованная нагрузка',open:'холостой ход',short:'короткое замыкание',cap:'ёмкость',ind:'индуктивность',resH:'R > Z_C',resL:'R < Z_C'};
+function rnd(a,b){return a+Math.random()*(b-a)}
+function gNew(){
+  const types=['match','open','short','cap','ind','resH','resL']; let t; do{t=types[Math.floor(Math.random()*types.length)]}while(t===G.ans&&Math.random()<0.7);
+  const o={f:fWork,mode:t};
+  if(t==='cap'){o.mode='cap';o.Cn=rnd(0.04,0.6)*1e-6} else if(t==='ind'){o.mode='ind';o.Ln=rnd(0.08,1.6)*1e-3}
+  else if(t==='resH'){o.mode='res';o.R=rnd(1.7,4)*ZcLine} else if(t==='resL'){o.mode='res';o.R=rnd(0.2,0.6)*ZcLine}
+  G.ans=t; G.R=computeWith(o); G.o=o; G.done=false;
+  document.querySelectorAll('#gOpts .chip').forEach(c=>{c.classList.remove('right','wrong');c.disabled=false;});
+  const fb=document.getElementById('gFb'); fb.className='gfb'; fb.textContent='Посмотри, где нули и максимумы и есть ли нули вообще.';
+  gDraw();
+}
+function gDraw(){
+  const cv=document.getElementById('gameCv'); if(!cv||!G.R)return; const {g,W,H}=prep(cv);
+  const teal=css('--teal'), cop=css('--copper'), mut=css('--muted'), rule=css('--rule'), ink=css('--ink');
+  const v=G.R.nodes.map(o=>abs(o.U)); const mx=Math.max(...v); const sc6=6/abs(G.R.nodes[N].U);
+  const ml=16,mr=16,mt=20,mb=34, pw=W-ml-mr, ph=H-mt-mb, bw=Math.min(36,pw/11*0.6);
+  g.strokeStyle=rule; g.beginPath(); g.moveTo(ml,mt+ph); g.lineTo(W-mr,mt+ph); g.stroke();
+  g.font='11px "JetBrains Mono",monospace'; g.textAlign='center'; g.textBaseline='middle';
+  for(let n=0;n<=N;n++){const x=ml+pw*(N-n+0.5)/11, h=Math.max(1,v[n]/mx*ph*0.92), z=v[n]<0.03*mx;
+    g.fillStyle=z?cop:teal; g.fillRect(x-bw/2,mt+ph-h,bw,h);
+    g.fillStyle=ink; g.fillText(fmt(v[n]*sc6,2),x,mt+ph-h-9);
+    g.fillStyle=mut; g.fillText(String(n),x,mt+ph+13);}
+  g.fillText('← генератор (Uвх = 6 В)            n            нагрузка ?  →',ml+pw/2,mt+ph+28);
+}
+function gAnswer(btn){
+  if(G.done)return; G.done=true; G.total++;
+  const pick=btn.dataset.g, ok=pick===G.ans; if(ok)G.score++;
+  document.querySelectorAll('#gOpts .chip').forEach(c=>{c.disabled=true; if(c.dataset.g===G.ans)c.classList.add('right');});
+  if(!ok)btn.classList.add('wrong');
+  const v=G.R.nodes.map(o=>abs(o.U)); const mx=Math.max(...v), mn=Math.min(...v); const loc=f=>{for(let n=0;n<N;n++){const l=n?v[n-1]:null;if((n===0||f(v[n],l))&&f(v[n],v[n+1]))return n;}return N;};
+  const imin=loc((a,b)=>a<=b), imax=loc((a,b)=>a>=b);
+  const why={match:'все узлы одинаковые — бегущая волна, отражения нет.',
+    open:'у нагрузки максимум, ноль ровно на n = 4 (λ/4).',
+    short:'ноль прямо на нагрузке, максимум на n = 4.',
+    cap:`ближайший к нагрузке минимум на n = ${imin} — ближе λ/4. Cн = ${fmt(G.o.Cn*1e6,3)} мкФ.`,
+    ind:`ближайший к нагрузке максимум на n = ${imax} — ближе λ/4, значит узел дальше λ/4. Lн = ${fmt(G.o.Ln*1e3,3)} мГн.`,
+    resH:`нулей нет, у нагрузки максимум. R = ${fmt(G.o.R,1)} Ом, kс = ${fmt(mx/mn,2)} ≈ R/Zc.`,
+    resL:`нулей нет, у нагрузки минимум. R = ${fmt(G.o.R,1)} Ом, kс = ${fmt(mx/mn,2)} ≈ Zc/R.`}[G.ans];
+  const fb=document.getElementById('gFb'); fb.className='gfb '+(ok?'ok':'bad');
+  fb.textContent=(ok?'Верно: ':'Нет, это '+gNames[G.ans].replace('_C','c')+': ')+why;
+  document.getElementById('gScore').textContent=G.score+' / '+G.total+(G.total>=5&&G.score===G.total?' 🔥':'');
+}
+
+/* ---------- анимация волны ---------- */
+let t0=performance.now(), tAcc=0;
+function drawWave(R,cvId,tt,showParts){
+  const cv=document.getElementById(cvId); if(!cv)return; const {g,W,H}=prep(cv);
+  const ink=css('--ink'), mut=css('--muted'), rule=css('--rule'), teal=css('--teal'), cop=css('--copper'), plum=css('--plum');
+  const U2=R.U2, I2=R.I2, Zc=ZcLine, beta=R.beta;
+  const Ainc=sc(add(U2,sc(I2,Zc)),0.5), Aref=sc(sub(U2,sc(I2,Zc)),0.5);
+  const norm=Math.max(abs(Ainc)+abs(Aref),1e-9);
+  const ml=10,mr=10, mid=H/2, amp=(H/2-18)/1.0;
+  const X=xk=>ml+(W-ml-mr)*(1-xk/10);
+  g.strokeStyle=rule; g.lineWidth=1; g.beginPath(); g.moveTo(ml,mid); g.lineTo(W-mr,mid); g.stroke();
+  for(let n=0;n<=10;n++){const x=X(n); g.beginPath(); g.moveTo(x,mid-4); g.lineTo(x,mid+4); g.stroke();}
+  const wt=tt;
+  const val=(A,sign,xk)=>{const ph=sign*beta*xk+wt; return (A.re*Math.cos(ph)-A.im*Math.sin(ph))/norm;};
+  const plot=(fn,col,wd,dash)=>{g.strokeStyle=col; g.lineWidth=wd; g.setLineDash(dash||[]); g.beginPath(); for(let i=0;i<=300;i++){const xk=10*i/300; const y=mid-fn(xk)*amp; i?g.lineTo(X(xk),y):g.moveTo(X(xk),y)} g.stroke(); g.setLineDash([]);};
+  // огибающая
+  plot(xk=>{const U=add(sc(Ainc,1),C(0));const a=add(mul(Ainc,expj(beta*xk)),mul(Aref,expj(-beta*xk)));return abs(a)/norm},rule,1.2,[4,4]);
+  plot(xk=>{const a=add(mul(Ainc,expj(beta*xk)),mul(Aref,expj(-beta*xk)));return -abs(a)/norm},rule,1.2,[4,4]);
+  if(showParts){plot(xk=>val(Ainc,1,xk),teal,1.3); if(abs(Aref)>1e-6*norm)plot(xk=>val(Aref,-1,xk),plum,1.3);}
+  plot(xk=>val(Ainc,1,xk)+val(Aref,-1,xk),cop,2.4);
+  g.fillStyle=mut; g.font='11px "JetBrains Mono",monospace'; g.textAlign='left'; g.fillText('генератор',ml,H-6); g.textAlign='right'; g.fillText('нагрузка',W-mr,H-6);
+  if(showParts){g.textAlign='left'; g.fillStyle=teal; g.fillText('падающая',ml,12); g.fillStyle=plum; g.fillText('отражённая',ml+80,12); g.fillStyle=cop; g.fillText('сумма',ml+176,12);}
+}
+
+/* ---------- герой ---------- */
+const heroState={mode:'open'};
+function heroCompute(){const save=S.mode; const f=S.f; S.mode='open'; S.f=fWork; const R=compute(); S.mode=save; S.f=f; return R;}
+let heroR=null;
+
+/* ---------- обновление ---------- */
+let R=null;
+function update(){
+  R=compute(); const s=series(R);
+  drawSchem(R); drawPlot(R,s); drawTable(R,s); summarize(R); readouts(R);
+  if(!S.play) drawWave(R,'wave',tAcc,document.getElementById('showParts').checked);
+}
+function loop(now){
+  const dt=(now-t0)/1000; t0=now;
+  if(S.play) tAcc+=dt*2.2;
+  if(R && S.play) drawWave(R,'wave',tAcc,document.getElementById('showParts').checked);
+  if(!heroR) heroR=heroCompute();
+  if(!reduce || !heroDrawn){drawWave(heroR,'heroCanvas',reduce?0.6:tAcc*0.8+0.0,true); heroDrawn=true;}
+  requestAnimationFrame(loop);
+}
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches; let heroDrawn=false;
+if(reduce){S.play=false;document.getElementById('play').textContent='Пуск';}
+
+/* ---------- элементы управления ---------- */
+const $=id=>document.getElementById(id);
+const logMap=(v,a,b)=>a*Math.pow(b/a,v/1000), logInv=(x,a,b)=>1000*Math.log(x/a)/Math.log(b/a);
+function setMode(m){S.mode=m; document.querySelectorAll('#modeChips .chip').forEach(c=>c.setAttribute('aria-pressed',c.dataset.mode===m?'true':'false'));
+  $('boxR').hidden=m!=='res'; $('boxC').hidden=m!=='cap'; $('boxL').hidden=m!=='ind';
+  try{localStorage.setItem('lr25-mode',m)}catch(e){}
+  update();}
+document.querySelectorAll('#modeChips .chip').forEach(c=>c.addEventListener('click',()=>setMode(c.dataset.mode)));
+function syncR(){ $('oR').textContent=fmt(S.R,S.R<10?2:1)+' Ом'; $('sR').value=logInv(S.R,1,1000); }
+function syncC(){ $('oC').textContent=fmt(S.Cn*1e6,3)+' мкФ'; $('sC').value=logInv(S.Cn,0.005e-6,2e-6); }
+function syncL(){ $('oL').textContent=fmt(S.Ln*1e3,3)+' мГн'; $('sL').value=logInv(S.Ln,0.01e-3,5e-3); }
+function syncF(){ $('oF').textContent=fmt(S.f/1000,2)+' кГц'; $('sF').value=S.f; }
+$('sR').addEventListener('input',e=>{S.R=logMap(+e.target.value,1,1000); syncR(); update();});
+$('sC').addEventListener('input',e=>{S.Cn=logMap(+e.target.value,0.005e-6,2e-6); syncC(); update();});
+$('sL').addEventListener('input',e=>{S.Ln=logMap(+e.target.value,0.01e-3,5e-3); syncL(); update();});
+$('sF').addEventListener('input',e=>{S.f=+e.target.value; syncF(); update();});
+$('sUin').addEventListener('input',e=>{S.Uin=+e.target.value; $('oUin').textContent=fmt(S.Uin,1)+' В'; update();});
+document.querySelectorAll('[data-r]').forEach(b=>b.addEventListener('click',()=>{const Z=compute().Zpi||ZcLine; S.R=+b.dataset.r*Z; syncR(); update();}));
+$('setCH').addEventListener('click',()=>{S.Cn=0.1041e-6; syncC(); update();});
+$('setLH').addEventListener('click',()=>{S.Ln=0.2598e-3; syncL(); update();});
+$('setF').addEventListener('click',()=>{S.f=fWork; syncF(); update();});
+$('setF2').addEventListener('click',()=>{S.f=Math.round(f2/10)*10-10; syncF(); update();});
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{S.q=t.dataset.q; document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected',x===t?'true':'false')); update();}));
+document.querySelectorAll('#gOpts .chip').forEach(c=>c.addEventListener('click',()=>gAnswer(c)));
+$('gNext').addEventListener('click',gNew);
+$('play').addEventListener('click',()=>{S.play=!S.play; $('play').textContent=S.play?'Пауза':'Пуск'; if(!S.play) drawWave(R,'wave',tAcc,$('showParts').checked);});
+$('showParts').addEventListener('change',()=>{ if(!S.play) drawWave(R,'wave',tAcc,$('showParts').checked);});
+window.addEventListener('resize',()=>{update(); gDraw(); heroDrawn=false;});
+const mq=window.matchMedia('(prefers-color-scheme: dark)'); mq.addEventListener&&mq.addEventListener('change',()=>{update();heroDrawn=false;});
+new MutationObserver(()=>{update();gDraw();heroDrawn=false;}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+
+/* ---------- калькуляторы вопросов ---------- */
+const Bw=Math.PI/8, Zcw=Math.sqrt(Lz/Cz)/Math.sqrt(1-(2*Math.PI*fWork)**2*Lz*Cz/4);
+const clampN=v=>Math.max(0,Math.min(10,Math.round(+v||0)));
+function q1(){const n=clampN($('q1n').value); $('q1a').textContent=fmt(2*Math.sin(n*Bw/2),3)+'·U₂'; $('q1b').textContent=fmt(1-Math.cos(n*Bw),3)+'·U₂';}
+function q2(){const n=clampN($('q2n').value), m=clampN($('q2m').value); $('q2a').textContent=fmt(2*Math.sin(Math.abs(n-m)*Bw/2),3)+'·U₂'; $('q2b').textContent=fmt(Math.abs(Math.cos(n*Bw)-Math.cos(m*Bw)),3)+'·U₂';}
+function q7(){const n=clampN($('q7n').value); const cb=Math.cos(Bw);
+  $('q7o').innerHTML=`согл.: U = U₂∠${fmt(n*22.5,1)}°, I = (U₂/Z<sub>C</sub>)∠${fmt(n*22.5,1)}° · ХХ: U = ${fmt(Math.cos(n*Bw),3)}·U₂, I = j${fmt(Math.sin(n*Bw),3)}·U₂/Z<sub>C</sub> · ёмк.: U = ${fmt(Math.cos((n+1)*Bw)/cb,3)}·U₂, I = j${fmt(Math.sin((n+1)*Bw)/cb,3)}·U₂/Z<sub>C</sub>`;}
+function q8(){const n=clampN($('q8n').value); const cb=Math.cos(Bw); const r2=Math.SQRT2;
+  $('q8o').innerHTML=`при U₂ = 1 В, Z<sub>C</sub> = ${fmt(Zcw,1)} Ом: согл. u = ${fmt(r2,3)} sin(ωt + ${fmt(n*22.5,1)}°) В; ХХ u = ${fmt(r2*Math.cos(n*Bw),3)} sin ωt В, i = ${fmt(r2*Math.sin(n*Bw)/Zcw*1000,2)} sin(ωt + 90°) мА; ёмк. u = ${fmt(r2*Math.cos((n+1)*Bw)/cb,3)} sin ωt В, i = ${fmt(r2*Math.sin((n+1)*Bw)/cb/Zcw*1000,2)} sin(ωt + 90°) мА`;}
+function q14(){const k=Math.max(0.1,+$('q14k').value||5); const w=2*Math.PI*fWork*k, x=w*w*Lz*Cz;
+  if(x>=4){$('q14o').textContent=`${fmt(k*fWork/1000,2)} кГц > f₂: полоса задерживания, моделирование невозможно.`;return}
+  const B=Math.acos(1-x/2), Z=Math.sqrt(Lz/Cz)/Math.sqrt(1-x/4), beta=w*Math.sqrt(L0*C0);
+  $('q14o').textContent=`f = ${fmt(k*fWork/1000,2)} кГц: B = ${fmt(B*180/Math.PI,1)}°, Z_C = ${fmt(Z,1)} Ом, l′ = ${fmt(B/beta,3)} км, звеньев на λ: ${fmt(2*Math.PI/B,1)} — ${B<=Math.PI/8+1e-6?'моделировать можно':B<=Math.PI/4?'грубо, но можно':'моделировать нельзя'}.`;}
+['q1n'].forEach(i=>$(i).addEventListener('input',q1)); ['q2n','q2m'].forEach(i=>$(i).addEventListener('input',q2));
+$('q7n').addEventListener('input',q7); $('q8n').addEventListener('input',q8); $('q14k').addEventListener('input',q14);
+q1();q2();q7();q8();q14();
+
+/* ---------- пасхалка ---------- */
+let eggClicks=0;
+$('eggBtn').addEventListener('click',()=>{
+  const e=$('egg'); e.hidden=false; $('eggBtn').setAttribute('aria-expanded','true');
+  if(reduce)return; eggClicks++;
+  for(let i=0;i<14;i++){const s=document.createElement('span'); s.className='five'; s.textContent='5';
+    s.style.left=(Math.random()*96)+'vw'; s.style.animationDuration=(2.2+Math.random()*2)+'s'; s.style.animationDelay=(Math.random()*0.6)+'s'; s.style.fontSize=(20+Math.random()*24)+'px';
+    document.body.appendChild(s); setTimeout(()=>s.remove(),5200);}
+});
+
+/* ---------- старт ---------- */
+syncR();syncC();syncL();syncF(); gNew(); setMode(S.mode);
+requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
