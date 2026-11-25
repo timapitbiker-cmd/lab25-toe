@@ -3,16 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="ЛР №25 ТОЭ МЭИ: моделирование длинной линии цепной схемой — интерактивный стенд, тренажёр, теория и ответы на контрольные вопросы.">
+<meta name="description" content="ЛР №25 ТОЭ МЭИ: моделирование длинной линии цепной схемой — схема сборки, пять опытов и интерактивный стенд.">
 <title>Длинная линия · ЛР 25</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Cpath d=%22M2 9h28M2 23h28%22 stroke=%22%2313233A%22 stroke-width=%222.5%22/%3E%3Cpath d=%22M8 9v14M16 9v14M24 9v14%22 stroke=%22%23B5582A%22 stroke-width=%222.5%22/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Unbounded:wght@500;700&display=swap">
-<script>
-window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global'},startup:{typeset:true}};
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js" async></script>
+
 <style>
 /* Layout: лабораторная тетрадь на миллиметровке — узкая колонка текста, широкие «стенды» с графиками */
 :root{
@@ -56,7 +53,7 @@ nav a:hover{color:var(--ink);background:var(--chip)}
 .hero .facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
 .pill{font:500 .8rem var(--f-mono);padding:5px 10px;border:1px solid var(--rule);border-radius:999px;background:var(--paper)}
 .hero-fig{background:var(--paper);border:1px solid var(--rule);border-radius:14px;box-shadow:var(--shadow);padding:14px;min-width:0}
-.hero-fig canvas{width:100%;height:210px;display:block}
+.hero-fig svg{width:100%;height:auto;display:block}.hero-fig svg text{font:14px var(--f-mono);fill:var(--muted)}
 .hero-fig .cap{font-size:.8rem;color:var(--muted);margin-top:6px}
 section{padding-block:36px}
 .sec-head{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;max-width:70ch}
@@ -132,31 +129,39 @@ td.zero{color:var(--copper);font-weight:600}
 .step ul{margin:6px 0 0;padding-left:18px}
 .expect{margin-top:8px;font-size:.86rem;background:var(--bg);border-radius:8px;padding:8px 10px}
 .expect b{color:var(--good)}
-/* вопросы */
-details.q{background:var(--paper);border:1px solid var(--rule);border-radius:12px;margin-bottom:8px}
-details.q summary{cursor:pointer;padding:12px 16px;display:grid;grid-template-columns:36px minmax(0,1fr) 18px;gap:10px;align-items:baseline;list-style:none}
-details.q summary::-webkit-details-marker{display:none}
-details.q summary .qn{font:700 .9rem var(--f-mono);color:var(--copper)}
-details.q summary::after{content:"+";font:600 1.1rem var(--f-mono);color:var(--muted)}
-details.q[open] summary::after{content:"–"}
-details.q .a{padding:0 16px 14px 62px;display:flex;flex-direction:column;gap:8px;font-size:.93rem}
-details.q .a .eq{overflow-x:auto;overflow-y:hidden}
-.calc{display:flex;flex-wrap:wrap;gap:12px;align-items:center;background:var(--bg);border-radius:8px;padding:8px 10px;font-size:.88rem}
-.calc label{display:flex;gap:6px;align-items:center}
-.calc input[type=number]{width:60px;font:600 .9rem var(--f-mono);background:var(--paper);color:var(--ink);border:1px solid var(--rule);border-radius:6px;padding:3px 6px}
-.calc output{font:600 .9rem var(--f-mono);color:var(--copper)}
 /* подвал */
 footer{border-top:1px solid var(--rule);margin-top:24px;padding-block:28px 40px;color:var(--muted);font-size:.85rem}
 footer .wrap{display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center}
-.egg-btn{background:none;border:1px dashed var(--rule);border-radius:10px;padding:8px 12px;color:var(--muted);cursor:pointer;font:500 .8rem var(--f-mono);display:flex;gap:8px;align-items:center}
-.egg-btn:hover{color:var(--ink);border-color:var(--copper)}
-.egg{display:flex;flex-direction:column;align-items:center;gap:6px;padding:18px 22px;border-radius:16px;background:var(--paper);border:1px solid var(--copper);box-shadow:var(--shadow)}
-.egg .big{font:700 clamp(1.4rem,4vw,2rem) var(--f-disp);color:var(--ink)}
-.egg .face{font-size:3rem;line-height:1;animation:wob 1.6s ease-in-out infinite}
-@keyframes wob{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
-.five{position:fixed;top:-40px;font:700 28px var(--f-disp);color:var(--copper);pointer-events:none;z-index:50;animation:fall linear forwards}
-@keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:.2}}
-@media (prefers-reduced-motion:reduce){.egg .face{animation:none}.five{display:none}html{scroll-behavior:auto}}
+.egg-btn{display:inline-flex;align-items:center;gap:.8rem;padding:.7rem 1.1rem;border:1px solid var(--rule);border-radius:100px;color:var(--ink);background:var(--paper);cursor:pointer;font:600 .93rem var(--f-body)}
+.egg-btn svg{width:38px;color:var(--copper)}.egg-btn:hover{border-color:var(--copper)}.egg-btn:hover path{transform:rotate(19deg)}.egg-btn path{transform-origin:9px 15px;transition:transform .2s}
+#gradeScene{position:fixed;inset:0;margin:0;padding:0;width:100vw;height:100%;max-width:none;max-height:none;border:0;overflow:clip;color:#fff2ce;background:radial-gradient(ellipse at 50% 85%,#383027 0%,#111e28 36%,#070d16 72%);isolation:isolate}
+#gradeScene::backdrop{background:#080f18}html:has(#gradeScene[open]){overflow:hidden}
+#gradeScene::before{content:"";position:absolute;inset:58% -40% -20%;background-image:linear-gradient(#d2975133 1px,transparent 1px),linear-gradient(90deg,#d2975133 1px,transparent 1px);background-size:55px 42px;transform:perspective(300px) rotateX(58deg);mask-image:linear-gradient(transparent,#000);pointer-events:none}
+#gradeDebris{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#gradeFive{position:absolute;left:50%;bottom:14%;width:min(58vh,68vw);height:auto;overflow:visible;transform-origin:50% 100%;filter:drop-shadow(0 6px 8px #0008);pointer-events:none}
+#gradeClose,#gradeAgain{cursor:pointer;color:#fff2ce;border:1px solid #ccaf795e;background:#111b25da;border-radius:100px;font:600 .95rem var(--f-body);padding:.65rem 1rem}
+#gradeClose{position:absolute;right:max(16px,env(safe-area-inset-right));top:max(16px,env(safe-area-inset-top));width:44px;height:44px;padding:0;font-size:1.45rem;z-index:3}
+#gradeClose:hover,#gradeAgain:hover{border-color:#ffda90}
+#gradeMessage{position:absolute;left:5%;right:5%;top:clamp(48px,11%,120px);text-align:center;opacity:0;transform:translateY(-8px);transition:opacity .45s,transform .45s;pointer-events:none}
+#gradeMessage h2{font:700 clamp(1.5rem,5vw,4rem)/1.06 var(--f-disp);color:#fff3cc;text-shadow:0 2px 24px #ed9f524d}
+#gradeFace{font-size:clamp(1.6rem,4.5vh,3rem);display:block;line-height:1.15;margin-top:.2em}
+#gradeAgain{position:absolute;top:max(16px,env(safe-area-inset-top));left:max(16px,env(safe-area-inset-left));z-index:3;white-space:nowrap}
+#gradeChoices{position:absolute;left:0;right:0;bottom:max(3%,env(safe-area-inset-bottom));display:flex;justify-content:center;align-items:center;gap:10px;padding:0 12px}
+#gradeChoices[hidden],#gradeBubble[hidden]{display:none}
+#gradeChoices button{min-height:44px;border-radius:100px;padding:.6rem 1.05rem;font:600 clamp(.88rem,2.8vw,1.05rem) var(--f-body);cursor:pointer}
+#gradeYes{border:1px solid #ffe3a2;background:linear-gradient(150deg,#ffe9ae,#e9a949);color:#392612;box-shadow:0 3px 20px #efae4130}
+#gradeYes:hover{filter:brightness(1.08)}
+#gradeOther{border:1px solid #ac987661;background:#15202b;color:#e5d7bb}
+#gradeOtherWrap{position:relative}
+#gradeBubble{position:absolute;right:0;bottom:calc(100% + 12px);padding:.6rem .85rem;border-radius:14px;background:#fff2d2;color:#342719;box-shadow:0 4px 24px #0005;font:600 .88rem/1.35 var(--f-body);width:max-content;max-width:min(215px,86vw)}
+#gradeBubble::after{content:"";position:absolute;right:28px;top:100%;border:7px solid transparent;border-top-color:#fff2d2}
+#gradeConfetti{position:absolute;inset:0;pointer-events:none;overflow:clip;contain:strict}
+#gradeConfetti i{position:absolute;display:block;will-change:transform,opacity}
+@media(max-height:480px){#gradeAgain,#gradeClose{top:4px}#gradeChoices{bottom:4px}}
+#gradeScene.revealed #gradeMessage{opacity:1;transform:none}
+@media(max-height:520px){#gradeMessage{top:5%}#gradeMessage h2{font-size:1.45rem}#gradeFace{font-size:1.4rem}#gradeFive{width:min(48vh,55vw)}#gradeAgain{padding:.35rem .9rem}}
+@media(prefers-reduced-motion:reduce){#gradeMessage,.egg-btn path{transition:none}}
+
 .game{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:16px;background:var(--paper);border:1px solid var(--rule);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
 .game-plot{min-width:0}.game-plot canvas{width:100%;height:260px;display:block}
 .game-side{display:flex;flex-direction:column;gap:12px;justify-content:center;min-width:0}
@@ -180,9 +185,52 @@ details.hint{margin-top:10px;font-size:.9rem;color:var(--muted)} details.hint su
   .prep,.modes{grid-template-columns:minmax(0,1fr)}
   nav{margin-left:0}
   .plot{height:280px}
-  details.q .a{padding-left:16px}
   .step{grid-template-columns:minmax(0,1fr)}
 }
+.comparison{margin:14px 0 0;background:var(--bg);padding:14px;border-radius:10px}.comparison .legend{margin-top:8px}.comparison svg{display:block;width:100%;max-width:620px}.comparison label,.comparison output{display:block;font-size:.94rem}.comparison input{max-width:620px}.comparison svg text{fill:var(--muted);font:12px var(--f-mono)}
+[hidden]{display:none!important}
+html{scroll-padding-top:5rem}
+.hero-actions,.actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:14px}
+a.btn{text-decoration:none;display:inline-block}
+#start .prep{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+#start .card{border-top:3px solid var(--teal)}
+#start .card p,.step p,.step li{font-size:1rem}
+#start .card h3{line-height:1.4}
+.steps{max-width:90ch}.step{padding:20px}
+.step p+p{margin-top:8px}
+.step details,.refcheck{margin-top:12px}
+.step summary{color:var(--teal);cursor:pointer;font-weight:600}
+.step details p{padding-top:6px}
+.bench-return{margin:0 0 14px}
+.unit-result{display:block;margin-top:8px}
+.unit-input{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+.unit-input input{font:inherit;background:var(--paper);color:var(--ink);border:1px solid var(--rule);border-radius:5px;width:6em;padding:4px 8px}
+@media(max-width:650px){html{scroll-padding-top:1rem}header.top{position:static}.step{padding:15px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+.wiring{background:var(--paper);border:1px solid var(--rule);border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
+.wire-controls{display:flex;gap:18px;flex-wrap:wrap;padding:16px 20px;border-bottom:1px solid var(--rule)}
+.wire-controls label{display:grid;gap:5px;font-size:.9rem;color:var(--muted)}
+.wire-controls select{font:inherit;font-size:1rem;color:var(--ink);background:var(--paper);border:1px solid var(--rule);border-radius:6px;padding:7px 10px;max-width:100%}
+.wiring figure{margin:0}.wire-scroll,.wire-original{overflow-x:auto}
+.wire-scroll{padding:12px 8px 0;background:var(--paper)}
+#wireSvg{display:block;width:100%;min-width:1060px;height:auto}
+#wireSvg path,#wireSvg rect,#wireSvg circle{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#wireSvg text{font:600 16px var(--f-body);fill:var(--ink)}
+#wireSvg .part{fill:var(--muted);font-size:14px}#wireSvg .node{font:700 16px var(--f-mono)}
+#wireSvg .key,#wireSvg .external-load text{fill:var(--copper);font-size:15px}
+#wireSvg .jumper,#wireSvg .external-load path,#wireSvg .external-load rect{stroke:var(--copper);stroke-width:3}
+#wireSvg .joint{fill:var(--ink)}#wireSvg .pin,#wireSvg .meter-box{fill:var(--paper)}
+#wireSvg .probe{stroke:var(--teal);stroke-width:3}#wireSvg .signal{fill:var(--teal)}
+#wireSvg .reference{stroke:var(--plum);stroke-width:2.8;stroke-dasharray:8 4}#wireSvg .ref-label{fill:var(--plum)}
+#wireSvg .return{stroke:var(--muted);stroke-dasharray:5 4}#wireSvg .disconnected{opacity:.32}
+#wireSvg .wave-icon{font-size:30px}
+.wiring figcaption{padding:8px 20px 14px;font-size:.91rem;color:var(--muted)}
+.wire-leads{counter-reset:wire;display:grid;grid-template-columns:1fr 1fr 1fr;list-style:none;gap:18px;padding:16px 20px;margin:0;border-top:1px solid var(--rule)}
+.wire-leads li{counter-increment:wire}.wire-leads b{display:block;margin-bottom:5px}
+.wire-leads b:before{content:counter(wire) ". ";color:var(--teal)}
+.wire-original img{display:block;max-width:100%;height:auto;background:white;margin-top:12px}
+.wire-next{display:inline-block;margin:0 20px 16px}
+@media(max-width:750px){.wire-leads{grid-template-columns:1fr}.wire-controls label{width:100%}.wire-scroll:before{content:"Схему можно прокрутить вбок";display:block;padding-left:10px;color:var(--muted);font-size:.88rem;margin-bottom:8px}}
 </style>
 </head>
 <body>
@@ -193,7 +241,7 @@ details.hint{margin-top:10px;font-size:.9rem;color:var(--muted)} details.hint su
       ЛР 25 · Длинная линия
     </a>
     <nav aria-label="Разделы">
-      <a href="#stend">Стенд</a><a href="#igra">Тренажёр</a><a href="#teoriya">Теория</a><a href="#hod">Ход работы</a><a href="#voprosy">Вопросы</a>
+      <a href="#start">Подготовка</a><a href="#sborka">Схема сборки</a><a href="#hod">Опыты</a><a href="#stend">Стенд</a><a href="#teoriya">Теория</a><a href="#igra">Тренажёр</a>
     </nav>
   </div>
 </header>
@@ -204,18 +252,87 @@ details.hint{margin-top:10px;font-size:.9rem;color:var(--muted)} details.hint su
       <div>
         <span class="eyebrow">Кафедра ТОЭ · лабораторная работа № 25</span>
         <h1>Моделирование длинной линии <em>однородной цепной схемой</em></h1>
-        <p class="lead">Коаксиальный кабель без потерь заменяют цепочкой из 10 П-образных звеньев фильтра нижних частот. Здесь можно покрутить режимы нагрузки, увидеть стоячие и бегущие волны и найти готовые ответы к подготовке и контрольным вопросам.</p>
+        <p class="lead">Почему при включённом генераторе вольтметр в середине цепи может показать ноль? Исследуй десять звеньев, меняй нагрузку на конце и сравнивай показания с расчётом для коаксиального кабеля.</p>
+        <div class="hero-actions"><a class="btn" href="#start">Разобраться с начала</a><a href="#sborka">Посмотреть схему сборки</a></div>
         <div class="facts">
           <span class="pill">L₀ = 0,24 мГн/км</span><span class="pill">C₀ = 0,1 мкФ/км</span><span class="pill">звено: L = 0,24 мГн, C = 0,1 мкФ</span><span class="pill">10 звеньев</span>
         </div>
       </div>
       <figure class="hero-fig" style="margin:0">
-        <canvas id="heroCanvas" aria-label="Анимация: падающая, отражённая и суммарная волна напряжения вдоль линии"></canvas>
-        <figcaption class="cap" id="heroCap">Холостой ход: падающая и отражённая волны складываются в стоячую. Узел напряжения — на 4-м звене от нагрузки.</figcaption>
+        <svg viewBox="0 0 440 170" role="img" aria-label="Относительное действующее напряжение при холостом ходе. Минимум в узле 4 от нагрузки."><text x="10" y="18">U(n) / U(0)</text><path d="M30 40 H410 M30 135 H410" stroke="var(--rule)"/><text x="8" y="45">1</text><text x="8" y="138">0</text><rect x="403" y="40.0" width="14" height="94.0" rx="2" fill="var(--teal)"/><text x="410" y="154" text-anchor="middle">0</text><rect x="365" y="47.2" width="14" height="86.8" rx="2" fill="var(--teal)"/><text x="372" y="154" text-anchor="middle">1</text><rect x="327" y="67.5" width="14" height="66.5" rx="2" fill="var(--teal)"/><text x="334" y="154" text-anchor="middle">2</text><rect x="289" y="98.0" width="14" height="36.0" rx="2" fill="var(--teal)"/><text x="296" y="154" text-anchor="middle">3</text><rect x="251" y="134.0" width="14" height="2.0" rx="2" fill="var(--copper)"/><text x="258" y="154" text-anchor="middle">4</text><rect x="213" y="98.0" width="14" height="36.0" rx="2" fill="var(--teal)"/><text x="220" y="154" text-anchor="middle">5</text><rect x="175" y="67.5" width="14" height="66.5" rx="2" fill="var(--teal)"/><text x="182" y="154" text-anchor="middle">6</text><rect x="137" y="47.2" width="14" height="86.8" rx="2" fill="var(--teal)"/><text x="144" y="154" text-anchor="middle">7</text><rect x="99" y="40.0" width="14" height="94.0" rx="2" fill="var(--teal)"/><text x="106" y="154" text-anchor="middle">8</text><rect x="61" y="47.2" width="14" height="86.8" rx="2" fill="var(--teal)"/><text x="68" y="154" text-anchor="middle">9</text><rect x="23" y="67.5" width="14" height="66.5" rx="2" fill="var(--teal)"/><text x="30" y="154" text-anchor="middle">10</text><text x="433" y="154" text-anchor="end">n</text></svg>
+        <figcaption class="cap" id="heroCap">Холостой ход на рабочей частоте. В узле 4 от нагрузки вольтметр показывает минимум действующего напряжения.</figcaption>
       </figure>
     </div>
   </div>
 
+  <section id="start"><div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Подготовка к работе</span><h2>Что именно мы измеряем?</h2>
+    <p>В кабеле напряжение можно рассчитать в любой точке. На стенде кабель заменяют одинаковыми П-звеньями. Выводы между ними позволяют снять напряжение в одиннадцати точках и проверить, насколько хорошо модель воспроизводит линию.</p></div>
+    <div class="prep">
+      <article class="card"><h3>Где начало отсчёта?</h3><p>Найди нагрузку справа. Здесь <b>n = 0</b> и U(0) = U₂. Один шаг к генератору даёт n = 1, ещё один — n = 2. Вход всей цепочки находится в узле 10.</p></article>
+      <article class="card"><h3>Что покажет прибор?</h3><p>Милливольтметр между выбранным узлом и общей шиной показывает действующее значение U(n) в вольтах. Фазу определяют отдельно осциллографом.</p></article>
+      <article class="card"><h3>Почему важна нагрузка?</h3><p>Z<sub>в</sub> — отношение напряжения к току одной бегущей волны. Z<sub>н</sub> — сопротивление элемента на конце. При согласовании отражения нет. При разомкнутом конце волна отражается и в некоторых точках гасит падающую.</p></article>
+    </div>
+    <details class="hint refcheck"><summary>Как из L и C получить ориентиры для стенда?</summary>
+    <p><b>Кабель.</b> При L₀ = 0,24·10⁻³ Гн/км и C₀ = 0,1·10⁻⁶ Ф/км получаем Z<sub>в</sub> = √(L₀/C₀) ≈ 49,0 Ом, v = 1/√(L₀C₀) ≈ 204 100 км/с. Для немагнитной изоляции εᵣ = (c/v)² ≈ 2,16.</p>
+    <p><b>Одно звено.</b> Из cos B = 1 − ω²LC/2 следует f = sin(B/2)/(π√(LC)). При B = 22,5° это 12,68 кГц. Граница полосы f₂ = 1/(π√(LC)) ≈ 65,0 кГц. На рабочей частоте Z<sub>π</sub> = √(L/C)/cos(B/2) ≈ 49,95 Ом.</p>
+    <p><b>Длина.</b> λ = v/f ≈ 16,1 км. Шаг по фазе равен 22,5°/360° = 1/16 волны, то есть около 1,01 км кабеля. Десять звеньев набирают 225°, или 0,625 λ. По номиналам L и C одно звено моделирует 1 км. Малое расхождение видно при сравнении графиков.</p></details>
+  </div></section>
+<section id="sborka"><div class="wrap">
+  <div class="sec-head"><span class="eyebrow">Схема подключения · рис. 10 методички</span>
+  <h2>Что соединить на стенде</h2>
+  <p>Генератор слева, нагрузка справа. Десять П-звеньев уже входят в состав стенда. Выбери опыт, чтобы увидеть положение перемычки K, место нагрузки и оба вывода измерительного прибора.</p></div>
+  <div class="wiring">
+    <div class="wire-controls">
+      <label>Какой опыт выполняем<select id="wireStage">
+        <option value="tune">1 · Настройка частоты</option><option value="oneOpen">2.1 · Одно звено, холостой ход</option><option value="oneMatch">2.2 · Одно звено, согласование</option><option value="matched">3.1 · Согласование, напряжение</option><option value="scope">3.2 · Согласование, фаза</option><option value="open">4.1 · Холостой ход</option><option value="cap">4.2 · Ёмкостная нагрузка</option><option value="high">5.1 · Активная нагрузка 2Zπ</option><option value="low">5.2 · Активная нагрузка 0,2Zπ</option>
+      </select></label><label>Точка измерения<select id="wireProbe"></select></label>
+    </div>
+    <figure><div class="wire-scroll" tabindex="0" role="region" aria-label="Схема соединений, возможна горизонтальная прокрутка"><svg id="wireSvg" viewBox="0 0 1250 350" role="img" aria-labelledby="wireTitle wireDesc"></svg></div>
+    <figcaption>Сплошные точки обозначают соединения. Все точки нижней шины электрически общие. Две отдельные клеммы «9» соединяет только перемычка K.</figcaption></figure>
+    <ol class="wire-leads" aria-live="polite"><li><b>Генератор</b><span id="wireGen"></span></li><li><b>Перемычка и нагрузка</b><span id="wireLoad"></span></li><li><b>Прибор</b><span id="wireMeter"></span></li></ol>
+    <a class="wire-next" id="wireNext" href="#exp1">К описанию опыта 1</a>
+  </div>
+  <details class="hint refcheck"><summary>Сверить с оригинальной схемой из методички</summary><div class="wire-original"><img src="data:image/png;base64,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" alt="Рисунок 10. Слева функциональный генератор, между клеммами 9 стоит K, справа показаны нагрузка, осциллограф и вольтметр."></div></details>
+</div></section>
+
+  <section id="hod"><div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Работа на стенде</span><h2>Пять опытов от настройки до вывода</h2><p>Выполняй опыты по порядку. Кнопки открывают расчёт для выбранного режима. В экспериментальную таблицу методички заноси собственные измерения.</p></div>
+    <div class="steps">
+    <article class="step" id="exp1"><span class="num">1</span><div><h3>Найди рабочую частоту</h3>
+    <p>Установи перемычку K, оставь выход разомкнутым. Подай синусоидальное напряжение 5–7 В. Подключи вольтметр между узлом 4 и общей шиной. Вблизи 12–13 кГц медленно меняй частоту, пока показание не станет минимальным. Запиши частоту и сравни с расчётными 12,68 кГц. Сохрани эту настройку для следующих опытов.</p>
+    <details><summary>Почему минимум ищут в четвёртом узле?</summary><p>На разомкнутом конце ток равен нулю, а напряжения падающей и отражённой волн складываются. Через четверть длины волны они оказываются в противофазе. При B = 22,5° четыре звена дают 90° и U(4)/U(0) = |cos 90°| = 0. На стенде ищи наименьшее устойчивое показание.</p></details>
+    <div class="actions"><a class="btn" href="#stend" data-run="tune">Попробовать настройку частоты</a></div><p class="refcheck"><a href="#sborka" data-wiring="tune">Схема подключения для опыта 1</a></p></div></article>
+    <article class="step" id="exp2"><span class="num">2</span><div><h3>Измерь фазовый шаг одного звена</h3>
+    <p>Сними перемычку K. На холостом ходу измерь напряжение на входе отдельного звена U₁х и на его выходе U₂х относительно общей шины. Запиши оба значения. Поскольку выходной ток равен нулю, U₁х = U₂х cos B. Отсюда B = arccos(U₁х/U₂х).</p>
+    <details open><summary>Проверить расчёт B по двум показаниям</summary><p>В полях приведён расчётный пример. Подставь свои значения в вольтах.</p>
+    <div class="unit-input"><label>U₁х, В <input id="unitIn" type="text" inputmode="decimal" value="6,00"></label><label>U₂х, В <input id="unitOut" type="text" inputmode="decimal" value="6,49"></label></div>
+    <output id="unitResult" for="unitIn unitOut" class="unit-result" aria-live="polite"></output></details>
+    <p class="expect">Подключи к выходу резистор около 50 Ом и повтори измерение. Нарисуй две векторные диаграммы: на ХХ векторы сонаправлены, а выходной длиннее. При согласовании длины равны, входное напряжение опережает выходное на B.</p><p class="refcheck"><a href="#sborka" data-wiring="oneOpen">Схема подключения для опыта 2</a></p></div></article>
+    <article class="step" id="exp3"><span class="num">3</span><div><h3>Сравни напряжение и фазу при согласовании</h3>
+    <p>Верни перемычку K и поставь на выход резистор около 50 Ом. Измерь U(0)…U(10). Для каждого узла раздели показание на U(0) этого опыта и нанеси точки на график. Ожидается ряд значений около единицы.</p>
+    <p>Для измерения фазы сначала подключи оба канала осциллографа к узлу 0 и совмести синусоиды. Размести один период на восьми клетках. Оставь опорный канал у нагрузки, второй последовательно подключай к узлам. Сдвиг в одну клетку соответствует 360°/8 = 45°. Следи за фазой от узла к узлу.</p>
+    <details><summary>Как из двух клеток получить точку годографа?</summary><p>У узла 4 максимум наступает на две клетки раньше опорного. Фаза опережения равна +90°. На комплексной плоскости вектор U(0) направь вправо, U(4) той же длины — вверх. Отметь концы всех 11 векторов: на рабочей частоте они пройдут по дуге окружности от 0° до 225°.</p></details>
+    <div class="actions"><a class="btn" href="#stend" data-run="match">Посмотреть U(n)</a><a href="#stend" data-run="phase">Посмотреть φ(n)</a></div><p class="refcheck"><a href="#sborka" data-wiring="matched">Схема подключения для опыта 3</a></p></div></article>
+    <article class="step" id="exp4"><span class="num">4</span><div><h3>Сравни холостой ход и ёмкостную нагрузку</h3>
+    <p><b>Первый проход.</b> Убери резистор, оставь выход разомкнутым. На прежней частоте запиши U(0)…U(10) в строку «холостой ход». Найди минимум около n = 4.</p>
+    <p><b>Второй проход.</b> Выбери в модуле конденсаторов ближайшую к 0,104 мкФ ёмкость, например 0,10 мкФ. Подключи её между узлом 0 и общей шиной. Перемычка K остаётся на месте. Запиши выбранную ёмкость и повтори измерения в строке «ёмкостная нагрузка».</p>
+    <details><summary>Откуда взялись 0,104 мкФ и куда сместится минимум?</summary><p>Входное сопротивление одного разомкнутого звена равно −jZπ cot B. Приравняй его к −j/(ωCн). Тогда Cн = tan B/(2πfZπ) ≈ 0,104 мкФ. Такая нагрузка действует как ещё одно разомкнутое звено за узлом 0. До первого минимума теперь остаётся три звена. При ближайшем доступном номинале минимум может лежать между точками измерения.</p></details>
+    <p class="expect">Построй обе кривые на одних осях. В каждом ряду дели напряжения на U(0) именно этого ряда. Сравни положения минимумов и максимумов. В идеальной модели минимум переходит с n = 4 на 3, следующая пучность — с n = 8 на 7.</p>
+    <figure class="comparison">
+    <figcaption><b>Как смещается минимум</b><br>Расчёт при B = 22,5°. Обе кривые приведены к напряжению на своей нагрузке.</figcaption>
+    <div class="legend"><span><i style="background:var(--teal)"></i>Холостой ход</span><span><i style="border-top:3px dashed var(--copper);background:none"></i>Cн = 0,104 мкФ</span></div>
+    <svg id="profiles" viewBox="0 0 520 155" role="img" aria-label="Распределение U(n)/U(0). На холостом ходу минимум в узле 4, с конденсатором в узле 3."></svg>
+    <label for="probeNode">Сравнить показания в узле <b id="probeLabel">4</b></label>
+    <input id="probeNode" type="range" min="0" max="10" value="4" dir="rtl">
+    <output id="probeResult" for="probeNode" aria-live="polite"></output></figure>
+    <div class="actions"><a class="btn" href="#stend" data-run="open">Показать холостой ход</a><a href="#stend" data-run="cap">Подключить Cн</a></div><p class="refcheck"><a href="#sborka" data-wiring="open">Схема подключения для опыта 4</a></p></div></article>
+    <article class="step" id="exp5"><span class="num">5</span><div><h3>Определи коэффициент стоячей волны</h3>
+    <p>Этот опыт выполняют по указанию преподавателя. Подключи магазин сопротивлений вместо конденсатора. Сначала выставь Rн = 2Zπ (около 100 Ом), затем 0,2Zπ (около 10 Ом). Для каждого сопротивления сними отдельный ряд U(n) и найди наибольшее и наименьшее показания.</p>
+    <details><summary>Как проверить полученный коэффициент?</summary><p>Раздели Umax на Umin в одном ряду. Если получилось 6,0/3,0 = 2, то размах соответствует первой нагрузке. При 2Zπ у нагрузки максимум, при 0,2Zπ — минимум и ожидаемый коэффициент равен 5. В обоих случаях часть волны отражается, а часть мощности поглощает резистор.</p></details>
+    <div class="actions"><a class="btn" href="#stend" data-run="high">Выставить 2Zπ</a><a href="#stend" data-run="low">Выставить 0,2Zπ</a></div><p class="refcheck"><a href="#sborka" data-wiring="high">Схема подключения для опыта 5</a></p></div></article>
+    </div><p class="refcheck"><a href="#igra">Проверить себя по неизвестному графику</a></p>
+  </div></section>
   <!-- ====================== СТЕНД ====================== -->
   <section id="stend">
     <div class="wrap">
@@ -224,6 +341,7 @@ details.hint{margin-top:10px;font-size:.9rem;color:var(--muted)} details.hint su
         <h2>Цепная схема и линия: выбери нагрузку</h2>
         <p>Генератор слева подключён к узлу 10, нагрузка справа — к узлу 0. Номера узлов отсчитываются от нагрузки, как в методичке. Столбики над узлами показывают действующее напряжение, которое покажет милливольтметр.</p>
       </div>
+      <p class="bench-return" id="benchTask" hidden><strong id="benchPrompt"></strong> <a id="backToExp" href="#hod">Вернуться к опыту</a></p>
       <div class="bench">
         <div class="bench-schem"><svg id="schem" viewBox="0 0 960 230" role="img" aria-label="Схема: генератор, 10 П-образных звеньев и нагрузка, над узлами столбики напряжения"></svg></div>
         <div class="bench-body">
@@ -285,21 +403,37 @@ details.hint{margin-top:10px;font-size:.9rem;color:var(--muted)} details.hint su
             <div class="legend"><span><i style="background:var(--teal)"></i>линия без потерь (теория, x = n · l₁)</span><span><i class="dot" style="background:var(--copper)"></i>цепная схема (узлы n = 0…10)</span></div>
             <p class="summary" id="summary"></p>
             <div class="tbl-wrap"><table id="tbl"></table></div>
-            <p class="note">Таблицу можно переписать в протокол как ожидаемые значения: это точный расчёт цепочки из 10 звеньев с L = 0,24 мГн и C = 0,1 мкФ (C/2 по краям звена).</p>
+            <p class="note">Строка «цепочка» показывает расчёт по параметрам звеньев, строка «линия» — расчёт для кабеля в тех же точках. Сравни их со своими измерениями. На схеме и графике нагрузка справа, в таблице столбец n = 0 слева.</p>
           </div>
         </div>
       </div>
 
-      <div class="row2 one">
-        <div class="panel">
-          <h3>Мгновенные значения u(x, t)</h3>
-          <canvas id="wave" aria-label="Анимация мгновенного напряжения вдоль линии"></canvas>
-          <div class="bar">
-            <button class="btn" id="play">Пауза</button>
-            <label class="note"><input type="checkbox" id="showParts" checked> падающая и отражённая волны</label>
-          </div>
-          <p class="note">Бегущая волна движется к нагрузке, огибающая ровная. Стоячая волна дышит на месте: узлы не двигаются, амплитуда между ними меняется.</p>
-        </div>
+    </div>
+  </section>
+
+  <!-- ====================== ТЕОРИЯ ====================== -->
+  <section id="teoriya">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Теория коротко</span>
+        <h2>Что происходит в линии</h2>
+      </div>
+      <div class="prose">
+        <p><b>Длинная линия</b> — цепь, где индуктивность и ёмкость распределены по длине. Если линия сравнима с длиной волны, фаза напряжения заметно меняется вдоль неё, и ток с напряжением становятся функциями координаты x. В линии без потерь (R₀ = 0, G₀ = 0) остаются только L₀ и C₀.</p>
+        <p>Напряжение и ток в любой точке — сумма двух бегущих волн: прямой (к нагрузке) и обратной (от нагрузки). Если отсчитывать x от нагрузки, то для действующих комплексов:</p>
+        <div class="eq"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><munder><mi>U</mi><mo accent="true">&#x02015;</mo></munder><mo stretchy="false">&#x00028;</mo><mi>x</mi><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><msub><munder><mi>U</mi><mo accent="true">&#x02015;</mo></munder><mn>2</mn></msub><mi>cos</mi><mi>&#x003B2;</mi><mi>x</mi><mo>&#x0002B;</mo><mi>j</mi><msub><mi>Z</mi><mi>C</mi></msub><msub><munder><mi>I</mi><mo accent="true">&#x02015;</mo></munder><mn>2</mn></msub><mi>sin</mi><mi>&#x003B2;</mi><mi>x</mi><mo>&#x0002C;</mo><mspace width="2em" /><munder><mi>I</mi><mo accent="true">&#x02015;</mo></munder><mo stretchy="false">&#x00028;</mo><mi>x</mi><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><msub><munder><mi>I</mi><mo accent="true">&#x02015;</mo></munder><mn>2</mn></msub><mi>cos</mi><mi>&#x003B2;</mi><mi>x</mi><mo>&#x0002B;</mo><mi>j</mi><mfrac><mrow><msub><munder><mi>U</mi><mo accent="true">&#x02015;</mo></munder><mn>2</mn></msub></mrow><mrow><msub><mi>Z</mi><mi>C</mi></msub></mrow></mfrac><mi>sin</mi><mi>&#x003B2;</mi><mi>x</mi></mrow></math></div>
+        <p>Здесь β = ω√(L₀C₀) — коэффициент фазы, Z<sub>C</sub> = √(L₀/C₀) — волновое сопротивление. Входное сопротивление отрезка длиной x:</p>
+        <div class="eq"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><msub><munder><mi>Z</mi><mo accent="true">&#x02015;</mo></munder><mrow><mi>в</mi><mi>х</mi></mrow></msub><mo stretchy="false">&#x00028;</mo><mi>x</mi><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><msub><mi>Z</mi><mi>C</mi></msub><mspace width="0.167em" /><mfrac><mrow><msub><munder><mi>Z</mi><mo accent="true">&#x02015;</mo></munder><mi>н</mi></msub><mo>&#x0002B;</mo><mi>j</mi><msub><mi>Z</mi><mi>C</mi></msub><mspace width="0.167em" /><mrow><mi mathvariant="normal">t</mi><mi mathvariant="normal">g</mi></mrow><mspace width="0.167em" /><mi>&#x003B2;</mi><mi>x</mi></mrow><mrow><msub><mi>Z</mi><mi>C</mi></msub><mo>&#x0002B;</mo><mi>j</mi><msub><munder><mi>Z</mi><mo accent="true">&#x02015;</mo></munder><mi>н</mi></msub><mspace width="0.167em" /><mrow><mi mathvariant="normal">t</mi><mi mathvariant="normal">g</mi></mrow><mspace width="0.167em" /><mi>&#x003B2;</mi><mi>x</mi></mrow></mfrac></mrow></math></div>
+        <p><b>Почему цепочка звеньев заменяет кабель.</b> Звено ФНЧ в полосе пропускания (f &lt; f₂) имеет вещественное характеристическое сопротивление Z<sub>C</sub> и коэффициент фазы B, где cos B = 1 − ω²LC/2. Напряжения в узлах цепочки описываются теми же формулами, что и линия, только βx заменяется на nB:</p>
+        <div class="eq"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><munder><mi>U</mi><mo accent="true">&#x02015;</mo></munder><mo stretchy="false">&#x00028;</mo><mi>n</mi><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><munder><mi>U</mi><mo accent="true">&#x02015;</mo></munder><mo stretchy="false">&#x00028;</mo><mn>0</mn><mo stretchy="false">&#x00029;</mo><mi>cos</mi><mi>n</mi><mi>B</mi><mo>&#x0002B;</mo><mi>j</mi><msub><mi>Z</mi><mi>C</mi></msub><munder><mi>I</mi><mo accent="true">&#x02015;</mo></munder><mo stretchy="false">&#x00028;</mo><mn>0</mn><mo stretchy="false">&#x00029;</mo><mi>sin</mi><mi>n</mi><mi>B</mi></mrow></math></div>
+        <p>Одно звено соответствует отрезку кабеля l₁ = 1 км (L/L₀ = 0,24/0,24). При B = π/8 на длину волны приходится 16 звеньев, поэтому 10 звеньев — это 0,625 λ. Цепочка показывает только дискретные точки линии с шагом l₁, а её Z<sub>C</sub> растёт с частотой и уходит в бесконечность на f₂. Поэтому рабочую частоту берут низкой, чтобы шаг по фазе был мал.</p>
+        <p><b>Коэффициент стоячей волны</b> k<sub>с</sub> = U<sub>max</sub>/U<sub>min</sub>. При чисто активной нагрузке k<sub>с</sub> = R<sub>н</sub>/Z<sub>C</sub> (если R<sub>н</sub> &gt; Z<sub>C</sub>) или Z<sub>C</sub>/R<sub>н</sub> (если R<sub>н</sub> &lt; Z<sub>C</sub>). Согласованный режим: k<sub>с</sub> = 1. ХХ, КЗ и реактивная нагрузка: k<sub>с</sub> = ∞.</p>
+      </div>
+      <div class="modes">
+        <div class="mode"><b>Согласованная, Z<sub>н</sub> = Z<sub>C</sub></b><div class="eq"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>U</mi><mo stretchy="false">&#x00028;</mo><mi>x</mi><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><msub><mi>U</mi><mn>2</mn></msub><mo>&#x0002C;</mo><mspace width="0.278em" /><mi>&#x003C8;</mi><mo>&#x0003D;</mo><mi>&#x003B2;</mi><mi>x</mi></mrow></math></div><p>Только прямая волна, режим бегущей волны. Действующее значение одинаково по всей длине, фаза растёт линейно.</p></div>
+        <div class="mode" style="border-top-color:var(--copper)"><b>Холостой ход, Z<sub>н</sub> = ∞</b><div class="eq"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>U</mi><mo>&#x0003D;</mo><msub><mi>U</mi><mn>2</mn></msub><mo stretchy="false">&#x0007C;</mo><mi>cos</mi><mi>&#x003B2;</mi><mi>x</mi><mo stretchy="false">&#x0007C;</mo><mo>&#x0002C;</mo><mspace width="0.278em" /><mi>I</mi><mo>&#x0003D;</mo><mfrac><mrow><msub><mi>U</mi><mn>2</mn></msub></mrow><mrow><msub><mi>Z</mi><mi>C</mi></msub></mrow></mfrac><mo stretchy="false">&#x0007C;</mo><mi>sin</mi><mi>&#x003B2;</mi><mi>x</mi><mo stretchy="false">&#x0007C;</mo></mrow></math></div><p>Стоячая волна. У нагрузки пучность напряжения, на λ/4 — узел. В опыте узел на n = 4.</p></div>
+        <div class="mode" style="border-top-color:var(--plum)"><b>Короткое замыкание, Z<sub>н</sub> = 0</b><div class="eq"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>U</mi><mo>&#x0003D;</mo><msub><mi>Z</mi><mi>C</mi></msub><msub><mi>I</mi><mn>2</mn></msub><mo stretchy="false">&#x0007C;</mo><mi>sin</mi><mi>&#x003B2;</mi><mi>x</mi><mo stretchy="false">&#x0007C;</mo><mo>&#x0002C;</mo><mspace width="0.278em" /><mi>I</mi><mo>&#x0003D;</mo><msub><mi>I</mi><mn>2</mn></msub><mo stretchy="false">&#x0007C;</mo><mi>cos</mi><mi>&#x003B2;</mi><mi>x</mi><mo stretchy="false">&#x0007C;</mo></mrow></math></div><p>Стоячая волна, у нагрузки узел напряжения и пучность тока. Картина ХХ, сдвинутая на λ/4.</p></div>
+        <div class="mode" style="border-top-color:var(--warn)"><b>Реактивная, Z<sub>н</sub> = ±jX</b><div class="eq"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>U</mi><mo>&#x0003D;</mo><msub><mi>U</mi><mn>2</mn></msub><mfrac><mrow><mo stretchy="false">&#x0007C;</mo><mi>cos</mi><mi>&#x003B2;</mi><mo stretchy="false">&#x00028;</mo><mi>x</mi><mo>&#x0002B;</mo><mi>y</mi><mo stretchy="false">&#x00029;</mo><mo stretchy="false">&#x0007C;</mo></mrow><mrow><mo stretchy="false">&#x0007C;</mo><mi>cos</mi><mi>&#x003B2;</mi><mi>y</mi><mo stretchy="false">&#x0007C;</mo></mrow></mfrac></mrow></math></div><p>Стоячая волна со сдвигом: нагрузку заменяют отрезком разомкнутой линии длиной y. Ёмкость: узел ближе λ/4. Индуктивность: узел дальше λ/4.</p></div>
       </div>
     </div>
   </section>
@@ -334,185 +468,47 @@ details.hint{margin-top:10px;font-size:.9rem;color:var(--muted)} details.hint su
           <li>Все столбики одинаковые — согласованная нагрузка.</li>
           <li>Есть ноль: у нагрузки максимум и ноль на n = 4 — ХХ; ноль на самой нагрузке — КЗ.</li>
           <li>Ноль ближе n = 4 — ёмкость; ноль дальше n = 4, а ближе — максимум — индуктивность.</li>
-          <li>Нулей нет, но волна неровная — активная: у нагрузки максимум → R &gt; Z<sub>C</sub>, минимум → R &lt; Z<sub>C</sub>.</li>
+          <li>При активной нагрузке экстремумы приходятся на n = 0, 4 и 8, напряжение в минимуме больше нуля. При R &gt; Z<sub>C</sub> у нагрузки максимум, при R &lt; Z<sub>C</sub> — минимум. При реактивной нагрузке ноль может попасть между узлами измерения.</li>
         </ul>
       </details>
     </div>
   </section>
 
-  <!-- ====================== ТЕОРИЯ ====================== -->
-  <section id="teoriya">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="eyebrow">Теория коротко</span>
-        <h2>Что происходит в линии</h2>
-      </div>
-      <div class="prose">
-        <p><b>Длинная линия</b> — цепь, где индуктивность и ёмкость распределены по длине. Если линия сравнима с длиной волны, фаза напряжения заметно меняется вдоль неё, и ток с напряжением становятся функциями координаты x. В линии без потерь (R₀ = 0, G₀ = 0) остаются только L₀ и C₀.</p>
-        <p>Напряжение и ток в любой точке — сумма двух бегущих волн: прямой (к нагрузке) и обратной (от нагрузки). Если отсчитывать x от нагрузки, то для действующих комплексов:</p>
-        <div class="eq">\[\underline U(x)=\underline U_2\cos\beta x+j Z_C\underline I_2\sin\beta x,\qquad \underline I(x)=\underline I_2\cos\beta x+j\frac{\underline U_2}{Z_C}\sin\beta x\]</div>
-        <p>Здесь β = ω√(L₀C₀) — коэффициент фазы, Z<sub>C</sub> = √(L₀/C₀) — волновое сопротивление. Входное сопротивление отрезка длиной x:</p>
-        <div class="eq">\[\underline Z_{вх}(x)=Z_C\,\frac{\underline Z_н+jZ_C\,\mathrm{tg}\,\beta x}{Z_C+j\underline Z_н\,\mathrm{tg}\,\beta x}\]</div>
-        <p><b>Почему цепочка звеньев заменяет кабель.</b> Звено ФНЧ в полосе пропускания (f &lt; f₂) имеет вещественное характеристическое сопротивление Z<sub>C</sub> и коэффициент фазы B, где cos B = 1 − ω²LC/2. Напряжения в узлах цепочки описываются теми же формулами, что и линия, только βx заменяется на nB:</p>
-        <div class="eq">\[\underline U(n)=\underline U(0)\cos nB+jZ_C\underline I(0)\sin nB\]</div>
-        <p>Одно звено соответствует отрезку кабеля l₁ = 1 км (L/L₀ = 0,24/0,24). При B = π/8 на длину волны приходится 16 звеньев, поэтому 10 звеньев — это 0,625 λ. Цепочка показывает только дискретные точки линии с шагом l₁, а её Z<sub>C</sub> растёт с частотой и уходит в бесконечность на f₂. Поэтому рабочую частоту берут низкой, чтобы шаг по фазе был мал.</p>
-        <p><b>Коэффициент стоячей волны</b> k<sub>с</sub> = U<sub>max</sub>/U<sub>min</sub>. При чисто активной нагрузке k<sub>с</sub> = R<sub>н</sub>/Z<sub>C</sub> (если R<sub>н</sub> &gt; Z<sub>C</sub>) или Z<sub>C</sub>/R<sub>н</sub> (если R<sub>н</sub> &lt; Z<sub>C</sub>). Согласованный режим: k<sub>с</sub> = 1. ХХ, КЗ и реактивная нагрузка: k<sub>с</sub> = ∞.</p>
-      </div>
-      <div class="modes">
-        <div class="mode"><b>Согласованная, Z<sub>н</sub> = Z<sub>C</sub></b><div class="eq">\(U(x)=U_2,\;\psi=\beta x\)</div><p>Только прямая волна, режим бегущей волны. Действующее значение одинаково по всей длине, фаза растёт линейно.</p></div>
-        <div class="mode" style="border-top-color:var(--copper)"><b>Холостой ход, Z<sub>н</sub> = ∞</b><div class="eq">\(U=U_2|\cos\beta x|,\;I=\frac{U_2}{Z_C}|\sin\beta x|\)</div><p>Стоячая волна. У нагрузки пучность напряжения, на λ/4 — узел. В опыте узел на n = 4.</p></div>
-        <div class="mode" style="border-top-color:var(--plum)"><b>Короткое замыкание, Z<sub>н</sub> = 0</b><div class="eq">\(U=Z_CI_2|\sin\beta x|,\;I=I_2|\cos\beta x|\)</div><p>Стоячая волна, у нагрузки узел напряжения и пучность тока. Картина ХХ, сдвинутая на λ/4.</p></div>
-        <div class="mode" style="border-top-color:var(--warn)"><b>Реактивная, Z<sub>н</sub> = ±jX</b><div class="eq">\(U=U_2\frac{|\cos\beta(x+y)|}{|\cos\beta y|}\)</div><p>Стоячая волна со сдвигом: нагрузку заменяют отрезком разомкнутой линии длиной y. Ёмкость: узел ближе λ/4. Индуктивность: узел дальше λ/4.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ====================== ХОД РАБОТЫ ====================== -->
-  <section id="hod">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="eyebrow">Рабочее задание</span>
-        <h2>Что делать на стенде и что должно получиться</h2>
-      </div>
-      <div class="steps">
-        <div class="step"><span class="num">1</span><div><h3>Выбор рабочей частоты</h3>
-          <p>Собрать цепочку с перемычкой K, подать U<sub>вх</sub> ≈ 5–7 В на частоте около 12–13 кГц. Нагрузку отключить (ХХ) и подстроить частоту так, чтобы на 4-м узле от нагрузки напряжение было почти нулевым. Дальше частоту не трогать.</p>
-          <p class="expect"><b>Ожидаемо:</b> f ≈ 12,7 кГц (расчёт 12,68 кГц). Небольшая разница — разброс номиналов L и C на стенде.</p></div></div>
-        <div class="step"><span class="num">2</span><div><h3>Исследование одного звена</h3>
-          <p>Снять перемычку K, измерить U<sub>1х</sub> и U<sub>2х</sub> одного звена на ХХ. В полосе пропускания они совпадают по фазе, и B находится из отношения:</p>
-          <div class="eq">\[\cos B=\frac{U_{2х}}{U_{1х}}\]</div>
-          <p>Затем включить R<sub>н</sub> = Z<sub>C</sub> ≈ 50 Ом и проверить, что U₁ = U₂.</p>
-          <p class="expect"><b>Ожидаемо:</b> U<sub>2х</sub>/U<sub>1х</sub> = cos 22,5° = 0,924, например 6,0 В → 5,54 В. При ХХ U₁ и U₂ в фазе, при Z<sub>C</sub> — равны по модулю и сдвинуты на 22,5°.</p></div></div>
-        <div class="step"><span class="num">3</span><div><h3>Согласованный режим</h3>
-          <p>Восстановить цепочку, нагрузить на резистор ≈ Z<sub>C</sub>, измерить U(n) во всех узлах. Двулучевым осциллографом измерить фазу φ(n) относительно нагрузки: 8 клеток на период, 45° на клетку.</p>
-          <p class="expect"><b>Ожидаемо:</b> U(n) ≈ const, φ(n) = 22,5°·n, то есть полклетки на звено. Годограф — окружность, векторы через 22,5°.</p></div></div>
-        <div class="step"><span class="num">4</span><div><h3>Режим стоячих волн</h3>
-          <p>Измерить U(n) на ХХ, затем с конденсатором C<sub>н</sub> ≈ 0,1 мкФ из модуля конденсаторов.</p>
-          <p class="expect"><b>Ожидаемо:</b> ХХ — узел на n = 4, пучности на n = 0 и 8. С ёмкостью картина сдвигается на одно звено: узел на n = 3, пучность на n = 7.</p></div></div>
-        <div class="step"><span class="num">5</span><div><h3>Активная нагрузка (по указанию преподавателя)</h3>
-          <p>Магазином сопротивлений поставить R<sub>н</sub> = 2Z<sub>C</sub> ≈ 100 Ом, затем 0,2Z<sub>C</sub> ≈ 10 Ом. Найти U<sub>max</sub>, U<sub>min</sub>, k<sub>с</sub>.</p>
-          <p class="expect"><b>Ожидаемо:</b> при 2Z<sub>C</sub> минимум на n = 4, k<sub>с</sub> = 2. При 0,2Z<sub>C</sub> минимум у нагрузки, максимум на n = 4, k<sub>с</sub> = 5. Узлы не нулевые: часть энергии уходит в нагрузку.</p></div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ====================== ВОПРОСЫ ====================== -->
-  <section id="voprosy">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="eyebrow">Контрольные вопросы</span>
-        <h2>Ответы на все 14 вопросов</h2>
-        <p>U(0) = U₂ — напряжение на нагрузке, B = 22,5°, Z<sub>C</sub> ≈ 50 Ом. Где в вопросе номер звена задаёт преподаватель, есть калькулятор.</p>
-      </div>
-      <div id="qlist">
-        <details class="q"><summary><span class="qn">1</span><span>Показание вольтметра между нагрузкой и n-м звеном: а) согласованная нагрузка, б) ХХ</span></summary>
-          <div class="a">
-            <p>Вольтметр показывает модуль разности комплексов: |U(n) − U(0)|.</p>
-            <div class="eq">\[а)\;U_V=U_2\left|e^{jnB}-1\right|=2U_2\sin\frac{nB}{2}\qquad б)\;U_V=U_2\left(1-\cos nB\right)\]</div>
-            <div class="calc"><label for="q1n">n =</label><input type="number" id="q1n" min="0" max="10" value="4"><span>а) <output id="q1a"></output></span><span>б) <output id="q1b"></output></span></div>
-          </div></details>
-        <details class="q"><summary><span class="qn">2</span><span>Показание вольтметра между n-м и m-м звеньями: а) согласованная нагрузка, б) ХХ</span></summary>
-          <div class="a">
-            <div class="eq">\[а)\;U_V=2U_2\sin\frac{|n-m|B}{2}\qquad б)\;U_V=U_2\left|\cos nB-\cos mB\right|\]</div>
-            <p>На ХХ все напряжения узлов вещественны (в фазе или в противофазе), поэтому разность — просто разность косинусов со знаком.</p>
-            <div class="calc"><label for="q2n">n =</label><input type="number" id="q2n" min="0" max="10" value="2"><label for="q2m">m =</label><input type="number" id="q2m" min="0" max="10" value="6"><span>а) <output id="q2a"></output></span><span>б) <output id="q2b"></output></span></div>
-          </div></details>
-        <details class="q"><summary><span class="qn">3</span><span>Найти n и m, при которых на ХХ Z<sub>вх</sub>(n) = Z<sub>вх</sub>(m) и Z<sub>вх</sub>(n) = Z*<sub>вх</sub>(m)</span></summary>
-          <div class="a">
-            <div class="eq">\[\underline Z_{вх}(n)=-jZ_C\,\mathrm{ctg}\,nB\]</div>
-            <p><b>Равенство:</b> ctg периодичен с периодом π, значит (m − n)B = π, m = n + 8. В цепочке это пары (0, 8), (1, 9), (2, 10).</p>
-            <p><b>Сопряжённые:</b> ctg mB = −ctg nB, значит (n + m)B = π, n + m = 8: пары (1, 7), (2, 6), (3, 5). Например, Z<sub>вх</sub>(1) = −j120,6 Ом (ёмкостное), Z<sub>вх</sub>(7) = +j120,6 Ом (индуктивное). Также n + m = 16: (6, 10), (7, 9).</p>
-          </div></details>
-        <details class="q"><summary><span class="qn">4</span><span>Номер звена при ёмкостной нагрузке, где Z<sub>вх</sub>(n) = Z<sub>н</sub> и Z<sub>вх</sub>(n) = Z*<sub>н</sub></span></summary>
-          <div class="a">
-            <p>C<sub>н</sub> эквивалентна одному разомкнутому звену, поэтому</p>
-            <div class="eq">\[\underline Z_{вх}(n)=-jZ_C\,\mathrm{ctg}\,(n+1)B,\qquad \underline Z_н=-jZ_C\,\mathrm{ctg}\,B\]</div>
-            <p><b>Z<sub>вх</sub>(n) = Z<sub>н</sub>:</b> nB = π, n = 8. <b>Z<sub>вх</sub>(n) = Z*<sub>н</sub></b> (то же |Z|, но индуктивное): (n + 2)B = π, n = 6.</p>
-          </div></details>
-        <details class="q"><summary><span class="qn">5</span><span>Распределение модуля входного сопротивления |Z<sub>вх</sub>(n)|: согласованная, ХХ, ёмкостная</span></summary>
-          <div class="a">
-            <div class="eq">\[а)\;|Z_{вх}|=Z_C\qquad б)\;|Z_{вх}|=Z_C|\mathrm{ctg}\,nB|\qquad в)\;|Z_{вх}|=Z_C|\mathrm{ctg}\,(n+1)B|\]</div>
-            <p>ХХ: ∞ на n = 0 и 8, ноль на n = 4. Ёмкостная: ∞ на n = 7, ноль на n = 3. График — вкладка «|Z<sub>вх</sub>(n)|» на стенде.</p>
-          </div></details>
-        <details class="q"><summary><span class="qn">6</span><span>Распределение действующего тока I(n) при известном U₂: согласованная, ХХ, ёмкостная</span></summary>
-          <div class="a">
-            <div class="eq">\[а)\;I=\frac{U_2}{Z_C}\qquad б)\;I=\frac{U_2}{Z_C}|\sin nB|\qquad в)\;I=\frac{U_2}{Z_C}\frac{|\sin(n+1)B|}{\cos B}\]</div>
-            <p>Узлы тока там, где пучности напряжения, и наоборот. При U₂ = 1 В и Z<sub>C</sub> = 50 Ом согласованный ток 20 мА. Вкладка «I(n)» на стенде.</p>
-          </div></details>
-        <details class="q"><summary><span class="qn">7</span><span>Векторные диаграммы U(n) и I(n) для заданного звена n: согласованная, ХХ, ёмкостная</span></summary>
-          <div class="a">
-            <p>Относительно U(0) = U₂ (вектор по оси +1):</p>
-            <ul style="margin:0;padding-left:18px">
-              <li><b>Согласованная:</b> U(n) = U₂e<sup>jnB</sup>, I(n) = (U₂/Z<sub>C</sub>)e<sup>jnB</sup> — векторы совпадают по направлению, повёрнуты на nB.</li>
-              <li><b>ХХ:</b> U(n) = U₂cos nB — на оси; I(n) = j(U₂/Z<sub>C</sub>)sin nB — опережает на 90° (или отстаёт, если sin &lt; 0).</li>
-              <li><b>Ёмкостная:</b> U(n) = U₂cos(n+1)B / cos B — на оси; I(n) = j(U₂/Z<sub>C</sub>)sin(n+1)B / cos B — перпендикулярно.</li>
-            </ul>
-            <div class="calc"><label for="q7n">n =</label><input type="number" id="q7n" min="0" max="10" value="3"><output id="q7o" style="white-space:normal"></output></div>
-            
-          </div></details>
-        <details class="q"><summary><span class="qn">8</span><span>Мгновенные значения u<sub>n</sub>(t) и i<sub>n</sub>(t): согласованная, ХХ, ёмкостная</span></summary>
-          <div class="a">
-            <p>Принимаем ψ<sub>u2</sub> = 0, действующее U₂:</p>
-            <div class="eq">\[а)\;u_n=\sqrt2U_2\sin(\omega t+nB),\quad i_n=\sqrt2\frac{U_2}{Z_C}\sin(\omega t+nB)\]</div>
-            <div class="eq">\[б)\;u_n=\sqrt2U_2\cos nB\,\sin\omega t,\quad i_n=\sqrt2\frac{U_2}{Z_C}\sin nB\,\sin(\omega t+90^\circ)\]</div>
-            <div class="eq">\[в)\;u_n=\sqrt2U_2\frac{\cos(n+1)B}{\cos B}\sin\omega t,\quad i_n=\sqrt2\frac{U_2}{Z_C}\frac{\sin(n+1)B}{\cos B}\sin(\omega t+90^\circ)\]</div>
-            <div class="calc"><label for="q8n">n =</label><input type="number" id="q8n" min="0" max="10" value="2"><output id="q8o" style="white-space:normal"></output></div>
-          </div></details>
-        <details class="q"><summary><span class="qn">9</span><span>Линия нагружена на чисто реактивную нагрузку. Как по графику U(x) определить её характер?</span></summary>
-          <div class="a">
-            <p>Реактивная нагрузка даёт стоячую волну с нулями напряжения. Смотрим, где ближайший к нагрузке <b>узел</b>:</p>
-            <ul style="margin:0;padding-left:18px">
-              <li>узел ближе λ/4 (в цепочке n &lt; 4) — нагрузка <b>ёмкостная</b> (эквивалент разомкнутого отрезка y &lt; λ/4);</li>
-              <li>узел дальше λ/4, а ближе λ/4 стоит пучность — <b>индуктивная</b> (эквивалент короткозамкнутого отрезка);</li>
-              <li>узел ровно на λ/4 — ХХ; узел на самой нагрузке — КЗ.</li>
-            </ul>
-          </div></details>
-        <details class="q"><summary><span class="qn">10</span><span>Распределение U(n) и I(n) в режиме КЗ при известном I₂</span></summary>
-          <div class="a">
-            <div class="eq">\[U(n)=Z_CI_2\,|\sin nB|,\qquad I(n)=I_2\,|\cos nB|\]</div>
-            <p>Узлы напряжения на n = 0 и 8, пучность на n = 4. Это ХХ, сдвинутый на λ/4. Выбери «Короткое замыкание» на стенде.</p>
-          </div></details>
-        <details class="q"><summary><span class="qn">11</span><span>U(n), если нагрузка равна входному сопротивлению одного короткозамкнутого звена</span></summary>
-          <div class="a">
-            <div class="eq">\[\underline Z_н=jZ_C\,\mathrm{tg}\,B=j20{,}7\;Ом\;(L_н=0{,}26\;мГн),\qquad \frac{U(n)}{U(0)}=\frac{|\sin(n+1)B|}{\sin B}\]</div>
-            <p>Индуктивная нагрузка заменяет одно звено с КЗ: картина КЗ сдвигается на одно звено. Узел на n = 7, пучность 2,61·U(0) на n = 3. На стенде: «Индуктивность L<sub>н</sub>» → «как 1 звено при КЗ».</p>
-          </div></details>
-        <details class="q"><summary><span class="qn">12</span><span>Векторные диаграммы U(n), I(n) и годограф при R<sub>н</sub> = 2Z<sub>C</sub></span></summary>
-          <div class="a">
-            <div class="eq">\[\underline U(n)=U_2\left(\cos nB+j\tfrac12\sin nB\right),\qquad \underline I(n)=\frac{U_2}{2Z_C}\left(\cos nB+j\,2\sin nB\right)\]</div>
-            <p>Годограф U(n) — эллипс с полуосями U₂ (по оси) и 0,5U₂; концы векторов идут по эллипсу через каждые 22,5° «эллиптического угла». Годограф I(n) — эллипс с полуосями 0,5U₂/Z<sub>C</sub> и U₂/Z<sub>C</sub>.</p>
-          </div></details>
-        <details class="q"><summary><span class="qn">13</span><span>Векторные диаграммы U(n), I(n) и годограф при R<sub>н</sub> = 0,2Z<sub>C</sub></span></summary>
-          <div class="a">
-            <div class="eq">\[\underline U(n)=U_2\left(\cos nB+j\,5\sin nB\right),\qquad \underline I(n)=\frac{5U_2}{Z_C}\left(\cos nB+j\,0{,}2\sin nB\right)\]</div>
-            <p>Годограф U(n) — эллипс, вытянутый по мнимой оси: полуоси U₂ и 5U₂. На n = 4 вектор U(4) = j5U₂ — максимум. Распределение U(n) — на стенде: «Активная» → «R = 0,2Z<sub>C</sub>».</p>
-          </div></details>
-        <details class="q"><summary><span class="qn">14</span><span>B и Z<sub>C</sub> одного звена на частоте 5f. Возможно ли моделирование, каков шаг l′?</span></summary>
-          <div class="a">
-            <p>5f = 63,38 кГц, ω′ = 398 226 рад/с, ω′²LC = 3,806:</p>
-            <div class="eq">\[\cos B'=1-\frac{3{,}806}{2}=-0{,}903\Rightarrow B'=154{,}6^\circ,\qquad Z_C'=\frac{48{,}99}{\sqrt{1-3{,}806/4}}=222{,}5\;Ом\]</div>
-            <p>Формально частота ещё в полосе пропускания (f₂ = 64,97 кГц), но моделировать линию нельзя. Шаг по фазе 154,6° — на длину волны приходится 2,3 звена, а характеристическое сопротивление в 4,5 раза больше волнового сопротивления кабеля (и сильно зависит от частоты). Шаг дискретизации l′ = B′/β′ = 1,38 км при λ′ = 3,22 км.</p>
-            <div class="calc"><label for="q14k">множитель k =</label><input type="number" id="q14k" min="0.2" max="6" step="0.1" value="5"><output id="q14o" style="white-space:normal"></output></div>
-          </div></details>
-      </div>
-    </div>
-  </section>
 </main>
 
 <footer>
   <div class="wrap">
-    <p>Расчёты — по методичке ЛР № 25 кафедры ТОЭ НИУ «МЭИ». Числа на стенде — точный расчёт цепочки из 10 звеньев; на реальном стенде будет разброс в несколько процентов.</p>
-    <button class="egg-btn" id="eggBtn" aria-expanded="false" aria-controls="egg">
-      <svg width="40" height="12" viewBox="0 0 40 12" aria-hidden="true"><path d="M0 6h10M30 6h10" stroke="currentColor" stroke-width="1.5"/><rect x="10" y="2" width="20" height="8" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
-      звено № 11
-    </button>
-    <div class="egg" id="egg" hidden>
-      <span class="face">🥹</span>
-      <span class="big">Можно, пожалуйста, 5?</span>
-      <span>Все 14 вопросов разобраны. Узел на 4-м звене найден. Ну пожалуйста.</span>
-    </div>
+    <p>Расчёты — по методичке ЛР № 25 кафедры ТОЭ НИУ «МЭИ». Числа на стенде — точный расчёт цепочки из 10 звеньев; расхождение с измерениями зависит от номиналов элементов, потерь и точности приборов.</p>
+    <button class="egg-btn" id="eggBtn" aria-haspopup="dialog" aria-controls="gradeScene"><svg viewBox="0 0 40 22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="0" y1="15" x2="8" y2="15"/><line x1="30" y1="15" x2="40" y2="15"/><circle cx="9" cy="15" r="2"/><circle cx="29" cy="15" r="2"/><path d="M11 14L28 7"/></svg>Замкнуть секретный контакт</button>
   </div>
 </footer>
+<dialog id="gradeScene" aria-labelledby="gradeTitle">
+  <canvas id="gradeDebris" aria-hidden="true"></canvas>
+  <svg id="gradeFive" viewBox="0 0 238 235" aria-hidden="true">
+    <defs>
+      <linearGradient id="goldFace" x1=".16" y1="0" x2=".8" y2="1" gradientUnits="objectBoundingBox">
+        <stop stop-color="#fffce7"/><stop offset=".23" stop-color="#ffe7a1"/><stop offset=".43" stop-color="#f8bc50"/><stop offset=".46" stop-color="#ffe8a0"/><stop offset=".7" stop-color="#f0a638"/><stop offset="1" stop-color="#bc641e"/>
+      </linearGradient>
+      <linearGradient id="goldEdge" x2="0" y2="1"><stop stop-color="#ffc668"/><stop offset=".43" stop-color="#995421"/><stop offset="1" stop-color="#593016"/></linearGradient>
+      <path id="fiveOutline" d="M45 12H200L190 58H86L80 85Q99 76 125 76Q190 76 196 126Q202 161 176 187Q152 211 105 214Q54 217 18 190L43 151Q69 171 98 170Q130 171 137 151Q144 132 127 125Q107 116 77 132L36 116Z"/>
+    </defs>
+    <g fill="url(#goldEdge)" stroke="#72401b" stroke-width="2" stroke-linejoin="round">
+      <use href="#fiveOutline" x="15" y="15"/><use href="#fiveOutline" x="12" y="12"/><use href="#fiveOutline" x="9" y="9"/><use href="#fiveOutline" x="6" y="6"/><use href="#fiveOutline" x="3" y="3"/>
+    </g>
+    <use href="#fiveOutline" fill="url(#goldFace)" stroke="#ffe5a2" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M47 16H194M84 59L77 89M48 155Q74 174 98 173" fill="none" stroke="#fff7d2" stroke-width="2" opacity=".7"/>
+  </svg>
+  <div id="gradeMessage"><h2 id="gradeTitle" aria-live="polite">поставьте 5 пожалуйста</h2><span id="gradeFace" aria-hidden="true">🥹</span></div>
+  <button id="gradeClose" type="button" autofocus aria-label="Вернуться к лабораторной" title="Вернуться к лабораторной">×</button>
+  <div id="gradeConfetti" aria-hidden="true"></div>
+  <div id="gradeChoices" role="group" aria-label="Выбор оценки" hidden>
+    <button type="button" id="gradeYes">Поставить 5</button>
+    <div id="gradeOtherWrap"><button type="button" id="gradeOther" aria-disabled="true">Могнуть</button>
+      <div id="gradeBubble" hidden>Данное дествие не доступно</div>
+    </div>
+  </div>
+  <button id="gradeAgain" type="button" hidden>Ещё раз</button>
+</dialog>
 
 <script>
 (function(){
@@ -532,8 +528,9 @@ const fWork=Math.sin(Math.PI/16)*2/Math.sqrt(Lz*Cz)/(2*Math.PI);
 const fmt=(x,d=2)=>{if(!isFinite(x))return '∞';return x.toFixed(d).replace('.',',').replace(/\B(?=(\d{3})+(?!\d))/g,' ')};
 const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 
-const S={mode:'open',f:fWork,R:2*ZcLine,Cn:0.1041e-6,Ln:0.2598e-3,Uin:6,q:'U',n:4,play:true};
-try{const m=localStorage.getItem('lr25-mode');if(m)S.mode=m;}catch(e){}
+const loadC=Math.tan(Math.PI/8)/(2*Math.PI*fWork*(ZcLine/Math.cos(Math.PI/16)));
+const S={mode:'open',f:fWork,R:2*ZcLine,Cn:loadC,Ln:0.2598e-3,Uin:6,q:'U',n:4};
+try{const m=localStorage.getItem('lr25-mode');if(['match','open','short','cap','ind','res'].includes(m))S.mode=m;}catch(e){}
 
 /* ---------- расчёт ---------- */
 function compute(){
@@ -677,7 +674,7 @@ function summarize(R){
     case 'short': txt=`Стоячая волна, сдвинутая на λ/4 относительно ХХ: у нагрузки узел напряжения, пучность на n = ${imax}.`; break;
     case 'cap': txt=`Ёмкость эквивалентна отрезку разомкнутой линии: картина ХХ сдвинута к нагрузке. Ближайший узел: ${zeros.length?'n = '+zeros[0]:'между узлами (n ≈ '+imin+')'}, максимум ${fmt(mx/v[0],3)}·U(0) на n = ${imax}.`; break;
     case 'ind': txt=`Индуктивность эквивалентна короткозамкнутому отрезку: картина КЗ сдвинута. Ближайший к нагрузке максимум на n = ${imax}, узел: ${zeros.length?'n = '+zeros.join(', '):'n ≈ '+imin}.`; break;
-    case 'res': txt=`Смешанная волна: U<sub>max</sub> = ${fmt(mx/v[0],2)}·U(0) (n = ${imax}), U<sub>min</sub> = ${fmt(mn/v[0],2)}·U(0) (n = ${imin}), k<sub>с</sub> = ${fmt(ks,2)}. Теория: k<sub>с</sub> = ${S.R>=ZcLine?'R/Z<sub>C</sub>':'Z<sub>C</sub>/R'} = ${fmt(S.R>=ZcLine?S.R/R.Zpi:R.Zpi/S.R,2)}.`; break;
+    case 'res': txt=`Смешанная волна: U<sub>max</sub> = ${fmt(mx/v[0],2)}·U(0) (n = ${imax}), U<sub>min</sub> = ${fmt(mn/v[0],2)}·U(0) (n = ${imin}), k<sub>с</sub> = ${fmt(ks,2)}. Теория: k<sub>с</sub> = ${S.R>=R.Zpi?'R/Z<sub>C</sub>':'Z<sub>C</sub>/R'} = ${fmt(S.R>=R.Zpi?S.R/R.Zpi:R.Zpi/S.R,2)}.`; break;
   }
   document.getElementById('summary').innerHTML='<b>'+modeName[S.mode][0].toUpperCase()+modeName[S.mode].slice(1)+'.</b> '+txt;
   const w=document.getElementById('warn');
@@ -764,52 +761,10 @@ function gAnswer(btn){
   document.getElementById('gScore').textContent=G.score+' / '+G.total+(G.total>=5&&G.score===G.total?' 🔥':'');
 }
 
-/* ---------- анимация волны ---------- */
-let t0=performance.now(), tAcc=0;
-function drawWave(R,cvId,tt,showParts){
-  const cv=document.getElementById(cvId); if(!cv)return; const {g,W,H}=prep(cv);
-  const ink=css('--ink'), mut=css('--muted'), rule=css('--rule'), teal=css('--teal'), cop=css('--copper'), plum=css('--plum');
-  const U2=R.U2, I2=R.I2, Zc=ZcLine, beta=R.beta;
-  const Ainc=sc(add(U2,sc(I2,Zc)),0.5), Aref=sc(sub(U2,sc(I2,Zc)),0.5);
-  const norm=Math.max(abs(Ainc)+abs(Aref),1e-9);
-  const ml=10,mr=10, mid=H/2, amp=(H/2-18)/1.0;
-  const X=xk=>ml+(W-ml-mr)*(1-xk/10);
-  g.strokeStyle=rule; g.lineWidth=1; g.beginPath(); g.moveTo(ml,mid); g.lineTo(W-mr,mid); g.stroke();
-  for(let n=0;n<=10;n++){const x=X(n); g.beginPath(); g.moveTo(x,mid-4); g.lineTo(x,mid+4); g.stroke();}
-  const wt=tt;
-  const val=(A,sign,xk)=>{const ph=sign*beta*xk+wt; return (A.re*Math.cos(ph)-A.im*Math.sin(ph))/norm;};
-  const plot=(fn,col,wd,dash)=>{g.strokeStyle=col; g.lineWidth=wd; g.setLineDash(dash||[]); g.beginPath(); for(let i=0;i<=300;i++){const xk=10*i/300; const y=mid-fn(xk)*amp; i?g.lineTo(X(xk),y):g.moveTo(X(xk),y)} g.stroke(); g.setLineDash([]);};
-  // огибающая
-  plot(xk=>{const U=add(sc(Ainc,1),C(0));const a=add(mul(Ainc,expj(beta*xk)),mul(Aref,expj(-beta*xk)));return abs(a)/norm},rule,1.2,[4,4]);
-  plot(xk=>{const a=add(mul(Ainc,expj(beta*xk)),mul(Aref,expj(-beta*xk)));return -abs(a)/norm},rule,1.2,[4,4]);
-  if(showParts){plot(xk=>val(Ainc,1,xk),teal,1.3); if(abs(Aref)>1e-6*norm)plot(xk=>val(Aref,-1,xk),plum,1.3);}
-  plot(xk=>val(Ainc,1,xk)+val(Aref,-1,xk),cop,2.4);
-  g.fillStyle=mut; g.font='11px "JetBrains Mono",monospace'; g.textAlign='left'; g.fillText('генератор',ml,H-6); g.textAlign='right'; g.fillText('нагрузка',W-mr,H-6);
-  if(showParts){g.textAlign='left'; g.fillStyle=teal; g.fillText('падающая',ml,12); g.fillStyle=plum; g.fillText('отражённая',ml+80,12); g.fillStyle=cop; g.fillText('сумма',ml+176,12);}
-}
-
-/* ---------- герой ---------- */
-const heroState={mode:'open'};
-function heroCompute(){const save=S.mode; const f=S.f; S.mode='open'; S.f=fWork; const R=compute(); S.mode=save; S.f=f; return R;}
-let heroR=null;
-
-/* ---------- обновление ---------- */
-let R=null;
 function update(){
-  R=compute(); const s=series(R);
+  const R=compute(), s=series(R);
   drawSchem(R); drawPlot(R,s); drawTable(R,s); summarize(R); readouts(R);
-  if(!S.play) drawWave(R,'wave',tAcc,document.getElementById('showParts').checked);
 }
-function loop(now){
-  const dt=(now-t0)/1000; t0=now;
-  if(S.play) tAcc+=dt*2.2;
-  if(R && S.play) drawWave(R,'wave',tAcc,document.getElementById('showParts').checked);
-  if(!heroR) heroR=heroCompute();
-  if(!reduce || !heroDrawn){drawWave(heroR,'heroCanvas',reduce?0.6:tAcc*0.8+0.0,true); heroDrawn=true;}
-  requestAnimationFrame(loop);
-}
-const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches; let heroDrawn=false;
-if(reduce){S.play=false;document.getElementById('play').textContent='Пуск';}
 
 /* ---------- элементы управления ---------- */
 const $=id=>document.getElementById(id);
@@ -829,49 +784,397 @@ $('sL').addEventListener('input',e=>{S.Ln=logMap(+e.target.value,0.01e-3,5e-3); 
 $('sF').addEventListener('input',e=>{S.f=+e.target.value; syncF(); update();});
 $('sUin').addEventListener('input',e=>{S.Uin=+e.target.value; $('oUin').textContent=fmt(S.Uin,1)+' В'; update();});
 document.querySelectorAll('[data-r]').forEach(b=>b.addEventListener('click',()=>{const Z=compute().Zpi||ZcLine; S.R=+b.dataset.r*Z; syncR(); update();}));
-$('setCH').addEventListener('click',()=>{S.Cn=0.1041e-6; syncC(); update();});
+$('setCH').addEventListener('click',()=>{S.Cn=loadC; syncC(); update();});
 $('setLH').addEventListener('click',()=>{S.Ln=0.2598e-3; syncL(); update();});
 $('setF').addEventListener('click',()=>{S.f=fWork; syncF(); update();});
 $('setF2').addEventListener('click',()=>{S.f=Math.round(f2/10)*10-10; syncF(); update();});
 document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{S.q=t.dataset.q; document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected',x===t?'true':'false')); update();}));
 document.querySelectorAll('#gOpts .chip').forEach(c=>c.addEventListener('click',()=>gAnswer(c)));
 $('gNext').addEventListener('click',gNew);
-$('play').addEventListener('click',()=>{S.play=!S.play; $('play').textContent=S.play?'Пауза':'Пуск'; if(!S.play) drawWave(R,'wave',tAcc,$('showParts').checked);});
-$('showParts').addEventListener('change',()=>{ if(!S.play) drawWave(R,'wave',tAcc,$('showParts').checked);});
-window.addEventListener('resize',()=>{update(); gDraw(); heroDrawn=false;});
-const mq=window.matchMedia('(prefers-color-scheme: dark)'); mq.addEventListener&&mq.addEventListener('change',()=>{update();heroDrawn=false;});
-new MutationObserver(()=>{update();gDraw();heroDrawn=false;}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+window.addEventListener('resize',()=>{update(); gDraw(); });
+const mq=window.matchMedia('(prefers-color-scheme: dark)'); mq.addEventListener&&mq.addEventListener('change',()=>{update();});
+new MutationObserver(()=>{update();gDraw();}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
 
-/* ---------- калькуляторы вопросов ---------- */
+/* Рабочие параметры звена */
 const Bw=Math.PI/8, Zcw=Math.sqrt(Lz/Cz)/Math.sqrt(1-(2*Math.PI*fWork)**2*Lz*Cz/4);
-const clampN=v=>Math.max(0,Math.min(10,Math.round(+v||0)));
-function q1(){const n=clampN($('q1n').value); $('q1a').textContent=fmt(2*Math.sin(n*Bw/2),3)+'·U₂'; $('q1b').textContent=fmt(1-Math.cos(n*Bw),3)+'·U₂';}
-function q2(){const n=clampN($('q2n').value), m=clampN($('q2m').value); $('q2a').textContent=fmt(2*Math.sin(Math.abs(n-m)*Bw/2),3)+'·U₂'; $('q2b').textContent=fmt(Math.abs(Math.cos(n*Bw)-Math.cos(m*Bw)),3)+'·U₂';}
-function q7(){const n=clampN($('q7n').value); const cb=Math.cos(Bw);
-  $('q7o').innerHTML=`согл.: U = U₂∠${fmt(n*22.5,1)}°, I = (U₂/Z<sub>C</sub>)∠${fmt(n*22.5,1)}° · ХХ: U = ${fmt(Math.cos(n*Bw),3)}·U₂, I = j${fmt(Math.sin(n*Bw),3)}·U₂/Z<sub>C</sub> · ёмк.: U = ${fmt(Math.cos((n+1)*Bw)/cb,3)}·U₂, I = j${fmt(Math.sin((n+1)*Bw)/cb,3)}·U₂/Z<sub>C</sub>`;}
-function q8(){const n=clampN($('q8n').value); const cb=Math.cos(Bw); const r2=Math.SQRT2;
-  $('q8o').innerHTML=`при U₂ = 1 В, Z<sub>C</sub> = ${fmt(Zcw,1)} Ом: согл. u = ${fmt(r2,3)} sin(ωt + ${fmt(n*22.5,1)}°) В; ХХ u = ${fmt(r2*Math.cos(n*Bw),3)} sin ωt В, i = ${fmt(r2*Math.sin(n*Bw)/Zcw*1000,2)} sin(ωt + 90°) мА; ёмк. u = ${fmt(r2*Math.cos((n+1)*Bw)/cb,3)} sin ωt В, i = ${fmt(r2*Math.sin((n+1)*Bw)/cb/Zcw*1000,2)} sin(ωt + 90°) мА`;}
-function q14(){const k=Math.max(0.1,+$('q14k').value||5); const w=2*Math.PI*fWork*k, x=w*w*Lz*Cz;
-  if(x>=4){$('q14o').textContent=`${fmt(k*fWork/1000,2)} кГц > f₂: полоса задерживания, моделирование невозможно.`;return}
-  const B=Math.acos(1-x/2), Z=Math.sqrt(Lz/Cz)/Math.sqrt(1-x/4), beta=w*Math.sqrt(L0*C0);
-  $('q14o').textContent=`f = ${fmt(k*fWork/1000,2)} кГц: B = ${fmt(B*180/Math.PI,1)}°, Z_C = ${fmt(Z,1)} Ом, l′ = ${fmt(B/beta,3)} км, звеньев на λ: ${fmt(2*Math.PI/B,1)} — ${B<=Math.PI/8+1e-6?'моделировать можно':B<=Math.PI/4?'грубо, но можно':'моделировать нельзя'}.`;}
-['q1n'].forEach(i=>$(i).addEventListener('input',q1)); ['q2n','q2m'].forEach(i=>$(i).addEventListener('input',q2));
-$('q7n').addEventListener('input',q7); $('q8n').addEventListener('input',q8); $('q14k').addEventListener('input',q14);
-q1();q2();q7();q8();q14();
+/* Снимок видимой части лабораторной для осколков. Canvas графиков копируется
+   вместе с текущими показаниями, а текст берётся из отрисованных строк. */
+function captureLabPage(w,h){
+  const page=document.createElement('canvas');
+  page.width=w;page.height=h;
+  const g=page.getContext('2d');
+  g.fillStyle=css('--bg');g.fillRect(0,0,w,h);
+  g.strokeStyle=css('--grid');g.beginPath();
+  for(let x=0;x<w;x+=24){g.moveTo(x,0);g.lineTo(x,h);}
+  for(let y=-(window.scrollY%24);y<h;y+=24){g.moveTo(0,y);g.lineTo(w,y);}
+  g.stroke();
+  const range=document.createRange();
+  function paint(el){
+    const r=el.getBoundingClientRect();
+    if(!r.width||!r.height||r.right<0||r.left>=w||r.bottom<=0||r.top>=h)return;
+    const s=getComputedStyle(el);
+    if(s.visibility==='hidden')return;
+    g.save();
+    const radius=parseFloat(s.borderTopLeftRadius)||0;
+    g.beginPath();g.roundRect(r.x,r.y,r.width,r.height,radius);
+    g.fillStyle=s.backgroundColor;g.fill();
+    if(parseFloat(s.borderTopWidth)>0){g.strokeStyle=s.borderTopColor;g.lineWidth=1;g.stroke();}
+    if(s.overflowX!=='visible'||s.overflowY!=='visible')g.clip();
+    if(el instanceof HTMLCanvasElement){if(el.width&&el.height)g.drawImage(el,r.x,r.y,r.width,r.height);}
+    else if(el instanceof HTMLImageElement){if(el.complete&&el.naturalWidth)g.drawImage(el,r.x,r.y,r.width,r.height);}
+    else if(!(el instanceof SVGElement)){
+      for(const node of el.childNodes){
+        if(node.nodeType===1){if(el.tagName!=='DETAILS'||el.open||node.tagName==='SUMMARY')paint(node);continue;}
+        if(node.nodeType!==3)continue;
+        g.font=s.fontWeight+' '+s.fontSize+' '+s.fontFamily;
+        g.fillStyle=s.color;g.textBaseline='middle';
+        for(const match of node.textContent.matchAll(/\S+/g)){
+          range.setStart(node,match.index);range.setEnd(node,match.index+match[0].length);
+          const box=range.getBoundingClientRect();
+          if(box.width&&box.bottom>0&&box.top<h)g.fillText(match[0],box.x,box.y+box.height/2,box.width);
+        }
+      }
+    }
+    g.restore();
+  }
+  ['main','footer','header.top'].forEach(selector=>paint(document.querySelector(selector)));
+  return page;
+}
 
-/* ---------- пасхалка ---------- */
-let eggClicks=0;
-$('eggBtn').addEventListener('click',()=>{
-  const e=$('egg'); e.hidden=false; $('eggBtn').setAttribute('aria-expanded','true');
-  if(reduce)return; eggClicks++;
-  for(let i=0;i<14;i++){const s=document.createElement('span'); s.className='five'; s.textContent='5';
-    s.style.left=(Math.random()*96)+'vw'; s.style.animationDuration=(2.2+Math.random()*2)+'s'; s.style.animationDelay=(Math.random()*0.6)+'s'; s.style.fontSize=(20+Math.random()*24)+'px';
-    document.body.appendChild(s); setTimeout(()=>s.remove(),5200);}
+const finale=$('gradeScene'), debris=$('gradeDebris'), five=$('gradeFive');
+let sceneFrame=0, gradeGiven=false, bubbleTimer=0, shake=null;
+function hideGradeBubble(){
+  clearTimeout(bubbleTimer);
+  $('gradeBubble').hidden=true;
+  $('gradeOther').removeAttribute('aria-describedby');
+  if(shake){shake.cancel();shake=null;}
+}
+function resetGradeChoice(){
+  hideGradeBubble();
+  $('gradeConfetti').replaceChildren();
+  $('gradeChoices').hidden=true;
+  $('gradeTitle').textContent='поставьте 5 пожалуйста';
+  $('gradeFace').textContent='🥹';
+  gradeGiven=false;
+}
+function tossConfetti(){
+  const layer=$('gradeConfetti'), w=finale.clientWidth, h=finale.clientHeight;
+  const colors=['#ffe49b','#ffb744','#75dcdd','#ff767f','#cba3ff','#fffbe8'];
+  const quiet=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const count=quiet?36:w<600?88:150;
+  for(let i=0;i<count;i++){
+    const paper=document.createElement('i');
+    const size=between(5,11), side=i%2===0?1:-1;
+    paper.style.width=size+'px';paper.style.height=(i%3?size*.5:size)+'px';
+    paper.style.borderRadius=i%4?'1px':'50%';paper.style.background=colors[i%colors.length];
+    layer.append(paper);
+    let frames;
+    if(quiet){
+      paper.style.left=between(1,98)+'%';paper.style.top=between(3,92)+'%';
+      frames=[{opacity:0},{opacity:.9,offset:.2},{opacity:0}];
+    }else{
+      const x=side>0?w*.05:w*.95, y=h*between(.75,.95);
+      const vx=side*w*between(.22,.94), vy=-h*between(2.9,4.7), gravity=h*5.5;
+      const spin=between(-670,670);
+      frames=Array.from({length:19},(_,j)=>{
+        const t=j/18;
+        return {offset:t,opacity:Math.min(1,(1-t)*6),transform:'translate('+(x+vx*t)+'px,'+(y+vy*t+gravity*t*t)+'px) rotate('+(spin*t)+'deg) scaleX('+(.3+.7*Math.abs(Math.cos(t*9+i)))+')'};
+      });
+    }
+    const flight=paper.animate(frames,{duration:quiet?1100:between(1800,2850),delay:between(0,220),fill:'both'});
+    flight.onfinish=()=>paper.remove();
+  }
+}
+$('gradeOther').addEventListener('click',()=>{
+  if(gradeGiven)return;
+  hideGradeBubble();
+  $('gradeBubble').hidden=false;
+  $('gradeOther').setAttribute('aria-describedby','gradeBubble');
+  if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    shake=$('gradeOther').animate([0,-7,6,-5,3,0].map(x=>({transform:'translateX('+x+'px)'})),{duration:350});
+  }
+  bubbleTimer=setTimeout(hideGradeBubble,2600);
 });
+$('gradeYes').addEventListener('click',()=>{
+  if(gradeGiven||$('gradeChoices').hidden)return;
+  gradeGiven=true;finale.scrollTop=0;hideGradeBubble();$('gradeChoices').hidden=true;
+  $('gradeTitle').textContent='Спасибо за пятерку';
+  $('gradeFace').textContent='🥹';
+  $('gradeAgain').focus({preventScroll:true});
+  tossConfetti();
+});
+const between=(a,b)=>a+Math.random()*(b-a);
+const clamp01=x=>Math.min(1,Math.max(0,x));
+function prepareShards(page,w,h){
+  const cols=w<600?5:9,rows=7;
+  const grid=Array.from({length:rows+1},(_,j)=>Array.from({length:cols+1},(_,i)=>({
+    x:w/cols*(i+(i>0&&i<cols?between(-.28,.28):0)),
+    y:h/rows*(j+(j>0&&j<rows?between(-.26,.26):0))
+  })));
+  const pieces=[];
+  for(let j=0;j<rows;j++)for(let i=0;i<cols;i++){
+    const a=grid[j][i],b=grid[j][i+1],c=grid[j+1][i+1],d=grid[j+1][i];
+    for(const tri of [[a,b,c],[a,c,d]]){
+      const cx=tri.reduce((v,p)=>v+p.x,0)/3,cy=tri.reduce((v,p)=>v+p.y,0)/3;
+      const dx=Math.floor(Math.min(...tri.map(v=>v.x))),dy=Math.floor(Math.min(...tri.map(v=>v.y)));
+      const img=document.createElement('canvas');
+      img.width=Math.ceil(Math.max(...tri.map(v=>v.x)))-dx+1;img.height=Math.ceil(Math.max(...tri.map(v=>v.y)))-dy+1;
+      const g=img.getContext('2d');g.translate(-dx,-dy);g.beginPath();g.moveTo(tri[0].x,tri[0].y);
+      tri.forEach(p=>g.lineTo(p.x,p.y));g.closePath();g.clip();g.drawImage(page,0,0);
+      g.strokeStyle='rgba(207,206,167,.55)';g.stroke();
+      pieces.push({img,dx:dx-cx,dy:dy-cy,cx,cy});
+    }
+  }
+  // Подписи со стенда и схемы остаются читаемыми среди обломков.
+  const labels=[...document.querySelectorAll('.wire-controls option,#modeChips button,.facts .pill')].map(el=>el.textContent.trim()).filter(Boolean);
+  labels.forEach((word,i)=>{
+    const img=document.createElement('canvas');img.width=170;img.height=32;
+    const g=img.getContext('2d');g.font='bold 14px system-ui';
+    img.width=Math.ceil(Math.min(240,g.measureText(word).width+22));g.font='bold 14px system-ui';
+    g.fillStyle=css('--paper');g.fillRect(0,0,img.width,32);g.strokeStyle=css('--copper');g.strokeRect(0,0,img.width,32);
+    g.fillStyle=css('--ink');g.fillText(word,9,21,img.width-18);
+    pieces.push({img,dx:-img.width/2,dy:-16,cx:w*(i+.5)/labels.length,cy:-between(20,160),label:true});
+  });
+  for(const p of pieces){
+    p.destX=w*(.11+.78*(Math.random()+Math.random())/2);
+    const mound=1-Math.abs(2*p.destX/w-1);
+    p.destY=h*(.895-.085*mound*Math.random());
+    p.blastX=(p.cx-w/2)*between(.4,1.0);
+    p.arc=-h*between(.22,.7);p.spin=between(-3,3);
+    p.restAngle=between(-.5,.5);p.scale=p.label?between(.63,.94):between(.24,.62);
+    p.delay=between(0,.14);p.duration=between(.86,1.25);
+    p.kick=(p.destX<w/2?-1:1)*w*between(.52,1.15);
+    p.rise=h*between(.18,.85);
+  }
+  return pieces;
+}
+function startFinale(page){
+  cancelAnimationFrame(sceneFrame);
+  finale.scrollTop=0;resetGradeChoice();finale.classList.remove('revealed');$('gradeAgain').hidden=true;
+  const w=finale.clientWidth,h=finale.clientHeight,g=debris.getContext('2d');
+  const ratio=Math.min(devicePixelRatio||1,2);
+  debris.width=Math.round(w*ratio);debris.height=Math.round(h*ratio);
+  g.setTransform(ratio,0,0,ratio,0,0);
+  const still=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const parts=still?[]:prepareShards(page,w,h);
+  const stars=Array.from({length:44},()=>({x:Math.random()*w,y:Math.random()*h*.78,r:between(.5,1.6)}));
+  const embers=Array.from({length:w<600?68:110},()=>({vx:between(-1.15,1.15)*w,vy:-between(.13,.96)*h,hue:between(25,55),life:between(.35,1.3)}));
+  const hit=2.8, floor=.86*h, start=performance.now();
+  function frame(now){
+    const t=still?5.3:(now-start)/1000, after=t-hit;
+    g.clearRect(0,0,w,h);
+    for(const star of stars){g.fillStyle='#a9bbc75e';g.fillRect(star.x,star.y,star.r,star.r);}
+    if(!still&&t<.21){g.drawImage(page,Math.sin(t*95)*t*16,0,w,h);}
+    else {
+      const shake=after>=0?Math.exp(-after*10)*Math.sin(after*70)*h*.016:0;
+      g.save();g.translate(0,shake);
+      for(const p of parts){
+        const u=clamp01((t-.21-p.delay)/p.duration), arc=4*u*(1-u);
+        let x=p.cx+(p.destX-p.cx)*u+p.blastX*arc;
+        let y=p.cy+(p.destY-p.cy)*u*u+p.arc*arc;
+        let angle=p.restAngle*u+p.spin*arc,scale=1+(p.scale-1)*u;
+        if(after>=0){
+          x=p.destX+p.kick*after;
+          y=p.destY-p.rise*after+h*.75*after*after;
+          angle+=Math.sign(p.kick)*after*6;
+        }
+        if(x < -p.img.width||x>w+p.img.width||y>h+p.img.height)continue;
+        g.save();g.translate(x,y);g.rotate(angle);g.scale(scale,scale);g.drawImage(p.img,p.dx,p.dy);g.restore();
+      }
+      g.restore();
+    }
+    const drop=clamp01((t-1.95)/(hit-1.95));
+    const lift=after>=0?Math.abs(Math.sin(after*13))*Math.exp(-after*7)*h*.09:0;
+    const offset=after<0?-(1-drop*drop)*h*1.45:-lift;
+    five.style.transform='translate(-50%,'+offset+'px) rotate('+((1-drop)*-11)+'deg)';
+    if(drop>0&&drop<1){
+      g.fillStyle='rgba(255,199,103,'+(.1*drop)+')';
+      for(let i=-2;i<=2;i++)g.fillRect(w/2+i*w*.043,floor+offset-h*.45,w*.005,h*.39);
+    }
+    if(after>=0&&after<1.55&&!still){
+      const wave=clamp01(after/.75);
+      g.save();g.strokeStyle='rgba(255,208,120,'+(.9*(1-wave))+')';g.lineWidth=2+5*(1-wave);
+      g.beginPath();g.ellipse(w/2,floor,w*(.025+wave*.8),h*(.006+wave*.055),0,0,2*Math.PI);g.stroke();
+      for(const s of embers){
+        if(after>s.life)continue;
+        const x=w/2+s.vx*after,y=floor+s.vy*after+h*.46*after*after;
+        g.strokeStyle='hsla('+s.hue+',96%,69%,'+(1-after/s.life)+')';g.lineWidth=2.5;
+        g.beginPath();g.moveTo(x,y);g.lineTo(x-s.vx*.015,y-(s.vy+h*.92*after)*.015);g.stroke();
+      }
+      g.restore();
+    }
+    if(after>.22)finale.classList.add('revealed');
+    if(after>1.15){$('gradeAgain').hidden=false;$('gradeChoices').hidden=gradeGiven;}
+    if(t<5.15&&finale.open)sceneFrame=requestAnimationFrame(frame);
+  }
+  frame(start);
+}
+let labSnapshot=null;
+$('eggBtn').addEventListener('click',()=>{
+  if(finale.open)return;
+  labSnapshot=captureLabPage(window.innerWidth,window.innerHeight);
+  finale.showModal();startFinale(labSnapshot);
+});
+$('gradeAgain').addEventListener('click',()=>{ $('gradeClose').focus({preventScroll:true});startFinale(labSnapshot); });
+$('gradeClose').addEventListener('click',()=>finale.close());
+finale.addEventListener('close',()=>{
+  cancelAnimationFrame(sceneFrame);labSnapshot=null;resetGradeChoice();
+  debris.width=1;debris.height=1;finale.classList.remove('revealed');
+  $('eggBtn').focus({preventScroll:true});
+});
+
+/* Переход из инструкции включает условия нужного опыта. */
+const experiments = {
+  tune:  {step:1, mode:'open', q:'V', prompt:'Подстрой частоту по минимуму U(4). Рядом с 12,7 кГц четвёртый столбик почти исчезает.'},
+  match: {step:3, mode:'match', q:'U', prompt:'Сравни значения в узлах 0, 4 и 10. При согласовании их отношение к U(0) равно единице.'},
+  phase: {step:3, mode:'match', q:'P', prompt:'Найди фазы узлов 0, 4 и 10. Каждое звено добавляет 22,5°.'},
+  open:  {step:4, mode:'open', q:'U', prompt:'На холостом ходу найди первый минимум, считая от нагрузки справа.'},
+  cap:   {step:4, mode:'cap', q:'U', prompt:'Сравни узлы 3 и 4 с холостым ходом. Какой из них стал узлом напряжения?'},
+  high:  {step:5, mode:'res', q:'V', ratio:2, prompt:'Сравни U(0) с U(4) и найди отношение максимума к минимуму.'},
+  low:   {step:5, mode:'res', q:'V', ratio:0.2, prompt:'При малом сопротивлении проверь, где теперь минимум и чему равен коэффициент стоячей волны.'}
+};
+document.querySelectorAll('[data-run]').forEach(link=>link.addEventListener('click',()=>{
+  const id=link.dataset.run, exp=experiments[id];
+  S.f=id==='tune'?12000:fWork;
+  S.Uin=6;
+  S.q=exp.q;
+  if(exp.ratio) S.R=exp.ratio*Zcw;
+  if(exp.mode==='cap') S.Cn=loadC;
+  syncF(); syncR(); syncC();
+  $('sUin').value=S.Uin;
+  $('oUin').textContent='6,0 В';
+  document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',String(t.dataset.q===S.q)));
+  setMode(exp.mode);
+  $('benchPrompt').textContent=exp.prompt;
+  $('backToExp').href='#exp'+exp.step;
+  $('benchTask').hidden=false;
+}));
+// Два режима опыта 4 сравниваются при одинаковом фазовом шаге.
+function compareProfiles(){
+  const selected=Number($('probeNode').value);
+  const open=n=>Math.abs(Math.cos(n*Bw));
+  const cap=n=>Math.abs(Math.cos((n+1)*Bw))/Math.cos(Bw);
+  const x=n=>493-45*n, y=u=>130-87*u;
+  let drawing='';
+  for(const level of [0,0.5,1]){
+    drawing+=`<path d="M43 ${y(level)}H493" stroke="var(--rule)"/><text x="36" y="${y(level)+4}" text-anchor="end">${fmt(level,1)}</text>`;
+  }
+  for(let n=0;n<=10;n++) drawing+=`<text x="${x(n)}" y="150" text-anchor="middle">${n}</text>`;
+  drawing+=`<text x="8" y="18">U(n)/U(0)</text><text x="510" y="150">n</text><path d="M${x(selected)} 26V132" stroke="var(--muted)" stroke-dasharray="2 3"/>`;
+  for(const [fn,color,dash] of [[open,'var(--teal)',''],[cap,'var(--copper)','7 4']]){
+    const points=[];
+    for(let i=0;i<=200;i++) points.push(x(i/20)+','+y(fn(i/20)));
+    drawing+=`<polyline points="${points.join(' ')}" fill="none" stroke="${color}" stroke-width="2" stroke-dasharray="${dash}"/>`;
+    for(let n=0;n<=10;n++) drawing+=`<circle cx="${x(n)}" cy="${y(fn(n))}" r="${n===selected?5:2.5}" fill="${color}"/>`;
+  }
+  $('profiles').innerHTML=drawing;
+  $('probeLabel').textContent=selected;
+  $('probeResult').textContent='U('+selected+')/U(0) на холостом ходу — '+fmt(open(selected),3)+', с конденсатором — '+fmt(cap(selected),3)+'.';
+}
+$('probeNode').addEventListener('input',compareProfiles);
+compareProfiles();
+function phaseFromReadings(){
+  const volts=id=>Number($(id).value.trim().replace(',','.'));
+  const input=volts('unitIn'), output=volts('unitOut');
+  let message='Введи два положительных значения напряжения.';
+  if(Number.isFinite(input) && Number.isFinite(output) && input>0 && output>0){
+    message=input>output?'Отношение больше единицы. Проверь, какой вывод принят за вход и разомкнут ли выход.':
+      'U₁х/U₂х = '+fmt(input/output,3)+'. Фазовый шаг B = '+fmt(Math.acos(input/output)*180/Math.PI,1)+'°. Расчётный ориентир — 22,5°.';
+  }
+  $('unitResult').textContent=message;
+}
+['unitIn','unitOut'].forEach(id=>$(id).addEventListener('input',phaseFromReadings));
+phaseFromReadings();
+/* Монтажная схема. В отличие от расчётной модели две клеммы 9 показаны отдельно. */
+const wiringModes = {
+  tune:     {step:1, load:'open', probe:4, tune:true},
+  oneOpen:  {step:2, load:'open', single:true},
+  oneMatch: {step:2, load:'match', single:true},
+  matched:  {step:3, load:'match', probe:0},
+  scope:    {step:3, load:'match', probe:0, scope:true},
+  open:     {step:4, load:'open', probe:0},
+  cap:      {step:4, load:'cap', probe:0},
+  high:     {step:5, load:'high', probe:0},
+  low:      {step:5, load:'low', probe:0}
+};
+const loadLabels={open:'Холостой ход',match:'R ≈ 50 Ом',cap:'Cн ≈ 0,104 мкФ',high:'R ≈ 100 Ом',low:'R ≈ 10 Ом'};
+function resetWiring(){
+  const mode=wiringModes[$('wireStage').value];
+  const options=mode.single?[[10,'Вход звена · клемма 10'],[9,'Выход звена · левая 9']]:
+    (mode.tune?[4]:Array.from({length:11},(_,n)=>n)).map(n=>[n,'Узел '+n+(n===0?' · нагрузка':'')]);
+  $('wireProbe').replaceChildren(...options.map(([n,label])=>new Option(label,n)));
+  $('wireProbe').value=mode.single?'10':String(mode.probe);
+  $('wireProbe').disabled=mode.tune===true;
+  drawWiring();
+}
+function drawWiring(){
+  const m=wiringModes[$('wireStage').value], n=Number($('wireProbe').value);
+  const load=loadLabels[m.load], left9=343, right9=435;
+  const xs=[1117,1043,969,895,821,747,673,599,525,right9,255];
+  const probeX=m.single && n===9?left9:xs[n];
+  const probe=m.single && n===9?'левую клемму 9':'клемму '+n;
+  const last=m.single?left9:xs[0], commonY=285, signalY=182;
+  const wire=(x1,y1,x2,y2,cls='')=>`<path class="${cls}" d="M${x1} ${y1}L${x2} ${y2}"/>`;
+  const label=(x,y,s,cls='',anchor='middle')=>`<text class="${cls}" x="${x}" y="${y}" text-anchor="${anchor}">${s}</text>`;
+  const dot=(x,y)=>`<circle class="joint" cx="${x}" cy="${y}" r="3.6"/>`;
+  const pin=(x,y)=>`<circle class="pin" cx="${x}" cy="${y}" r="4.5"/>`;
+  const coil=(a,b)=>{
+    const x=(a+b)/2-20;
+    return wire(a,signalY,x,signalY)+`<path d="M${x} 182 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15"/>`+wire(x+40,signalY,b,signalY)+label(x+20,154,'L','part');
+  };
+  const capacitor=(x,caption)=> wire(x,182,x,224)+wire(x-10,224,x+10,224)+wire(x-10,231,x+10,231)+wire(x,231,x,285)+label(x+13,250,caption,'part','start')+dot(x,285);
+  let svg='<title id="wireTitle">Схема подключения для опыта '+m.step+'</title><desc id="wireDesc">'+(m.single?'K снята, работает звено 10 — левая 9.':'K соединяет обе клеммы 9.')+' '+load+'. Измерительная точка '+n+'. Общий вывод подключён к нижней шине.</desc>';
+  // Генератор и входная цепь, включая последовательный резистор с рис. 10.
+  svg+=`<rect x="12" y="143" width="94" height="150" rx="8"/>`+label(59,173,'Генератор','')+label(59,211,'∿','wave-icon')+label(60,264,'общ.','part');
+  svg+=wire(106,182,164,182)+pin(106,182)+'<rect x="164" y="175" width="42" height="14"/>'+wire(206,182,255,182)+label(185,152,'R','part');
+  svg+=wire(106,285,1224,285)+pin(106,285)+label(132,323,'Общая шина','','start')+label(171,205,'Uвх до R','part');
+  svg+=coil(255,left9)+capacitor(255,'C/2')+capacitor(left9,'C/2');
+  svg+='<g class="'+(m.single?'disconnected':'')+'">';
+  for(let j=9;j>=1;j--) svg+=coil(xs[j],xs[j-1]);
+  for(let j=9;j>=0;j--) svg+=capacitor(xs[j],j===9||j===0?'C/2':'C');
+  for(let j=8;j>=0;j--) svg+=dot(xs[j],182)+label(xs[j]+4,202,String(j),'node','start');
+  svg+='</g>'+dot(255,182)+label(258,202,'10','node','start')+label(left9+4,202,'9','node','start')+label(right9+4,202,'9','node','start');
+  svg+=m.single?`<path class="jumper" stroke-dasharray="6 5" d="M${left9+6} 168 Q389 119 ${right9-6} 168"/>`:`<path class="jumper" d="M${left9} 182 Q389 125 ${right9} 182"/>`;
+  svg+=label(389,136,m.single?'K снята':'K установлена','key')+pin(left9,182)+pin(right9,182);
+  if(m.load!=='open'){
+    const x=m.single?394:1196;
+    svg+='<g class="external-load">'+wire(last,182,x,182)+wire(x,182,x,212);
+    if(m.load==='cap') svg+=wire(x-12,212,x+12,212)+wire(x-12,220,x+12,220)+wire(x,220,x,285);
+    else svg+=`<rect x="${x-7}" y="212" width="14" height="36"/>`+wire(x,248,x,285);
+    svg+=dot(x,285)+label(m.single?x:1220,m.single?318:155,load,'key',m.single?'middle':'end')+'</g>';
+  }else if(!m.single){
+    svg+=wire(last,182,1196,182)+pin(1196,182)+pin(1196,285)+label(1196,158,'ХХ','key')+label(1196,248,'разрыв','part');
+  }
+  // Щуп приходит сверху, общий провод прибора обходит схему справа.
+  const boxX=550,boxW=240;
+  svg+=`<rect class="meter-box" x="${boxX}" y="10" width="${boxW}" height="58" rx="7"/>`;
+  svg+=label(670,32,m.scope?'Двухканальный осциллограф':'Милливольтметр','meter-title');
+  const sig=m.scope?746:592;
+  svg+=`<path class="probe" d="M${sig} 68 V88 H${probeX} V176"/>`+label(sig,56,m.scope?'CH2':'V','signal')+pin(probeX,182);
+  if(m.scope){
+    // При выставлении нуля оба щупа заканчиваются на одной клемме.
+    svg+=`<path class="reference" d="M590 68 V100 H${xs[0]+9} V169 L${xs[0]} 180"/>`+label(590,56,'CH1','ref-label');
+  }
+  const com=m.scope?669:748;
+  svg+=`<path class="return" d="M${com} 10 V3 H1230 V285 H1224"/>`+label(com,56,m.scope?'общие':'COM','part')+dot(1224,285);
+  $('wireSvg').innerHTML=svg;
+  $('wireGen').textContent=m.tune?'Выход генератора подключи ко входу стенда, общий вывод — к нижней шине. Выбери синус, Uвх ≈ 5–7 В и частоту около 12–13 кГц.':'Сохрани подключение генератора и рабочую частоту, найденную в опыте 1.';
+  $('wireLoad').textContent=(m.single?'Сними K. Работает только звено от 10 до левой 9. ':'Соедини обе клеммы 9 перемычкой K. ')+(m.load==='open'?(m.single?'Левую 9 оставь без нагрузки.':'Оставь клемму 0 без нагрузки.'):(m.load==='cap'?'Выбери ближайшую к 0,104 мкФ ёмкость. Подключи конденсатор':'Подключи резистор '+load.replace('R ≈ ','около '))+' между '+(m.single?'левой 9':'клеммой 0')+' и общей шиной.');
+  $('wireMeter').textContent=m.scope?'CH1 поставь на клемму 0, CH2 — на '+probe+'. Общие выводы обоих каналов подключи к нижней шине. '+(n===0?'Совмести синусоиды и выставь 8 клеток на период. Затем выбери следующую точку.':'Измерь смещение относительно CH1. Одна клетка соответствует 45°.'):
+    'Измерительный вывод V поставь на '+probe+', общий COM — на нижнюю шину. '+(m.tune?'Подстрой частоту до минимума U(4).':m.single?(n===10?'Запиши напряжение на входе звена.':'Запиши напряжение на выходе звена.'):'Запиши действующее напряжение U('+n+') в вольтах.');
+  $('wireNext').href='#exp'+m.step;
+  $('wireNext').textContent='К описанию опыта '+m.step;
+}
+$('wireStage').addEventListener('change',resetWiring);
+$('wireProbe').addEventListener('change',drawWiring);
+document.querySelectorAll('[data-wiring]').forEach(link=>link.addEventListener('click',()=>{
+  $('wireStage').value=link.dataset.wiring;
+  resetWiring();
+}));
+resetWiring();
 
 /* ---------- старт ---------- */
 syncR();syncC();syncL();syncF(); gNew(); setMode(S.mode);
-requestAnimationFrame(loop);
 })();
 </script>
 </body>
