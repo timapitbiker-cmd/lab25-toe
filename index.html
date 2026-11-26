@@ -162,16 +162,7 @@ footer .wrap{display:flex;flex-direction:column;gap:14px;align-items:center;text
 @media(max-height:520px){#gradeMessage{top:5%}#gradeMessage h2{font-size:1.45rem}#gradeFace{font-size:1.4rem}#gradeFive{width:min(48vh,55vw)}#gradeAgain{padding:.35rem .9rem}}
 @media(prefers-reduced-motion:reduce){#gradeMessage,.egg-btn path{transition:none}}
 
-.game{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:16px;background:var(--paper);border:1px solid var(--rule);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
-.game-plot{min-width:0}.game-plot canvas{width:100%;height:260px;display:block}
-.game-side{display:flex;flex-direction:column;gap:12px;justify-content:center;min-width:0}
-.score{font-size:1.6rem;font-weight:600;color:var(--copper)}
-.gfb{font-size:.92rem;min-height:3.2em}
-.gfb.ok{color:var(--good)} .gfb.bad{color:var(--warn)}
-.chip:disabled{cursor:default;opacity:.75}
-.chip.right{background:var(--good);color:#fff;border-color:var(--good);opacity:1} .chip.wrong{background:var(--warn);color:#fff;border-color:var(--warn);opacity:1}
 details.hint{margin-top:10px;font-size:.9rem;color:var(--muted)} details.hint summary{cursor:pointer;color:var(--teal)}
-@media (max-width:900px){.game{grid-template-columns:minmax(0,1fr)}}
 /* адаптив */
 @media (max-width:900px){
   .hero{grid-template-columns:minmax(0,1fr)}
@@ -241,7 +232,7 @@ a.btn{text-decoration:none;display:inline-block}
       ЛР 25 · Длинная линия
     </a>
     <nav aria-label="Разделы">
-      <a href="#start">Подготовка</a><a href="#sborka">Схема сборки</a><a href="#hod">Опыты</a><a href="#stend">Стенд</a><a href="#teoriya">Теория</a><a href="#igra">Тренажёр</a>
+      <a href="#hod">Работа на стенде</a><a href="#sborka">Схема сборки</a><a href="#stend">Стенд</a><a href="#teoriya">Теория</a>
     </nav>
   </div>
 </header>
@@ -252,8 +243,8 @@ a.btn{text-decoration:none;display:inline-block}
       <div>
         <span class="eyebrow">Кафедра ТОЭ · лабораторная работа № 25</span>
         <h1>Моделирование длинной линии <em>однородной цепной схемой</em></h1>
-        <p class="lead">Почему при включённом генераторе вольтметр в середине цепи может показать ноль? Исследуй десять звеньев, меняй нагрузку на конце и сравнивай показания с расчётом для коаксиального кабеля.</p>
-        <div class="hero-actions"><a class="btn" href="#start">Разобраться с начала</a><a href="#sborka">Посмотреть схему сборки</a></div>
+        <p class="lead">В этой работе мы исследуем модель длинной линии — цепочку из десяти звеньев, которая воспроизводит поведение кабеля. Сначала настроим генератор и измерим фазовый сдвиг одного звена. Затем посмотрим, как нагрузка на конце линии влияет на показания вдоль неё: измерим напряжение, найдём минимумы и сравним результаты с расчётом.</p>
+        <div class="hero-actions"><a class="btn" href="#hod">Перейти к опытам</a><a href="#sborka">Посмотреть схему сборки</a></div>
         <div class="facts">
           <span class="pill">L₀ = 0,24 мГн/км</span><span class="pill">C₀ = 0,1 мкФ/км</span><span class="pill">звено: L = 0,24 мГн, C = 0,1 мкФ</span><span class="pill">10 звеньев</span>
         </div>
@@ -265,38 +256,7 @@ a.btn{text-decoration:none;display:inline-block}
     </div>
   </div>
 
-  <section id="start"><div class="wrap">
-    <div class="sec-head"><span class="eyebrow">Подготовка к работе</span><h2>Что именно мы измеряем?</h2>
-    <p>В кабеле напряжение можно рассчитать в любой точке. На стенде кабель заменяют одинаковыми П-звеньями. Выводы между ними позволяют снять напряжение в одиннадцати точках и проверить, насколько хорошо модель воспроизводит линию.</p></div>
-    <div class="prep">
-      <article class="card"><h3>Где начало отсчёта?</h3><p>Найди нагрузку справа. Здесь <b>n = 0</b> и U(0) = U₂. Один шаг к генератору даёт n = 1, ещё один — n = 2. Вход всей цепочки находится в узле 10.</p></article>
-      <article class="card"><h3>Что покажет прибор?</h3><p>Милливольтметр между выбранным узлом и общей шиной показывает действующее значение U(n) в вольтах. Фазу определяют отдельно осциллографом.</p></article>
-      <article class="card"><h3>Почему важна нагрузка?</h3><p>Z<sub>в</sub> — отношение напряжения к току одной бегущей волны. Z<sub>н</sub> — сопротивление элемента на конце. При согласовании отражения нет. При разомкнутом конце волна отражается и в некоторых точках гасит падающую.</p></article>
-    </div>
-    <details class="hint refcheck"><summary>Как из L и C получить ориентиры для стенда?</summary>
-    <p><b>Кабель.</b> При L₀ = 0,24·10⁻³ Гн/км и C₀ = 0,1·10⁻⁶ Ф/км получаем Z<sub>в</sub> = √(L₀/C₀) ≈ 49,0 Ом, v = 1/√(L₀C₀) ≈ 204 100 км/с. Для немагнитной изоляции εᵣ = (c/v)² ≈ 2,16.</p>
-    <p><b>Одно звено.</b> Из cos B = 1 − ω²LC/2 следует f = sin(B/2)/(π√(LC)). При B = 22,5° это 12,68 кГц. Граница полосы f₂ = 1/(π√(LC)) ≈ 65,0 кГц. На рабочей частоте Z<sub>π</sub> = √(L/C)/cos(B/2) ≈ 49,95 Ом.</p>
-    <p><b>Длина.</b> λ = v/f ≈ 16,1 км. Шаг по фазе равен 22,5°/360° = 1/16 волны, то есть около 1,01 км кабеля. Десять звеньев набирают 225°, или 0,625 λ. По номиналам L и C одно звено моделирует 1 км. Малое расхождение видно при сравнении графиков.</p></details>
-  </div></section>
-<section id="sborka"><div class="wrap">
-  <div class="sec-head"><span class="eyebrow">Схема подключения · рис. 10 методички</span>
-  <h2>Что соединить на стенде</h2>
-  <p>Генератор слева, нагрузка справа. Десять П-звеньев уже входят в состав стенда. Выбери опыт, чтобы увидеть положение перемычки K, место нагрузки и оба вывода измерительного прибора.</p></div>
-  <div class="wiring">
-    <div class="wire-controls">
-      <label>Какой опыт выполняем<select id="wireStage">
-        <option value="tune">1 · Настройка частоты</option><option value="oneOpen">2.1 · Одно звено, холостой ход</option><option value="oneMatch">2.2 · Одно звено, согласование</option><option value="matched">3.1 · Согласование, напряжение</option><option value="scope">3.2 · Согласование, фаза</option><option value="open">4.1 · Холостой ход</option><option value="cap">4.2 · Ёмкостная нагрузка</option><option value="high">5.1 · Активная нагрузка 2Zπ</option><option value="low">5.2 · Активная нагрузка 0,2Zπ</option>
-      </select></label><label>Точка измерения<select id="wireProbe"></select></label>
-    </div>
-    <figure><div class="wire-scroll" tabindex="0" role="region" aria-label="Схема соединений, возможна горизонтальная прокрутка"><svg id="wireSvg" viewBox="0 0 1250 350" role="img" aria-labelledby="wireTitle wireDesc"></svg></div>
-    <figcaption>Сплошные точки обозначают соединения. Все точки нижней шины электрически общие. Две отдельные клеммы «9» соединяет только перемычка K.</figcaption></figure>
-    <ol class="wire-leads" aria-live="polite"><li><b>Генератор</b><span id="wireGen"></span></li><li><b>Перемычка и нагрузка</b><span id="wireLoad"></span></li><li><b>Прибор</b><span id="wireMeter"></span></li></ol>
-    <a class="wire-next" id="wireNext" href="#exp1">К описанию опыта 1</a>
-  </div>
-  <details class="hint refcheck"><summary>Сверить с оригинальной схемой из методички</summary><div class="wire-original"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA6QAAAE2CAIAAAD57MjrAAArtElEQVR4nO3df2wT5+HH8cdf9Q8qQQuREGXTOqdICWiZ2irZlEWlc4omklWlw0JbmKIqVawBikRhjQvNVrGWJQWSrVXUCOgSJYJI5I/IG0wssSYaU6QOTYkmtEgQS2ksuhJoJAJLpPGfv7IfcjhnOzix79dz79c/4LN9fu7x5e7j5557Hk88HhcAAACAiv7P6gIAAAAARiHsAgAAQFmEXQAAACiLsAsAAABlEXYBAACgLMIuAAAAlEXYBQAAgLIIuwAAAFAWYRcAAADKIuwCAABAWYRdAAAAKIuwCwAAAGURdgEAAKAswi4AAACURdgFAACAsgi7AAAAUBZhFwAAAMoi7AIAAEBZhF0AAAAo6wmrCwAAyInH4xG2F4/HrS4CACxC2AUAx7B5lHREHAfgNnRjAAAAgLIIuwAAAFAWYRcAAADKIuwCAABAWYRdAAAAKIuwCwAAAGUx9BgAOJhVo33ZfBA0ANAQdgHA2czPnYynC8BB6MYAAAAAZRF2AQAAoCzCLgAAAJRF2AUAAICyCLsAAABQFmEXAAAAyiLsAgAAQFmEXQAAACiLsAsAAABlEXYBAACgLMIuAAAAlEXYBQAAgLIIuwAAAFAWYRcAAADKIuwCAABAWYRdAAAAKIuwCwAAAGURdgEAAKAswi4AAACURdgFAACAsgi7AAAAUBZhFwAAAMoi7AIAAEBZhF0AAAAoi7ALAAAAZRF2AQAAoCzCLgAAAJRF2AUAAICyCLsAAABQ1hNWFwAAkBePx2N1EQDAvgi7AOBg8Xjc6iIAgK3RjQEAAADKIuwCAABAWYRdAAAAKIuwCwAAAGURdgEAAKAswi4AAACURdgFAACAsgi7AAAAUBZhFwAAAMpiBjUAUHYO4fznVyvUegBzJs1mX0U6D7sFkO2gCSggn4N86t9CLuvxeDinwPqDNjshdGjZBTLgWAkbyj1KGvGDLcd18lsRlmMnVFV8padmwi4AqCYejxek+8Fy10PLLmySa9kP1ePJ4zcMYRcAFFSokz2hAXam/R4DlsBoDAAAwKnSf4/xCw06hF0AAOBgqemWpIt0hF0AAOBsMuOSdJERYRcAAADKIuwCAABAWYRdAAAAKIuwCwAAAGURdgEAmXmSrC4FAOSFsAsAasozqmrvJe8CcDTCLgAoiKgKABJhFwCQgTZkKWOXAnA0wi4AKKggUZWYC0ABhF0AUBZpFQAIuwAAAFAWYRcAAADKIuwCAABAWYRdAAAAKOsJqwsAAMjVcgfNLcggu4zUC8DRCLsAoObQCh6PJ//RGAqyEgCwEN0YAAAAoCzCLgAAAJRF2AUAAICyCLsAAABQFmEXAAAAyiLsAgAAQFmEXQAAACiLsAsAAABlEXYBAACgLMIuAAAAlEXYBQAAgLIIuwAAAFDWE1YXAABQAB6P57EL4/G4CSsBAFsh7AKACgqSQQmyANRDNwYAAAAoi7ALAAAAZRF2AQAAoCzCLgAAAJRF2AUAAICyCLsAAABQFmEXAAAAyiLsAgAAQFmEXQAAACiLsAsAAABlEXYBAACgLMIuAAAAlEXYBQAAgLIIuwAAAFAWYRcAAADKIuwCAABAWYRdAAAAKIuwCwAAAGURdgEAAKCsJ3SPY0kWFcZGXnjhhbVr11pdCgAAAOTFE4/HUx9v2bJl7dq1q1atEi52+/Ztn8938uRJqwsCa3g8+r8LAIDNcehWmyeP71ffsvvgwYNz5855vV7hYn19fZcvX7a6FICzeTwe3RJ5nPrmm2/Onj3b3Nzc0dHx9ttvW1Q6AIBb0GcXgCHi8fi5c+eEEHv37r137572i/z8+fNvv/32b3/723v37lldRgCA+vQtuwBQKHNzczLsPv3003LJtWvXvv/97wshjh49anXpAACuQMsuAKP86le/EkI8//zz2pLBwcHKykpLCwUAcBfCLgBDRKNRIcSnn36qLfnss8+qq6stLRQAwHUIu1BBJOhJCEYyPx3rqU0+7/HU9jCwnlkmJiaEED/84Q/lw88++2xkZOSVV16xulwAjPDoOKvhgAubIOxChZxb3bHkC4oDZSPxhJGyQHHWSIzC+tvf/iaHrJanvW+++YZ+uoC6vI1D8fhUd03yQXPykDvU6OqRnWAfhF04nK89mWKbMz8b66mt7hDNI+0++eKm7hrRUU3cNdz9+/dPnTq1d+/eeDx+6dIlq4sDwETaIdd4qQ3J6Q8BibALlcUuDQ4L0fyqdtz1bttVI0THcQdcXHP2NcHr168LIX76058KIV555ZW9e/fu3r37/v37VpcLrt4tYfohF7AFwi6UP/DWbE65kubdVCaEGB68ZPvzs7OvCf773/8WQpSWlsqHe/fuFUIMDQ1ZXS64ereEwci6sCnCLlQ/8IqyTannYu/mxHl6+Ibtw6411wQLO+hYSUmJfPj888+/9tprCjXu0sDpyN0SBovd0DcvGC7b/LHMG4xUbg+78/Pz0Wj0woULVhcEUKedJH3QMSHEgQMHhBBjY2NCBa5u4HTobgnDRS52CFGza5tb/hKgTNidn5/X/p96lpqentZOaamv1JbIF2tvT11P6hq0F6euPHW12v+np6d1hZF0n5v+cfIpXQHmk4QQq1ev/uc///nUU0+llgcqtTJkMT7pgGY4R4aK+/fvnz17VgixZs2a1OWvvPLKa6+99vHHH3/zzTdCJa5r4HTkbgmzsq7uUhpg+7Db39//xhtvBIPBSCRx83o4HJb/EUI0NTUJIQ4fPiwfjo2NdXZ2akv8fn84HNYWCiE6Ozu1eCqz5o9//GP5f/niubk5v98vW1i11ab+v6mpSbYMyY9rbW0Nh8MDAwOpn6uRH5e6htQl8qFWpPr6+oqKCq08UIfssZCZIw7IFlwTzNMf/vCHtWvX/v73vxdC7N69W3dD9C9/+cu//vWvGzZsUONeabeGPst3y4fDaqdxXUcSm4lNjgs3/kHA0WE3GAzev39/06ZNW7du7e/vv3DhQktLi0yW/f39fr8/2xsjkUhRUVFLS8sSn3rgwIGXX35ZW1VLS4vP5ztz5kx7e3vG10ej0aKiort372rtrxUVFS0tLXV1dcvZ2MeXB7ARB14TfPvtt+OLpT5bV1eX7SkHcmvWtXy3lO2H6Zz1p6IeR/xBMMGQW2UNu+fPn29qalq3bt23v/3tffv2yRjq9/v7+/tDoVB9fX3iSvD4uD9Ja3MdHx9/7733lh46vqur67kkIcTNmze3bNkil69evXr9+vVCiJmZGblav98/MzMjhDhx4sQ777yzf//+3t7ejOvUShIMBuWSAwcOyCXj4+O6JboW3NTyQCly5AVdjwXZt8HmR2TTrwmmtpU5aBRiS4ttagPnosZMS78hyy9VRy52yE7SKRK9p5sPuabT9HKnkLRq7BuzpP9yzvxbmgmGXCxr2C0rK9NC4dWrV2tra4UQ9fX1p0+f1pp1y8rKQkkff/yxtuTo0aOyk0NGX3/99aVLl1Lbfefm5rT/y2i7fv16udpQKCTj7+eff/6nP/3p4sWL2YYu0kqidRf++OOP5ZKysmTgWVhy5syZ1tbWJcoDhfhebdaPvCCvtDmha4Bp1wQTbR3V491TMjaMNHdUO6LRw+pim9fAuXhLLf6GLL9UHRGvxvWdpBM5ywm/Xw2z1BSS5mbdjH8QkaANjihMMORuWcNuKBQaGBjo6+uTrbYyDs7Pz69fv14262bj8/k2bdrU1dUlhJidnZX9YmdnZ+Ug8+3t7ceOHdNe/Oabb3Z2dsp7yILBoIzUOv39/W+99VZ7Um1tbX9//9dff617zczMjPZButtiNNevXx8bG/vss89SF+rKA8UkD2ii42JEd6XNAW1AZl0TjPXsCww3j2hDCfjap7prhgP7rD852bvY5jVwRroCwzXdJ7Vd1tc+0iyGA10Rd16q9vnSPtv1WVdknULSDlk3EqwW1h9xnTzBEAy+Qa29vf3TTz8dGhqSLbXz8/OdnZ2p0VBr4i0tLa2qqtKWyD4PpaWl69atCyetW7fu9OnTpaWlwWBQDr1ZVVVVWlq6cePGrq6uwcHBtra2V199VUbq1A7Bfr//qaee0pqK9+/f/9RTT42Pj7/55pupn1tbWys/qL6+vqSkRK48tZBVVVU3b94Mh8NfffVVKBSqSkovTyGqFJY1N2UYYsHbeDLx+/3hAS2ZkJxx97xZ1wQTSUr3McmTgFVhyinFNq+B8+G+neudl8peqs6OrGuTP8gMP/6SVyU6bPDtOHqCIRSCruuT1+udmlq4XFZQO3fujDtEb29vQ0OD1aVAbhbGOtXUaNd7NY+aPdI6+2WS/ndh0VZl2JTk1mReXrjPkUtzqitrWF5sM2tI7r0pn5X8cEu+HbN2y2VJ9te1775qjrSdxORPXpIZxVo62CycJhaXJONC2Fg+p2bzJpWQHWoBI0b3T5VhbH9f+8KTDmjTteCaoLPmk7NBsU1t4HzYF2ehn27i8oTonrJiT7blpWrada316OCalRn7amredf5ILyg8t8+gBrj6mqDst5baq/lxs3HYgsXFNvleHG/jULL5bDhQ7PF49omTFk3WZstL1WRduGGCIeTrCVE42ugNpaWlt27d0oZZKC0tXb169fz8/OrVq2XfX/mf1CHAysvLo9GofMu3vvWtjRs3yuXRaFT2qdW9Xq5zenr61q1ba9asSX9NeXl5ATcNMEck6Hl0Y3VHtSfDTdaFPbN7Gw81B4Y7OqprN089jFCxnuPW39tt52I/roEzXvgk6muPT22uLU6EzUS35EaT23VN3y2Xl3UPZR6kB1jUzX3YwRMMwTZhV85qVlFRIUcTe++997ShFebm5tasWRMOh+X9Z52dndu3bxdCaK+X2bSxsVG+5csvv9yRJIRobGzcs2dPfX39/Px8OByenZ2dnJysqKiYm5v773//29fXt3///nA4PDo6GgqFUsvQ2tpKxwk48ppgu+kfmcxRgWJPILmgpkb2ZLN3c5l1xV6igbM4MUKEAd9fYtWDu6biU5cSH9FR7RnvXsj4qu6WuSHrAshJoW5QGx0dbW1tzXY7Wuqzra2to0mpr099y+joaGNjYzwe/+STT86ePfvSSy9lXE/qR7S2tp49ezb12ZdeeunWrVsr2BBuUIMNblBz570udi+2RffiJD720c1fC4Vw3BdkAO5Nc/gfbUFlSzUpFbT4HkoqzU2n5kJ2Y0glZ0GT/5ejlfX19Y2OjsrZzmTLrrakqKiou7t7Zmamra1NCDE0NCQnQhsYGLhy5cq1a9cikUiGwRVTbN++PRwOb9myZXR0tK2tbXZ2Vgih9YUAkCvZG6Cmu8nW7brWFNuSBk65Zc1aO7KvPT4iPNUdHRcj7UseFdVHuy5SxONxj8eT5e60xARDHR3Je1q9jptgCAVgVNiVs6BpD8fGxhoaGmQ3BplohRDaEu0tMgTLhdpME7Ozs/39/elhV063Jl2/fv3pp58WQmzatGn79u1r1qyRY/0CWI5IMNEvNHUKA0dwaLFXOitxYnyGjkDivhqfetu7vP4kzSNkXeRC/tGk/ER0zgRDsHPY1d2vlvEFcn611PvJUu8qO3HiRE9Pj7zzzO/3T09P61pqKysru7q6mpqaIpHI6dOnr1y5MjY2tm7dOm5NA/KYT1OkzEvmCA4t9vJurRm8FGtcvHmmzFRsZ4k57JpH3N22jdwlJhgaLA4c72nyNXqdNMEQ7BV2S0tLteEXhBDbtm0Lh8Py/3Nzc/KWMvlQm6tMzq8mF5aXl6dOnCYnhdTGWNi/f//c3NzGjRtTP6W9vb2/v7+tre3pp5++cuVKehkALPN++xpzb3xya7FXMPBEYF/PtofbmGzHbh4ZUnSDl9OpxOoy2HAKSVc39i89wm5iTPZNQc/DW1qbR+JDJF330HdwKS4uHhkZ8Xrd/PeS6Ex8+fLl3t5eqwsCa2Tv+KUeOYRA4n/NIwUe/N3j8WRcXoi6NbDYtvRoexNUzvbIa9dg74DCPHmcmgm7GRB2Xc5NYbfwtIybrQ5TQzD1DAAw+tRsYJ9dAO7x2IyrSX2BfBeRFwBgHMIugLzkE1jlu3IPygAALBdhFzBVjhfxC/sygxSqXVZbg1UNvSp9KfmgHpAROwacjrALmCQ9yWXMdoV9mbN6NmsNvWZuhUpfyopRD8iIHQNqIOwCZsgY4NKzXWFfZhCjz09LzoRUSCp9KfmgHpAROwaUQdh1gGxDOBUQBxpDLX0o17JdYV8mjGHOaUluhaF7pkpfSj6oB2TEjgGVEHadwdCjgAlhGmow84REkw8AoCD+rzCrAZBFLnEtx4aNZb1MFJoluVNuS6qCrFaZLyVP1AMyYseAYuzSsjs/P9/Z2Sn/v2vXLm2i4IK4ffv2wYMHb9++/cwzz3z00UfPPPOMMItLxlRSaTPlttCgqLtj2sIK0Z0F3fzVqPSHlg/qQYcKUake1NgKu7FLy+7ExMTs7Oz27durqqoaGxuj0Wih1nz79u3a2trXX3/9yJEjr7/+enV19Y0bN4Qp5FlZUvg3q0qbqQtVwq10225tvkz/Itz51bBzStSDDhWiUj2odD61Fbu07Aoh1q1bV15eLoSorKycm5uLRqMnTpzo7u6Wz3Z1df3kJz8ZHBwsKyvbsWNHMBisq6tbs2bN4cOHhRANDQ07duwQQvj9fiHEzMxMT0+PbB5+//339+zZU1dXJ9ezdu3agwcPDg0NGb05unygagd8lTYzY6hy6LbkgyOsDbFzStSDDhWiUj2odD61GxuF3b6+vtHRURlV29vbx8bGJiYmtGfv378/NzfX0tKydevWr776SghRXl6+detWGVtra2t/8IMfbNy4UQgRCoXa2trm5ubkG69evbpnzx5tPZWVlTt27Fj6dN7b22vQKd+2MaKwBbPtZtp5W3I8ouV+4FPpW7Bq62z+pbBzpq8tWxke+4krfqOF782GHcOItVnFVlsRd2zytlHYbWhoaGlpkY24suH2zp07wWBwcnJy//792sv27NnzwQcfRKPRsbExIcTq1atl2L1165YQoqKiQrfazZs337hx44UXXpAPb9y4UV5e/o9//GOJkhRkzKOMO+jK1mnnoccKuJmWU2lb8im2rY6tGe9c4UvJf4Vuq4cVf2g+pTXhvewYKtWDzbfCY7NTgyP77Kb6zne+Mzk5KYTYsGFDe3v7mTNntHvXZMPt66+/3tbWJvs8SF9++eWaNWsuXbpUVVWlW9uHH354/Pjxv/zlL0KISCRy8ODBjz76aOkC9Pb2NjQ05LkVLrmrRqXNzDbgudvYsB50l/aE+9jwS7EE9aBDhahUD04+n8Z6aj1LCEYsLp+NWnaHhoa0bgw9PT1zc3N37tyRfXD9fv/NmzeFEMFgcNu2bU1NTX6/PxqNVlZWBgIB2d9XCPHBBx+UlZV1dnbOzMwMDQ1duXJFCOH1es+dO/fuu+/u3LnT5/N99NFHlZWV5u+4ztllXb2ZKm2LYvVA9zUbfimWoB50qBCV6sGpWxG7NDhc0z011OhdtLSntjgwLGq6p9p9wlr6k0dxcfHIyIjXu6i8jjA2NhYOh2VHCJmPQ6HQylbV19d3+fJl2XPXDow+x7s8Q6SjQuxZD3YrjyWoBIl60KFCJOrBmrqNBIOiXZdoI0FPdYcQzSPxAkXdfL5cG7Xs5qm8vLy0tFR7eOzYMUuLAwAAoL7I5OamxkVLYj21hU26eVIn7Go3q0mFnZbCco7uGA4AAFTla1wcdSNBu3RfUDLsqoqLMgAAwAFiC426uh68lrLjaAwAAABwmojtGnWTCLsAAABQsVE3ibALAAAAFRt1kwi7AAAAduHEW9Jjtm3UTSLsAgAAYIWyzh4RCVo+d5pE2DWDE3+lrYBLNhMAACzqvpChUTfWc1y8ao8uDYRdAAAArLj7QlqjbiTo8RQHyrSsG+up9UjJtl7dQ8Mxzi4AAABW2KgrxHCg2BNIe7pms9bU620cGrnhqRYPp1TTPTQcYRcAAADL5WuPx9uFA9CNITMmLQMApTy6cJpU2xNLLgwm/3UXqgIW6ajWdrtE7wfTEHYBwB1cG3HkhhcHykbijxy6UZxcKDbZcaQko1AVKChPDlJf3/xoxxtpFuYh7AKA6lwccRKbXhwYrumeii/uHehrn+quEaLZJneLm4CqQMHFcyBsgD67AOCOITB1AwMlIs546v3SLtr2JO+2XTU1QuWkn4KqgB1GbRDVnuRNabqHhn88YRcAlOXqiBPr2Ze4U7ym+2TWOZ3Kdm1TdvNTURWwmLdxKN6Y9aHhCLsAoChXR5yHGy+aD2XdeG9ju5nnW8tQFXA7wi4ArJDH47FJj7RM3B1xYpcGExtf092kbi+NHFEVcD3CLgCol3TdHnEebr0oU/ruu5xQFVgB3SgK2Rba+hiYgtEYALhP3oNw2T3puj7ixG4kt54BBqgKuwZH+4s7YZiFHBF2oTKHHmJgINcMwkXEAezA/j+M3YCwC2VxiIFB44yya9mfd3NN4p/xSdUnzHg8qmLlXHAJyCUMCbuRSGR+fl77fyQSEU5Di6DFOMQUGrt0DoNwbfYqtGu5POJ4N5Ul/hm+kXXzI8Gg805NK0FVqHoJSHeeTDlZLogEl3jSVQwJu1988cXExIT2/y+++MKIT4GanHCIcRyn5DP7D8LloJp0e8TxNSUa60VHdcaNjPXUXnzVhKHsbYGqUPQSUGKs2kez7iaLG1/8U97XHo8niyyn6c30O98lzOvGEAwG/Uny4YULF7SHgUDA7/dv3bpVPtSeikaj/f392lPRaFR7qr+/37SSwzROOcSYikZu8wbhUutE4PaI420cSsaAjuoMrV37xEmlN34xqkL9S0DZf8cnfvY2j7j+O9bdW+f1eqemEr8O8vHJJ5+0trbK/zc3N7e2tp5PisfjZ8+ebW1tnZiY2LlzZzweHx0dbW5ulv+Rb5mYmGhsbJRLXnrpJbkS+eJ4PC6fisfj2lNG6O3tbWhoKOAKc5w/2uny3Ez58/Phr9OMT2d7qqDFsNH39bBG5E/yBQu/4hctNGZz7FIP+ZfnMfuW8QUonGWWYXGjT+rSfCvDOfWwUAea3P92VKsQF1RFvn+kjz1WTHU35/Cnk2cxlvN2WeIl/p5Hmlf0Pec4GkPcRPl8nCHj7DY1NcnGWvmwoqJix44dwWCwr69PPvz73/9eUVEhhChPSn3v4ODgc889J59av369bs07duzw+/1FRUV37twxouSwjPuuMq+wdSHRyD1eHChzYyO3pYNwObMmE1cx2yNBT3Wg2BPQliZOfe3CLZJ1YHUh7IGqUG8eFnl0q8l+doxNjje/yrduVDeG7u7uUJIMtYFAYOvWraFQSCbgysrK2dlZ+cpgMJj6xqqqKu2pmZmZ1Kemp6fb29tDoVB3d/eGDRuEEuhg7t6rzMpdR1N4EC5n12Qi4izi+iuagIHzsJh5uHh81r00mGvTiNJM6rPr8/kuXLgQDAZDodDs7Gx5efnk5KTsxbt161bdK7Wn9uzZk/rUxo0b169f39bWFgg8aqJwOss7mNsibTvwEGMgGrkBwHQOvARE1s2ZEX12nc78Prsy7Ba+002ePfseSUnbBvSnydg3dbkK2HnI0q6ZBakMtfouF2oHW2kvVVvVg60KYyHqQYcKyb8eHp4H8zj2FupbyHU9j+2vO9Vds9LNEWr12WVSCTuITY6LJX+cRS52mDEPklW3c7r9KnMqGrltNggXNQnAntzTrutJSv3PchF2HdPB3OeCtA0HXkdTeRAuahJwjzznYTH9cKF41vWk0DXTpj6V49oIu9azfoe1Om077RBjIBq5jcE4owDUugT02BN3pCvnYXtsRxdwdc/qgm8uKyTsWs4JWdfgEphwiPEsx7JeLxzFbvVgYnmSQxKMNIvhQGI2vgUXX81606dpZy8TK8HWqAcdKsTsenDiJaDsVwEjF8fz7A5nCfnV5F6fWkPv0i8j7FrN8qRpgxI48hBjDBq5bTIIFzUJuI9Cl4BiPcfHcxi1x64Nust6Vy5NvIUMu4GkAq7QDaxPmtaXwIxDTNwwwlGN3HarB7uVx5Kka89KMB/1oEOFWFEP9r0ElGnEdSE6LmZuIto3uCv74JX2lGdNLp13Cxl2JyYm7t69Oz09LR+OjY3J/8zPz0ejUblEI5frHs7Pz2tv0T2rrVauKhqNyqe0t8glwmGsT5rWl8BxhxhD0chttUw1mToatZrTugBw2iUg2UiU1kSUOFwV3ziUfuKMaGPmZ2sxsVBBanKJvFuwsNvV1VVXV+f3+3t7e2Wu3b17t0yob7zxRmNjYn693bt3h5N2794thOjs7BwYGAiHw62trWNjY51JQgi/39/Z2Tk6OipfGQ6Hp6enf/7zn8sPOnz4sBCisbExHA4PDAxobxkcHAyHw7opKuzO+g7mtsm6TjrEGEqh62iKiAQ9ifnsFiR+jdnwVAHAZDY4DclJp8SiJqJ94mSGU2cs0VKSPKtOddd0VNvrIFbAmsyWdwsWdgcGBr73ve9t2bKlr69PLnn55ZdDoZAQoqioaP369XJhS5L2rrq6upaWFjmlsNTf319UVCSnUmtpaSkrK2tpaZFzp01PT/f398sJh9evX9/S0lJXVyffdezYsV27dlVVVQknsrCDufVp26GHGEPRyG2Z9JqM9RzveDRm+8PpKbI0vANwC/tcApLzsD6S8TQRuaS1lHgbT3bXZOn+oK7ChF3ZteCLL74Ih8NlZWX9/f1CiOeee+7SpUtdXV319fU5rmd2djYSiezbty/9qf379//xj38MhUIZ13b48OHBwUGhGNM6mDvqds6VHWI8hnFWI7fd6sFW5clUk5GuwV1Tj04eC+3uK76F0PaVYCHqQYcKcVQ92PsSkK8xJQI/vDfEJgreWJOxcbcwYffEiRNHjx6VrbbHjh2TDbpCiE2bNg0MDPh8Gc7S8/Pzs7OzuoXnz58/evRoxo/w+XxXr16Vjb5dXV0VFRVjY2PXr1+fnZ2NRqMzMzOywfjOnTvCQVbWwTwl2iX+lh72w1kIefJhQX5VOuN2TnsfYgxGm66xNRmb3HxI9zf4cMAMAK7l8EtAscnxfAZzd8ApLD3vFibsvvjii1qiLSkp2bZtW2lpaVVV1a9//etgMCj71AohGhoa5GsaGhpGR0fXrVtXXl4uhKiqqpKv7+jo2Lhxo/y/fKV8o1RaWiqbdQcGBoQQ4XD45s2bk5OTc3NzwWCwra3tP//5z1tvvaXdsuYEy+1gLqPd4K6phZ43FyOyCTDRa6crknif7JaT5Xp33mk7GbStu0VnxYeY5d6iu6wXO6iR2271YLfy6HkbGzOeEZbo+aNeJZiFetChQuxZD1ZdAkotQF5N17FLg8Jul2wzKmjd6b57r9c7NbWQHOyktbV1586d8v+NjY3a8k8++WRiYqKwn9Xb29vQ0FDAFT72z+9hRtM8Sm8ZXtc8svC/1JelLciZ/Jtc/NZHH5T+yqwfY+gYMVnWP9KsL0ymzSnAB9lRWjkXvqAUaV9iPuu3mHHlWcaaM/9pmMduX4pVqAcdKsS601DisNA9kvGsvsIzkaFbMZJ21lxxGfIv5xJrWByLUg+6KYkp+6bo1uyYsHv+/Pm5uTlzPsv8sJujJb/hxJMrPgfnmrblK60Iu+YcYpb6LJtJL+Tir0b7SlcezOxWDwaVZ1mrTfyeyGvnypfdvhSrUA86VIiVYTeDlbc/GboVU901OZ4SLA+7j05jmaoxcSheckt0a3bMDGo7duxYvXq1cLfYjeGFb/ek2LfoMnWsp+tGWbJXg3G3c9qQKVeZbcjy62jKWF6PsUSnmeYRp/x1ALDqcJEc6ahZ3+PfapHgo+ErYz09EbvXp7fxUHPmWZZik+PNI0sOxKnrtuuYsIvFt8YsvpsysQc3tTftqkkGm1hPULFx7x1/iCkobqWySKxnX6Bs6eMrAEUt64dxpCswXGOzfrGRoKe649GAlsU3NtmqeEtNs5TWjrf8CQAIu9ZYWQfzxPB449VyefV499RQo5C3I118NdHY5N22Kzm29D7RpFLWc/whxhxubeQ2b9cKJu4MJeoCLuT0S0CxnlpPdceiRTYZjuFxZONux/HFUyx1De5a5mn+iYKXDLlY6X2gie4GicnoNIsepz2bXe5DDNpvwIHHHWLiNjrEWN/IPaJybZiYdD3HN6d0EgGApS4BxW0VJb25hwNbNu52BAJdkcaFtobIRXGofZkHY8NbdqPRaCAQMPpTsFzL6j/uEOpfZaaR25KajPXUVgtdM00kaN0AfADMxCUgWzXuxnqOi+W3ShsbdgOBwOHDhz///HO/33/hwgVDPwvq4RCj0nU0h4r11CbmLOl42H1oQbUDplsBkDcuAdml5+7w4KXYyrowGBx2A4HAiy+++Jvf/GbDhg2hUKivry8ajY6NjfkXCCHa2tqCwWAgEPD7/XLO4ZKSkkgk0RW5v7+/pKRECBEMBuXraSG2y4gQpuAQkwf1G7nN2bUeJt0M6AoNqM/ll4A8K5u0Ir95fbPPfzUc6IokuzDkdKbXfXcGht27d+82NTVpDysqKgYHBw8cOHDmzJlQKLRt27auri75VHd397Fjxw4fPiyE2LBhQ39/f2IfiUQ2bNiQ2EivN5Q0MTFhXGmRg8RMxIk+7on7OY39C3b5ISYdjdwFlHtN6ofkc97gfADMoN4loPjjRq41taPjw64M1Z7qFXRhMDjsFhUVaXF2fn5+aGho165dd+7ckcPlVlZW3r9/XwhRV1cnG3TlK9evXy+EmJ6e1v4fi8X8fr+cdhiWSk5MbLOTvXqHmHQ0cgOAybgEZMNByFZ8H4qBYbe7u/tf//rXgQMH7ty588YbbwSDwZKSkrKysrGxMSFEOBx+9tlnhRADAwNCiAsXLhQVFck3+ny+pqamd955R97fdvXq1VAodOTIkTt37hhXWtgHh5hUNHIDgPm4BGQvicbdlY+hb+zQY93d3dFo9MSJE93d3XKJ7K5QVFT03HPP1dfXt7W1Xb16NRAI3L17NxQKyfbg+vr6UChUUlJSVFRUUlJSWVkpm3Vffvnl+fl5c+ZRc9QoBO4+xDh1OJXCW4j+w57FwynWdE9xvAUA2I3stpvjSd/X3p7jatPXqX9cXFw8MjLi9Zp0cmxraxNCtLS0CDvp6+uLRCJ9fX3W3EfvWMpspn02pCCN3InZR7zOrgd7lscSVIJEPehQISrVgz23wmNYqQq75oxrs3hSiaqqKmsLANgZjdwAAOTJ4rDr83HHOAAAgEvFl9OZYWnZ1mP4DGoAAABA/mPuLmGJxEzYBQAAgIPz7tJtwxZ3YwAAAADiC3l3WV0acnkLLbsAAAAWS2/XzP/KvuPEk3LfcNmg+9hwTMsuAAAA7EKXd/WD5mZ/KhvCroEyDGtsy8Hz8uSSzQQAwJyE58I2XZ3UFKGrjRUEDMIuAACA7dBslFoP+bSjEXYzK8iPKpf8SnPJZgIAACfiBjVTueRXmks2EwAAg86enEkLiLALAAAAZRF2jeWSX2ku2UwAAAwlz6GcSQuLsAsAAABlEXYN55JfaS7ZTAAADMWZtOAIuwAAAFAWYdcMLvmV5pLNBAAADkLYBQAAgLIIuwAAAFAWYRcAAADKIuwCAABAWYRdAAAAKMstYffUqVO/+93vTp06ZfLnehYI1SmzpXITFNgQxerBbuWxBJUgUQ86VIhK9WDPk6nH6ro9derUkSNHVpzi1A+7Dx48+NGPfnTt2jUhxLVr12prax88eGDOR3s8nvgCu+24haXMlqYW3tEbolg92K08lqASJOpBhwpRqR7seTL1WFq3BUlxiWpNfVxcXDwyMuL1eoUqDh48+N3vfvfAgQPy4bFjx+7fv//hhx8u8ZYtW7bcu3dveno6/1126SVqUGZLM/4NO3FDFKsHu5XHElSCRD3oUCEq1YM9T6Yeq+t2BSku3RNCdcPDw3/+85+1hz/72c8qKyuvXr26xFsOHTp0+fLl6urqghfGPj/UcuHz+VyypW7YEMXqwW7lsQSVkLEesp2Gc6+ufNZg1Xvzeb2q1KgHe26Fx8RSbd68OT3FEXb1Vq1aldrife/evWefffbIkSNLvCUWiwkhln7NY0UikfSFlv9EU/JnX6EosyGK1YPdymMJKiH/esi/uvJZg0HvZcdQqR7suRUeq0v14osvpqe45a5E/bB76NCh999//9y5c6tWrbp3796777574sSJpdss+/r68mzXlLtC6gUIO1yMMIgyW5reR8qhG6JYPditPJagEiTqQYcKUake7HkyjVtdtxlT3HJXon7Yrauru3379saNG71ebywWO3nyZE1Njfm7iB12WeMos6XKbIhi9WC38liCSpCoBx0qRKV6sOdWxC0tVUFSnPo3qEkPHjx48sknc/yS+vr6Ll++3Nvba3y5AAAAULAU58ahx6RVq1ZZXQQAAACYneLcEnYBAADgQoRdAAAAKIuwCwAAAGURdgEAAKAswi4AAACURdgFAACAsgi7AAAAUBZhFwAAAMoi7AIAAEBZCobd27dvP/nkk540icmR0zz55JO3b9+2usgAAAAQRqS4J4Rynnnmmf/9739WlwIAAADWpzgFW3YBAAAAibALAAAAZRF2AQAAoCzCLgAAAJRF2AUAAICyCLsAAABQFmEXAAAAyiLsAgAAQFmEXQAAACiLsAsAAABlZZgu+OrVq7FYTLjYxMSE1UUAAACAAWG3pqbm9OnThVizs/3iF7+wuggAAADIlycej+e9EgAAAMCO6LMLAAAAZRF2AQAAoCzCLgAAAJRF2AUAAICyCLsAAABQFmEXAAAAyiLsAgAAQFmEXQAAACiLsAsAAABlEXYBAACgLMIuAAAAlEXYBQAAgLIIuwAAAFAWYRcAAADKIuwCAABAWYRdAAAAKIuwCwAAAGURdgEAAKAswi4AAACURdgFAACAsgi7AAAAUBZhFwAAAEJV/w/X53onQkoCOgAAAABJRU5ErkJggg==" alt="Рисунок 10. Слева функциональный генератор, между клеммами 9 стоит K, справа показаны нагрузка, осциллограф и вольтметр."></div></details>
-</div></section>
-
-  <section id="hod"><div class="wrap">
+<section id="hod"><div class="wrap">
     <div class="sec-head"><span class="eyebrow">Работа на стенде</span><h2>Пять опытов от настройки до вывода</h2><p>Выполняй опыты по порядку. Кнопки открывают расчёт для выбранного режима. В экспериментальную таблицу методички заноси собственные измерения.</p></div>
     <div class="steps">
     <article class="step" id="exp1"><span class="num">1</span><div><h3>Найди рабочую частоту</h3>
@@ -331,8 +291,26 @@ a.btn{text-decoration:none;display:inline-block}
     <p>Этот опыт выполняют по указанию преподавателя. Подключи магазин сопротивлений вместо конденсатора. Сначала выставь Rн = 2Zπ (около 100 Ом), затем 0,2Zπ (около 10 Ом). Для каждого сопротивления сними отдельный ряд U(n) и найди наибольшее и наименьшее показания.</p>
     <details><summary>Как проверить полученный коэффициент?</summary><p>Раздели Umax на Umin в одном ряду. Если получилось 6,0/3,0 = 2, то размах соответствует первой нагрузке. При 2Zπ у нагрузки максимум, при 0,2Zπ — минимум и ожидаемый коэффициент равен 5. В обоих случаях часть волны отражается, а часть мощности поглощает резистор.</p></details>
     <div class="actions"><a class="btn" href="#stend" data-run="high">Выставить 2Zπ</a><a href="#stend" data-run="low">Выставить 0,2Zπ</a></div><p class="refcheck"><a href="#sborka" data-wiring="high">Схема подключения для опыта 5</a></p></div></article>
-    </div><p class="refcheck"><a href="#igra">Проверить себя по неизвестному графику</a></p>
+    </div>
   </div></section>
+
+  <section id="sborka"><div class="wrap">
+  <div class="sec-head"><span class="eyebrow">Схема подключения · рис. 10 методички</span>
+  <h2>Что соединить на стенде</h2>
+  <p>Генератор слева, нагрузка справа. Десять П-звеньев уже входят в состав стенда. Выбери опыт, чтобы увидеть положение перемычки K, место нагрузки и оба вывода измерительного прибора.</p></div>
+  <div class="wiring">
+    <div class="wire-controls">
+      <label>Какой опыт выполняем<select id="wireStage">
+        <option value="tune">1 · Настройка частоты</option><option value="oneOpen">2.1 · Одно звено, холостой ход</option><option value="oneMatch">2.2 · Одно звено, согласование</option><option value="matched">3.1 · Согласование, напряжение</option><option value="scope">3.2 · Согласование, фаза</option><option value="open">4.1 · Холостой ход</option><option value="cap">4.2 · Ёмкостная нагрузка</option><option value="high">5.1 · Активная нагрузка 2Zπ</option><option value="low">5.2 · Активная нагрузка 0,2Zπ</option>
+      </select></label><label>Точка измерения<select id="wireProbe" disabled><option value="4">Узел 4</option></select></label>
+    </div>
+    <figure><div class="wire-scroll" tabindex="0" role="region" aria-label="Схема соединений, возможна горизонтальная прокрутка"><svg id="wireSvg" viewBox="0 0 1250 350" role="img" aria-labelledby="wireTitle wireDesc"><title id="wireTitle">Схема подключения для опыта 1</title><desc id="wireDesc">K соединяет обе клеммы 9. Холостой ход. Измерительная точка 4. Общий вывод подключён к нижней шине.</desc><rect x="12" y="143" width="94" height="150" rx="8"/><text class="" x="59" y="173" text-anchor="middle">Генератор</text><text class="wave-icon" x="59" y="211" text-anchor="middle">∿</text><text class="part" x="60" y="264" text-anchor="middle">общ.</text><path class="" d="M106 182L164 182"/><circle class="pin" cx="106" cy="182" r="4.5"/><rect x="164" y="175" width="42" height="14"/><path class="" d="M206 182L255 182"/><text class="part" x="185" y="152" text-anchor="middle">R</text><path class="" d="M106 285L1224 285"/><circle class="pin" cx="106" cy="285" r="4.5"/><text class="" x="132" y="323" text-anchor="start">Общая шина</text><text class="part" x="171" y="205" text-anchor="middle">Uвх до R</text><path class="" d="M255 182L279 182"/><path d="M279 182 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15"/><path class="" d="M319 182L343 182"/><text class="part" x="299" y="154" text-anchor="middle">L</text><path class="" d="M255 182L255 224"/><path class="" d="M245 224L265 224"/><path class="" d="M245 231L265 231"/><path class="" d="M255 231L255 285"/><text class="part" x="268" y="250" text-anchor="start">C/2</text><circle class="joint" cx="255" cy="285" r="3.6"/><path class="" d="M343 182L343 224"/><path class="" d="M333 224L353 224"/><path class="" d="M333 231L353 231"/><path class="" d="M343 231L343 285"/><text class="part" x="356" y="250" text-anchor="start">C/2</text><circle class="joint" cx="343" cy="285" r="3.6"/><g class=""><path class="" d="M435 182L460 182"/><path d="M460 182 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15"/><path class="" d="M500 182L525 182"/><text class="part" x="480" y="154" text-anchor="middle">L</text><path class="" d="M525 182L542 182"/><path d="M542 182 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15"/><path class="" d="M582 182L599 182"/><text class="part" x="562" y="154" text-anchor="middle">L</text><path class="" d="M599 182L616 182"/><path d="M616 182 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15"/><path class="" d="M656 182L673 182"/><text class="part" x="636" y="154" text-anchor="middle">L</text><path class="" d="M673 182L690 182"/><path d="M690 182 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15"/><path class="" d="M730 182L747 182"/><text class="part" x="710" y="154" text-anchor="middle">L</text><path class="" d="M747 182L764 182"/><path d="M764 182 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15"/><path class="" d="M804 182L821 182"/><text class="part" x="784" y="154" text-anchor="middle">L</text><path class="" d="M821 182L838 182"/><path d="M838 182 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15"/><path class="" d="M878 182L895 182"/><text class="part" x="858" y="154" text-anchor="middle">L</text><path class="" d="M895 182L912 182"/><path d="M912 182 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15"/><path class="" d="M952 182L969 182"/><text class="part" x="932" y="154" text-anchor="middle">L</text><path class="" d="M969 182L986 182"/><path d="M986 182 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15"/><path class="" d="M1026 182L1043 182"/><text class="part" x="1006" y="154" text-anchor="middle">L</text><path class="" d="M1043 182L1060 182"/><path d="M1060 182 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15"/><path class="" d="M1100 182L1117 182"/><text class="part" x="1080" y="154" text-anchor="middle">L</text><path class="" d="M435 182L435 224"/><path class="" d="M425 224L445 224"/><path class="" d="M425 231L445 231"/><path class="" d="M435 231L435 285"/><text class="part" x="448" y="250" text-anchor="start">C/2</text><circle class="joint" cx="435" cy="285" r="3.6"/><path class="" d="M525 182L525 224"/><path class="" d="M515 224L535 224"/><path class="" d="M515 231L535 231"/><path class="" d="M525 231L525 285"/><text class="part" x="538" y="250" text-anchor="start">C</text><circle class="joint" cx="525" cy="285" r="3.6"/><path class="" d="M599 182L599 224"/><path class="" d="M589 224L609 224"/><path class="" d="M589 231L609 231"/><path class="" d="M599 231L599 285"/><text class="part" x="612" y="250" text-anchor="start">C</text><circle class="joint" cx="599" cy="285" r="3.6"/><path class="" d="M673 182L673 224"/><path class="" d="M663 224L683 224"/><path class="" d="M663 231L683 231"/><path class="" d="M673 231L673 285"/><text class="part" x="686" y="250" text-anchor="start">C</text><circle class="joint" cx="673" cy="285" r="3.6"/><path class="" d="M747 182L747 224"/><path class="" d="M737 224L757 224"/><path class="" d="M737 231L757 231"/><path class="" d="M747 231L747 285"/><text class="part" x="760" y="250" text-anchor="start">C</text><circle class="joint" cx="747" cy="285" r="3.6"/><path class="" d="M821 182L821 224"/><path class="" d="M811 224L831 224"/><path class="" d="M811 231L831 231"/><path class="" d="M821 231L821 285"/><text class="part" x="834" y="250" text-anchor="start">C</text><circle class="joint" cx="821" cy="285" r="3.6"/><path class="" d="M895 182L895 224"/><path class="" d="M885 224L905 224"/><path class="" d="M885 231L905 231"/><path class="" d="M895 231L895 285"/><text class="part" x="908" y="250" text-anchor="start">C</text><circle class="joint" cx="895" cy="285" r="3.6"/><path class="" d="M969 182L969 224"/><path class="" d="M959 224L979 224"/><path class="" d="M959 231L979 231"/><path class="" d="M969 231L969 285"/><text class="part" x="982" y="250" text-anchor="start">C</text><circle class="joint" cx="969" cy="285" r="3.6"/><path class="" d="M1043 182L1043 224"/><path class="" d="M1033 224L1053 224"/><path class="" d="M1033 231L1053 231"/><path class="" d="M1043 231L1043 285"/><text class="part" x="1056" y="250" text-anchor="start">C</text><circle class="joint" cx="1043" cy="285" r="3.6"/><path class="" d="M1117 182L1117 224"/><path class="" d="M1107 224L1127 224"/><path class="" d="M1107 231L1127 231"/><path class="" d="M1117 231L1117 285"/><text class="part" x="1130" y="250" text-anchor="start">C/2</text><circle class="joint" cx="1117" cy="285" r="3.6"/><circle class="joint" cx="525" cy="182" r="3.6"/><text class="node" x="529" y="202" text-anchor="start">8</text><circle class="joint" cx="599" cy="182" r="3.6"/><text class="node" x="603" y="202" text-anchor="start">7</text><circle class="joint" cx="673" cy="182" r="3.6"/><text class="node" x="677" y="202" text-anchor="start">6</text><circle class="joint" cx="747" cy="182" r="3.6"/><text class="node" x="751" y="202" text-anchor="start">5</text><circle class="joint" cx="821" cy="182" r="3.6"/><text class="node" x="825" y="202" text-anchor="start">4</text><circle class="joint" cx="895" cy="182" r="3.6"/><text class="node" x="899" y="202" text-anchor="start">3</text><circle class="joint" cx="969" cy="182" r="3.6"/><text class="node" x="973" y="202" text-anchor="start">2</text><circle class="joint" cx="1043" cy="182" r="3.6"/><text class="node" x="1047" y="202" text-anchor="start">1</text><circle class="joint" cx="1117" cy="182" r="3.6"/><text class="node" x="1121" y="202" text-anchor="start">0</text></g><circle class="joint" cx="255" cy="182" r="3.6"/><text class="node" x="258" y="202" text-anchor="start">10</text><text class="node" x="347" y="202" text-anchor="start">9</text><text class="node" x="439" y="202" text-anchor="start">9</text><path class="jumper" d="M343 182 Q389 125 435 182"/><text class="key" x="389" y="136" text-anchor="middle">K установлена</text><circle class="pin" cx="343" cy="182" r="4.5"/><circle class="pin" cx="435" cy="182" r="4.5"/><path class="" d="M1117 182L1196 182"/><circle class="pin" cx="1196" cy="182" r="4.5"/><circle class="pin" cx="1196" cy="285" r="4.5"/><text class="key" x="1196" y="158" text-anchor="middle">ХХ</text><text class="part" x="1196" y="248" text-anchor="middle">разрыв</text><rect class="meter-box" x="550" y="10" width="240" height="58" rx="7"/><text class="meter-title" x="670" y="32" text-anchor="middle">Милливольтметр</text><path class="probe" d="M592 68 V88 H821 V176"/><text class="signal" x="592" y="56" text-anchor="middle">V</text><circle class="pin" cx="821" cy="182" r="4.5"/><path class="return" d="M748 10 V3 H1230 V285 H1224"/><text class="part" x="748" y="56" text-anchor="middle">COM</text><circle class="joint" cx="1224" cy="285" r="3.6"/></svg></div>
+    <figcaption>Сплошные точки обозначают соединения. Все точки нижней шины электрически общие. Две отдельные клеммы «9» соединяет только перемычка K.</figcaption></figure>
+    <ol class="wire-leads" aria-live="polite"><li><b>Генератор</b><span id="wireGen">Выход генератора подключи ко входу стенда, общий вывод — к нижней шине. Выбери синус, Uвх ≈ 5–7 В и частоту около 12–13 кГц.</span></li><li><b>Перемычка и нагрузка</b><span id="wireLoad">Соедини обе клеммы 9 перемычкой K. Оставь клемму 0 без нагрузки.</span></li><li><b>Прибор</b><span id="wireMeter">Измерительный вывод V поставь на клемму 4, общий COM — на нижнюю шину. Подстрой частоту до минимума U(4).</span></li></ol>
+    <a class="wire-next" id="wireNext" href="#exp1">К описанию опыта 1</a>
+  </div>
+  <details class="hint refcheck"><summary>Сверить с оригинальной схемой из методички</summary><div class="wire-original"><img src="data:image/png;base64,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" alt="Рисунок 10. Слева функциональный генератор, между клеммами 9 стоит K, справа показаны нагрузка, осциллограф и вольтметр."></div></details>
+</div></section>
   <!-- ====================== СТЕНД ====================== -->
   <section id="stend">
     <div class="wrap">
@@ -438,41 +416,6 @@ a.btn{text-decoration:none;display:inline-block}
     </div>
   </section>
 
-  <!-- ====================== ИГРА ====================== -->
-  <section id="igra">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="eyebrow">Тренажёр</span>
-        <h2>Угадай нагрузку по показаниям вольтметра</h2>
-        <p>Как на защите: нагрузку закрыли, видно только U(n) по узлам. Частота рабочая, B = 22,5°. Что стоит на конце линии?</p>
-      </div>
-      <div class="game">
-        <div class="game-plot"><canvas id="gameCv" aria-label="Распределение напряжения по узлам для загаданной нагрузки"></canvas></div>
-        <div class="game-side">
-          <div class="score mono" id="gScore">0 / 0</div>
-          <div class="chips" id="gOpts">
-            <button class="chip" data-g="match">Z<sub>н</sub> = Z<sub>C</sub></button>
-            <button class="chip" data-g="open">ХХ</button>
-            <button class="chip" data-g="short">КЗ</button>
-            <button class="chip" data-g="cap">ёмкость</button>
-            <button class="chip" data-g="ind">индуктивность</button>
-            <button class="chip" data-g="resH">R &gt; Z<sub>C</sub></button>
-            <button class="chip" data-g="resL">R &lt; Z<sub>C</sub></button>
-          </div>
-          <p class="gfb" id="gFb" aria-live="polite"></p>
-          <button class="btn" id="gNext" style="align-self:flex-start">Следующая</button>
-        </div>
-      </div>
-      <details class="hint"><summary>Шпаргалка: как отличать</summary>
-        <ul>
-          <li>Все столбики одинаковые — согласованная нагрузка.</li>
-          <li>Есть ноль: у нагрузки максимум и ноль на n = 4 — ХХ; ноль на самой нагрузке — КЗ.</li>
-          <li>Ноль ближе n = 4 — ёмкость; ноль дальше n = 4, а ближе — максимум — индуктивность.</li>
-          <li>При активной нагрузке экстремумы приходятся на n = 0, 4 и 8, напряжение в минимуме больше нуля. При R &gt; Z<sub>C</sub> у нагрузки максимум, при R &lt; Z<sub>C</sub> — минимум. При реактивной нагрузке ноль может попасть между узлами измерения.</li>
-        </ul>
-      </details>
-    </div>
-  </section>
 
 </main>
 
@@ -510,6 +453,100 @@ a.btn{text-decoration:none;display:inline-block}
   <button id="gradeAgain" type="button" hidden>Ещё раз</button>
 </dialog>
 
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+/* Монтажная схема. В отличие от расчётной модели две клеммы 9 показаны отдельно. */
+const wiringModes = {
+  tune:     {step:1, load:'open', probe:4, tune:true},
+  oneOpen:  {step:2, load:'open', single:true},
+  oneMatch: {step:2, load:'match', single:true},
+  matched:  {step:3, load:'match', probe:0},
+  scope:    {step:3, load:'match', probe:0, scope:true},
+  open:     {step:4, load:'open', probe:0},
+  cap:      {step:4, load:'cap', probe:0},
+  high:     {step:5, load:'high', probe:0},
+  low:      {step:5, load:'low', probe:0}
+};
+const loadLabels={open:'Холостой ход',match:'R ≈ 50 Ом',cap:'Cн ≈ 0,104 мкФ',high:'R ≈ 100 Ом',low:'R ≈ 10 Ом'};
+function resetWiring(){
+  const mode=wiringModes[$('wireStage').value];
+  const options=mode.single?[[10,'Вход звена · клемма 10'],[9,'Выход звена · левая 9']]:
+    (mode.tune?[4]:Array.from({length:11},(_,n)=>n)).map(n=>[n,'Узел '+n+(n===0?' · нагрузка':'')]);
+  const select=$('wireProbe');
+  select.options.length=0;
+  for(const [n,label] of options) select.add(new Option(label,String(n)));
+  $('wireProbe').value=mode.single?'10':String(mode.probe);
+  $('wireProbe').disabled=mode.tune===true;
+  drawWiring();
+}
+function drawWiring(){
+  const m=wiringModes[$('wireStage').value], n=Number($('wireProbe').value);
+  const load=loadLabels[m.load], left9=343, right9=435;
+  const xs=[1117,1043,969,895,821,747,673,599,525,right9,255];
+  const probeX=m.single && n===9?left9:xs[n];
+  const probe=m.single && n===9?'левую клемму 9':'клемму '+n;
+  const last=m.single?left9:xs[0], commonY=285, signalY=182;
+  const wire=(x1,y1,x2,y2,cls='')=>`<path class="${cls}" d="M${x1} ${y1}L${x2} ${y2}"/>`;
+  const label=(x,y,s,cls='',anchor='middle')=>`<text class="${cls}" x="${x}" y="${y}" text-anchor="${anchor}">${s}</text>`;
+  const dot=(x,y)=>`<circle class="joint" cx="${x}" cy="${y}" r="3.6"/>`;
+  const pin=(x,y)=>`<circle class="pin" cx="${x}" cy="${y}" r="4.5"/>`;
+  const coil=(a,b)=>{
+    const x=(a+b)/2-20;
+    return wire(a,signalY,x,signalY)+`<path d="M${x} 182 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15"/>`+wire(x+40,signalY,b,signalY)+label(x+20,154,'L','part');
+  };
+  const capacitor=(x,caption)=> wire(x,182,x,224)+wire(x-10,224,x+10,224)+wire(x-10,231,x+10,231)+wire(x,231,x,285)+label(x+13,250,caption,'part','start')+dot(x,285);
+  let svg='<title id="wireTitle">Схема подключения для опыта '+m.step+'</title><desc id="wireDesc">'+(m.single?'K снята, работает звено 10 — левая 9.':'K соединяет обе клеммы 9.')+' '+load+'. Измерительная точка '+n+'. Общий вывод подключён к нижней шине.</desc>';
+  // Генератор и входная цепь, включая последовательный резистор с рис. 10.
+  svg+=`<rect x="12" y="143" width="94" height="150" rx="8"/>`+label(59,173,'Генератор','')+label(59,211,'∿','wave-icon')+label(60,264,'общ.','part');
+  svg+=wire(106,182,164,182)+pin(106,182)+'<rect x="164" y="175" width="42" height="14"/>'+wire(206,182,255,182)+label(185,152,'R','part');
+  svg+=wire(106,285,1224,285)+pin(106,285)+label(132,323,'Общая шина','','start')+label(171,205,'Uвх до R','part');
+  svg+=coil(255,left9)+capacitor(255,'C/2')+capacitor(left9,'C/2');
+  svg+='<g class="'+(m.single?'disconnected':'')+'">';
+  for(let j=9;j>=1;j--) svg+=coil(xs[j],xs[j-1]);
+  for(let j=9;j>=0;j--) svg+=capacitor(xs[j],j===9||j===0?'C/2':'C');
+  for(let j=8;j>=0;j--) svg+=dot(xs[j],182)+label(xs[j]+4,202,String(j),'node','start');
+  svg+='</g>'+dot(255,182)+label(258,202,'10','node','start')+label(left9+4,202,'9','node','start')+label(right9+4,202,'9','node','start');
+  svg+=m.single?`<path class="jumper" stroke-dasharray="6 5" d="M${left9+6} 168 Q389 119 ${right9-6} 168"/>`:`<path class="jumper" d="M${left9} 182 Q389 125 ${right9} 182"/>`;
+  svg+=label(389,136,m.single?'K снята':'K установлена','key')+pin(left9,182)+pin(right9,182);
+  if(m.load!=='open'){
+    const x=m.single?394:1196;
+    svg+='<g class="external-load">'+wire(last,182,x,182)+wire(x,182,x,212);
+    if(m.load==='cap') svg+=wire(x-12,212,x+12,212)+wire(x-12,220,x+12,220)+wire(x,220,x,285);
+    else svg+=`<rect x="${x-7}" y="212" width="14" height="36"/>`+wire(x,248,x,285);
+    svg+=dot(x,285)+label(m.single?x:1220,m.single?318:155,load,'key',m.single?'middle':'end')+'</g>';
+  }else if(!m.single){
+    svg+=wire(last,182,1196,182)+pin(1196,182)+pin(1196,285)+label(1196,158,'ХХ','key')+label(1196,248,'разрыв','part');
+  }
+  // Щуп приходит сверху, общий провод прибора обходит схему справа.
+  const boxX=550,boxW=240;
+  svg+=`<rect class="meter-box" x="${boxX}" y="10" width="${boxW}" height="58" rx="7"/>`;
+  svg+=label(670,32,m.scope?'Двухканальный осциллограф':'Милливольтметр','meter-title');
+  const sig=m.scope?746:592;
+  svg+=`<path class="probe" d="M${sig} 68 V88 H${probeX} V176"/>`+label(sig,56,m.scope?'CH2':'V','signal')+pin(probeX,182);
+  if(m.scope){
+    // При выставлении нуля оба щупа заканчиваются на одной клемме.
+    svg+=`<path class="reference" d="M590 68 V100 H${xs[0]+9} V169 L${xs[0]} 180"/>`+label(590,56,'CH1','ref-label');
+  }
+  const com=m.scope?669:748;
+  svg+=`<path class="return" d="M${com} 10 V3 H1230 V285 H1224"/>`+label(com,56,m.scope?'общие':'COM','part')+dot(1224,285);
+  $('wireSvg').innerHTML=svg;
+  $('wireGen').textContent=m.tune?'Выход генератора подключи ко входу стенда, общий вывод — к нижней шине. Выбери синус, Uвх ≈ 5–7 В и частоту около 12–13 кГц.':'Сохрани подключение генератора и рабочую частоту, найденную в опыте 1.';
+  $('wireLoad').textContent=(m.single?'Сними K. Работает только звено от 10 до левой 9. ':'Соедини обе клеммы 9 перемычкой K. ')+(m.load==='open'?(m.single?'Левую 9 оставь без нагрузки.':'Оставь клемму 0 без нагрузки.'):(m.load==='cap'?'Выбери ближайшую к 0,104 мкФ ёмкость. Подключи конденсатор':'Подключи резистор '+load.replace('R ≈ ','около '))+' между '+(m.single?'левой 9':'клеммой 0')+' и общей шиной.');
+  $('wireMeter').textContent=m.scope?'CH1 поставь на клемму 0, CH2 — на '+probe+'. Общие выводы обоих каналов подключи к нижней шине. '+(n===0?'Совмести синусоиды и выставь 8 клеток на период. Затем выбери следующую точку.':'Измерь смещение относительно CH1. Одна клетка соответствует 45°.'):
+    'Измерительный вывод V поставь на '+probe+', общий COM — на нижнюю шину. '+(m.tune?'Подстрой частоту до минимума U(4).':m.single?(n===10?'Запиши напряжение на входе звена.':'Запиши напряжение на выходе звена.'):'Запиши действующее напряжение U('+n+') в вольтах.');
+  $('wireNext').href='#exp'+m.step;
+  $('wireNext').textContent='К описанию опыта '+m.step;
+}
+$('wireStage').addEventListener('change',resetWiring);
+$('wireProbe').addEventListener('change',drawWiring);
+document.querySelectorAll('[data-wiring]').forEach(link=>link.addEventListener('click',()=>{
+  $('wireStage').value=link.dataset.wiring;
+  resetWiring();
+}));
+resetWiring();
+})();
+</script>
 <script>
 (function(){
 "use strict";
@@ -715,52 +752,6 @@ function axes(g,W,H,ml,mr,mt,mb,xmax,ymin,ymax,ystep,xlab,ylab,log){
 }
 function vline(g,x,mt,ph,col,dash,label){g.strokeStyle=col;g.fillStyle=col;g.lineWidth=1.5;g.setLineDash(dash);g.beginPath();g.moveTo(x,mt);g.lineTo(x,mt+ph);g.stroke();g.setLineDash([]);if(label){g.textAlign='left';g.fillText(label,x+4,mt+8);}}
 
-/* ---------- тренажёр ---------- */
-const G={ans:null,R:null,score:0,total:0,done:false};
-const gNames={match:'согласованная нагрузка',open:'холостой ход',short:'короткое замыкание',cap:'ёмкость',ind:'индуктивность',resH:'R > Z_C',resL:'R < Z_C'};
-function rnd(a,b){return a+Math.random()*(b-a)}
-function gNew(){
-  const types=['match','open','short','cap','ind','resH','resL']; let t; do{t=types[Math.floor(Math.random()*types.length)]}while(t===G.ans&&Math.random()<0.7);
-  const o={f:fWork,mode:t};
-  if(t==='cap'){o.mode='cap';o.Cn=rnd(0.04,0.6)*1e-6} else if(t==='ind'){o.mode='ind';o.Ln=rnd(0.08,1.6)*1e-3}
-  else if(t==='resH'){o.mode='res';o.R=rnd(1.7,4)*ZcLine} else if(t==='resL'){o.mode='res';o.R=rnd(0.2,0.6)*ZcLine}
-  G.ans=t; G.R=computeWith(o); G.o=o; G.done=false;
-  document.querySelectorAll('#gOpts .chip').forEach(c=>{c.classList.remove('right','wrong');c.disabled=false;});
-  const fb=document.getElementById('gFb'); fb.className='gfb'; fb.textContent='Посмотри, где нули и максимумы и есть ли нули вообще.';
-  gDraw();
-}
-function gDraw(){
-  const cv=document.getElementById('gameCv'); if(!cv||!G.R)return; const {g,W,H}=prep(cv);
-  const teal=css('--teal'), cop=css('--copper'), mut=css('--muted'), rule=css('--rule'), ink=css('--ink');
-  const v=G.R.nodes.map(o=>abs(o.U)); const mx=Math.max(...v); const sc6=6/abs(G.R.nodes[N].U);
-  const ml=16,mr=16,mt=20,mb=34, pw=W-ml-mr, ph=H-mt-mb, bw=Math.min(36,pw/11*0.6);
-  g.strokeStyle=rule; g.beginPath(); g.moveTo(ml,mt+ph); g.lineTo(W-mr,mt+ph); g.stroke();
-  g.font='11px "JetBrains Mono",monospace'; g.textAlign='center'; g.textBaseline='middle';
-  for(let n=0;n<=N;n++){const x=ml+pw*(N-n+0.5)/11, h=Math.max(1,v[n]/mx*ph*0.92), z=v[n]<0.03*mx;
-    g.fillStyle=z?cop:teal; g.fillRect(x-bw/2,mt+ph-h,bw,h);
-    g.fillStyle=ink; g.fillText(fmt(v[n]*sc6,2),x,mt+ph-h-9);
-    g.fillStyle=mut; g.fillText(String(n),x,mt+ph+13);}
-  g.fillText('← генератор (Uвх = 6 В)            n            нагрузка ?  →',ml+pw/2,mt+ph+28);
-}
-function gAnswer(btn){
-  if(G.done)return; G.done=true; G.total++;
-  const pick=btn.dataset.g, ok=pick===G.ans; if(ok)G.score++;
-  document.querySelectorAll('#gOpts .chip').forEach(c=>{c.disabled=true; if(c.dataset.g===G.ans)c.classList.add('right');});
-  if(!ok)btn.classList.add('wrong');
-  const v=G.R.nodes.map(o=>abs(o.U)); const mx=Math.max(...v), mn=Math.min(...v); const loc=f=>{for(let n=0;n<N;n++){const l=n?v[n-1]:null;if((n===0||f(v[n],l))&&f(v[n],v[n+1]))return n;}return N;};
-  const imin=loc((a,b)=>a<=b), imax=loc((a,b)=>a>=b);
-  const why={match:'все узлы одинаковые — бегущая волна, отражения нет.',
-    open:'у нагрузки максимум, ноль ровно на n = 4 (λ/4).',
-    short:'ноль прямо на нагрузке, максимум на n = 4.',
-    cap:`ближайший к нагрузке минимум на n = ${imin} — ближе λ/4. Cн = ${fmt(G.o.Cn*1e6,3)} мкФ.`,
-    ind:`ближайший к нагрузке максимум на n = ${imax} — ближе λ/4, значит узел дальше λ/4. Lн = ${fmt(G.o.Ln*1e3,3)} мГн.`,
-    resH:`нулей нет, у нагрузки максимум. R = ${fmt(G.o.R,1)} Ом, kс = ${fmt(mx/mn,2)} ≈ R/Zc.`,
-    resL:`нулей нет, у нагрузки минимум. R = ${fmt(G.o.R,1)} Ом, kс = ${fmt(mx/mn,2)} ≈ Zc/R.`}[G.ans];
-  const fb=document.getElementById('gFb'); fb.className='gfb '+(ok?'ok':'bad');
-  fb.textContent=(ok?'Верно: ':'Нет, это '+gNames[G.ans].replace('_C','c')+': ')+why;
-  document.getElementById('gScore').textContent=G.score+' / '+G.total+(G.total>=5&&G.score===G.total?' 🔥':'');
-}
-
 function update(){
   const R=compute(), s=series(R);
   drawSchem(R); drawPlot(R,s); drawTable(R,s); summarize(R); readouts(R);
@@ -789,11 +780,9 @@ $('setLH').addEventListener('click',()=>{S.Ln=0.2598e-3; syncL(); update();});
 $('setF').addEventListener('click',()=>{S.f=fWork; syncF(); update();});
 $('setF2').addEventListener('click',()=>{S.f=Math.round(f2/10)*10-10; syncF(); update();});
 document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{S.q=t.dataset.q; document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected',x===t?'true':'false')); update();}));
-document.querySelectorAll('#gOpts .chip').forEach(c=>c.addEventListener('click',()=>gAnswer(c)));
-$('gNext').addEventListener('click',gNew);
-window.addEventListener('resize',()=>{update(); gDraw(); });
+window.addEventListener('resize',()=>{update();  });
 const mq=window.matchMedia('(prefers-color-scheme: dark)'); mq.addEventListener&&mq.addEventListener('change',()=>{update();});
-new MutationObserver(()=>{update();gDraw();}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+new MutationObserver(()=>{update();}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
 
 /* Рабочие параметры звена */
 const Bw=Math.PI/8, Zcw=Math.sqrt(Lz/Cz)/Math.sqrt(1-(2*Math.PI*fWork)**2*Lz*Cz/4);
@@ -1085,96 +1074,10 @@ function phaseFromReadings(){
 }
 ['unitIn','unitOut'].forEach(id=>$(id).addEventListener('input',phaseFromReadings));
 phaseFromReadings();
-/* Монтажная схема. В отличие от расчётной модели две клеммы 9 показаны отдельно. */
-const wiringModes = {
-  tune:     {step:1, load:'open', probe:4, tune:true},
-  oneOpen:  {step:2, load:'open', single:true},
-  oneMatch: {step:2, load:'match', single:true},
-  matched:  {step:3, load:'match', probe:0},
-  scope:    {step:3, load:'match', probe:0, scope:true},
-  open:     {step:4, load:'open', probe:0},
-  cap:      {step:4, load:'cap', probe:0},
-  high:     {step:5, load:'high', probe:0},
-  low:      {step:5, load:'low', probe:0}
-};
-const loadLabels={open:'Холостой ход',match:'R ≈ 50 Ом',cap:'Cн ≈ 0,104 мкФ',high:'R ≈ 100 Ом',low:'R ≈ 10 Ом'};
-function resetWiring(){
-  const mode=wiringModes[$('wireStage').value];
-  const options=mode.single?[[10,'Вход звена · клемма 10'],[9,'Выход звена · левая 9']]:
-    (mode.tune?[4]:Array.from({length:11},(_,n)=>n)).map(n=>[n,'Узел '+n+(n===0?' · нагрузка':'')]);
-  $('wireProbe').replaceChildren(...options.map(([n,label])=>new Option(label,n)));
-  $('wireProbe').value=mode.single?'10':String(mode.probe);
-  $('wireProbe').disabled=mode.tune===true;
-  drawWiring();
-}
-function drawWiring(){
-  const m=wiringModes[$('wireStage').value], n=Number($('wireProbe').value);
-  const load=loadLabels[m.load], left9=343, right9=435;
-  const xs=[1117,1043,969,895,821,747,673,599,525,right9,255];
-  const probeX=m.single && n===9?left9:xs[n];
-  const probe=m.single && n===9?'левую клемму 9':'клемму '+n;
-  const last=m.single?left9:xs[0], commonY=285, signalY=182;
-  const wire=(x1,y1,x2,y2,cls='')=>`<path class="${cls}" d="M${x1} ${y1}L${x2} ${y2}"/>`;
-  const label=(x,y,s,cls='',anchor='middle')=>`<text class="${cls}" x="${x}" y="${y}" text-anchor="${anchor}">${s}</text>`;
-  const dot=(x,y)=>`<circle class="joint" cx="${x}" cy="${y}" r="3.6"/>`;
-  const pin=(x,y)=>`<circle class="pin" cx="${x}" cy="${y}" r="4.5"/>`;
-  const coil=(a,b)=>{
-    const x=(a+b)/2-20;
-    return wire(a,signalY,x,signalY)+`<path d="M${x} 182 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15 q0 -15 5 -15t5 15"/>`+wire(x+40,signalY,b,signalY)+label(x+20,154,'L','part');
-  };
-  const capacitor=(x,caption)=> wire(x,182,x,224)+wire(x-10,224,x+10,224)+wire(x-10,231,x+10,231)+wire(x,231,x,285)+label(x+13,250,caption,'part','start')+dot(x,285);
-  let svg='<title id="wireTitle">Схема подключения для опыта '+m.step+'</title><desc id="wireDesc">'+(m.single?'K снята, работает звено 10 — левая 9.':'K соединяет обе клеммы 9.')+' '+load+'. Измерительная точка '+n+'. Общий вывод подключён к нижней шине.</desc>';
-  // Генератор и входная цепь, включая последовательный резистор с рис. 10.
-  svg+=`<rect x="12" y="143" width="94" height="150" rx="8"/>`+label(59,173,'Генератор','')+label(59,211,'∿','wave-icon')+label(60,264,'общ.','part');
-  svg+=wire(106,182,164,182)+pin(106,182)+'<rect x="164" y="175" width="42" height="14"/>'+wire(206,182,255,182)+label(185,152,'R','part');
-  svg+=wire(106,285,1224,285)+pin(106,285)+label(132,323,'Общая шина','','start')+label(171,205,'Uвх до R','part');
-  svg+=coil(255,left9)+capacitor(255,'C/2')+capacitor(left9,'C/2');
-  svg+='<g class="'+(m.single?'disconnected':'')+'">';
-  for(let j=9;j>=1;j--) svg+=coil(xs[j],xs[j-1]);
-  for(let j=9;j>=0;j--) svg+=capacitor(xs[j],j===9||j===0?'C/2':'C');
-  for(let j=8;j>=0;j--) svg+=dot(xs[j],182)+label(xs[j]+4,202,String(j),'node','start');
-  svg+='</g>'+dot(255,182)+label(258,202,'10','node','start')+label(left9+4,202,'9','node','start')+label(right9+4,202,'9','node','start');
-  svg+=m.single?`<path class="jumper" stroke-dasharray="6 5" d="M${left9+6} 168 Q389 119 ${right9-6} 168"/>`:`<path class="jumper" d="M${left9} 182 Q389 125 ${right9} 182"/>`;
-  svg+=label(389,136,m.single?'K снята':'K установлена','key')+pin(left9,182)+pin(right9,182);
-  if(m.load!=='open'){
-    const x=m.single?394:1196;
-    svg+='<g class="external-load">'+wire(last,182,x,182)+wire(x,182,x,212);
-    if(m.load==='cap') svg+=wire(x-12,212,x+12,212)+wire(x-12,220,x+12,220)+wire(x,220,x,285);
-    else svg+=`<rect x="${x-7}" y="212" width="14" height="36"/>`+wire(x,248,x,285);
-    svg+=dot(x,285)+label(m.single?x:1220,m.single?318:155,load,'key',m.single?'middle':'end')+'</g>';
-  }else if(!m.single){
-    svg+=wire(last,182,1196,182)+pin(1196,182)+pin(1196,285)+label(1196,158,'ХХ','key')+label(1196,248,'разрыв','part');
-  }
-  // Щуп приходит сверху, общий провод прибора обходит схему справа.
-  const boxX=550,boxW=240;
-  svg+=`<rect class="meter-box" x="${boxX}" y="10" width="${boxW}" height="58" rx="7"/>`;
-  svg+=label(670,32,m.scope?'Двухканальный осциллограф':'Милливольтметр','meter-title');
-  const sig=m.scope?746:592;
-  svg+=`<path class="probe" d="M${sig} 68 V88 H${probeX} V176"/>`+label(sig,56,m.scope?'CH2':'V','signal')+pin(probeX,182);
-  if(m.scope){
-    // При выставлении нуля оба щупа заканчиваются на одной клемме.
-    svg+=`<path class="reference" d="M590 68 V100 H${xs[0]+9} V169 L${xs[0]} 180"/>`+label(590,56,'CH1','ref-label');
-  }
-  const com=m.scope?669:748;
-  svg+=`<path class="return" d="M${com} 10 V3 H1230 V285 H1224"/>`+label(com,56,m.scope?'общие':'COM','part')+dot(1224,285);
-  $('wireSvg').innerHTML=svg;
-  $('wireGen').textContent=m.tune?'Выход генератора подключи ко входу стенда, общий вывод — к нижней шине. Выбери синус, Uвх ≈ 5–7 В и частоту около 12–13 кГц.':'Сохрани подключение генератора и рабочую частоту, найденную в опыте 1.';
-  $('wireLoad').textContent=(m.single?'Сними K. Работает только звено от 10 до левой 9. ':'Соедини обе клеммы 9 перемычкой K. ')+(m.load==='open'?(m.single?'Левую 9 оставь без нагрузки.':'Оставь клемму 0 без нагрузки.'):(m.load==='cap'?'Выбери ближайшую к 0,104 мкФ ёмкость. Подключи конденсатор':'Подключи резистор '+load.replace('R ≈ ','около '))+' между '+(m.single?'левой 9':'клеммой 0')+' и общей шиной.');
-  $('wireMeter').textContent=m.scope?'CH1 поставь на клемму 0, CH2 — на '+probe+'. Общие выводы обоих каналов подключи к нижней шине. '+(n===0?'Совмести синусоиды и выставь 8 клеток на период. Затем выбери следующую точку.':'Измерь смещение относительно CH1. Одна клетка соответствует 45°.'):
-    'Измерительный вывод V поставь на '+probe+', общий COM — на нижнюю шину. '+(m.tune?'Подстрой частоту до минимума U(4).':m.single?(n===10?'Запиши напряжение на входе звена.':'Запиши напряжение на выходе звена.'):'Запиши действующее напряжение U('+n+') в вольтах.');
-  $('wireNext').href='#exp'+m.step;
-  $('wireNext').textContent='К описанию опыта '+m.step;
-}
-$('wireStage').addEventListener('change',resetWiring);
-$('wireProbe').addEventListener('change',drawWiring);
-document.querySelectorAll('[data-wiring]').forEach(link=>link.addEventListener('click',()=>{
-  $('wireStage').value=link.dataset.wiring;
-  resetWiring();
-}));
-resetWiring();
+
 
 /* ---------- старт ---------- */
-syncR();syncC();syncL();syncF(); gNew(); setMode(S.mode);
+syncR();syncC();syncL();syncF(); setMode(S.mode);
 })();
 </script>
 </body>
